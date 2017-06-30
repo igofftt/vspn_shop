@@ -111,7 +111,7 @@ gulp.task('srv', cb => {
 		gulp.src(e.path, {base: './'})
 			.pipe(gulp.dest(`${outDir}`))
 			.on('finish', () => {
-				srv.stop();
+				srv.stop() ;
 				srv.start();
 				console.log('server restarted');
 			});
