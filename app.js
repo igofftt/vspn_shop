@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import express from 'express';
 import indexApp from 'app/index';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv' ;
 import cookieSession from 'cookie-session';
 import flash from 'connect-flash';
 import passport from 'passport';
