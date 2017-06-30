@@ -1,0 +1,9 @@
+{
+  "presets": ["es2015", "stage-2"],
+  "plugins": [
+    ["module-alias", [
+      { "src": "./app/generic", "expose": "generic" },
+      { "src": "./app", "expose": "app" }
+    ]]
+  ]
+}

@@ -1,0 +1,312 @@
+<link href="/admin/js/plugins/upl_mul/style.css" rel="stylesheet">
+<!-- image cropping -->
+<script src="/admin/js/plugins/cropping/cropper.min.js"></script>
+<script src="/admin/js/plugins/cropping/main2.js"></script>
+<script src="/admin/js/plugins/upl_mul/jquery.uploadifive.min.js" type="text/javascript"></script>
+
+<div class="panel-group" id="accordion{{ name_table }}" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default" style="border-radius: 0px;">
+        <div class="panel-heading" role="tab" id="headingOne" style="padding:0">
+            <h4 class="panel-title" style="margin-top: 0">
+                <div
+                        style="padding: 10px 15px"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordion{{ name_table }}"
+                        href="#collapseOne{{ name_table }}"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                >
+                    Альбом
+                </div>
+            </h4>
+        </div>
+        <div id="collapseOne{{ name_table }}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                {{# if id_album }}
+                    <form style="margin-bottom: 5px">
+                        <input id="file_upload{{ name_table }}" name="file_upload" type="file" multiple="multiple">
+                    </form>
+
+                    <form name="" id="imag_main_form">
+                        <div id="queue{{ name_table }}" class="alert queue"></div>
+                        <div class="response_suss" id="response_suss{{ name_table }}">
+                            {{# each files as |v| }}
+                                <div class="col-md-4 rowID-{{ v.id }}">
+                                    <div class="thumbnail" style="border-radius: 0">
+                                        <div class="image view view-first">
+                                            {{# if v.crop }}
+                                                <img src="/images/files/small/{{ v.crop }}" style="width: 100%; display: block;"/>
+                                            {{ else }}
+                                                <img src="/images/files/small/{{ v.file }}" style="width: 100%; display: block;"/>
+                                            {{/ if }}
+                                        </div>
+                                        <div class="caption" style="padding-bottom: 0">
+                                            <div class="tools tools-bottom" style="text-align: center">
+                                                <a
+                                                        href="javascript:void(0)"
+                                                        class="btn btn-outline btn-info"
+                                                        title="Редактировать"
+                                                        onclick="editImg{{ name_table }}({{ v.id }})"
+                                                >
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+
+                                                <a
+                                                        href="javascript:void(0)"
+                                                        class="btn btn-outline btn-info"
+                                                        title="Обрезать"
+                                                        onclick="cropImg{{ name_table }}({{ v.id }})"
+                                                >
+                                                    <i class="fa fa-crop"></i>
+                                                </a>
+
+                                                <a
+                                                        href="javascript:void(0)"
+                                                        class="btn btn-outline btn-info"
+                                                        title="Удалить"
+                                                        onclick="$.adm.rowDelete('{{ v.id }}', '\'files\'')"
+                                                >
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+
+                                                <a
+                                                        href="javascript:void(0)"
+                                                        class="btn btn-outline btn-info"
+                                                        title="Сделать главной"
+                                                        onclick="toMain{{ name_table }}({{ v.id }})"
+                                                >
+                                                    <i class="toMain{{ ../name_table }} toMain{{ ../name_table }}{{ v.id }} glyphicon {{# iff v.main '==' '1' }} glyphicon-check {{ else }} glyphicon-unchecked {{/iff}}"></i>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <p id="img-name-{{ v.id }}">{{ v.name }}</p>
+                                                <p id="img-text-{{ v.id }}">{{ v.text }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+
+                            <input type="hidden" id="vt_i" name="fo[o][id_img]" value="0"/>
+                            <input type="hidden" id="vt_i" name="fo[id_album]" value="{{ id_album }}"/>
+                        </div>
+                    </form>
+
+                    <script type="text/javascript">
+                        var typeFile = [
+                            'image/jpg',
+                            'image/gif',
+                            'image/GIF',
+                            'image/png',
+                            'image/jpeg',
+                            'image/JPG',
+                            'image/PNG',
+                            'image/JPEG'
+                        ];
+
+                        $(function() {
+                            $('#file_upload{{ name_table }}').uploadifive({
+                                'formData'       : {
+                                    'timestamp'  : '{{ timestamp }}',
+                                    'token'      : '{{ hex }}',
+                                    'id_album'   : '{{ id_album }}',
+                                    'name_table' : '{{ name_table }}'
+                                },
+
+                                'debug'        : true,
+                                'queueID'      : 'queue{{ name_table }}',
+                                'buttonText'   : 'Выбрать изображения',
+                                'buttonClass'  : 'btn btn-primary imag_bat',
+                                'width'        : 350,
+                                'height'       : 40,
+                                'lineHeight'   :  '20px',
+                                'fileType'     :  typeFile,
+                                'fileDesc'     : 'All supported files types (.pdf, .jpeg)',
+                                'uploadScript' : '/admin/file_manager/upload_img?name_table={{ name_table }}&id_album={{ id_album }}&timestamp={{ timestamp }}&token={{ hex }}',
+                                'onProgress'   : 'total',
+                                'fileSizeLimit': '10048KB',
+
+                                'onUploadComplete' : function(file, data)
+                                {
+                                    var ds = JSON.parse(data);
+
+                                    var img = '<div class="col-md-4 rowID-' + ds.id + '">' +
+                                            '<div class="thumbnail">' +
+                                            '<div class="image view view-first">' +
+                                            '<img src="/images/files/small/' + ds['name'] + '" style="width: 100%; display: block;"/>' +
+                                            '</div>' +
+                                            '<div class="caption" style="padding-bottom: 0">' +
+                                            '<div class="tools tools-bottom" style="text-align: center">' +
+                                            '<a href="javascript:void(0)" onclick="editImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info"><i class="fa fa-pencil"></i></a>' +
+                                            '<a href="javascript:void(0)" onclick="cropImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info"><i class="fa fa-crop"></i></a>' +
+                                            '<a href="javascript:void(0)" onclick="$.adm.rowDelete(' + ds.id + ', \'files\')" class="btn btn-outline btn-info"><i class="fa fa-times"></i></a>' +
+                                            '<a href="javascript:void(0)" class="btn btn-outline btn-info" onclick="toMain{{ name_table }}(' + ds.id + ')">';
+
+                                    if(ds.main) {
+                                        img += '<i class="toMain{{ name_table }} toMain{{ name_table }}' + ds.id + ' glyphicon glyphicon-check"></i>';
+                                    } else {
+                                        img += '<i class="toMain{{ name_table }} toMain{{ name_table }}' + ds.id + ' glyphicon glyphicon-unchecked"></i>';
+                                    }
+
+                                    img += '</a>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>';
+
+                                    $('#response_suss{{ name_table }}').append(img);
+                                    $("#vt_a").show(100);
+                                }
+                            });
+                        });
+
+                        function cropImg{{ name_table }}(id) {
+                            $.ajax
+                            ({
+                                type: "POST",
+                                url: "/admin/file_manager/get_crop",
+                                dataType: 'html',
+                                data: {
+                                    id: id
+                                },
+                                cache: false,
+                                success: function (html)
+                                {
+                                    $('.alb-modal{{ name_table }} > div > div > div > .modal-title').html('Редактирование изображение');
+                                    $('.modal-lgAl{{ name_table }}').css({width: '100%'});
+                                    $('#alb-modal{{ name_table }}').modal('show');
+                                    $('.bodyModal{{ name_table }}').html(html);
+
+                                    setTimeout(function () {
+                                        $('.btnsav{{ name_table }}').attr('data-id', ''+id+'')
+                                    }, 300);
+                                }
+                            });
+                        }
+
+                        function editImg{{ name_table }}(id) {
+                            $.ajax
+                            ({
+                                type: "POST",
+                                url: "/admin/file_manager/get_edit",
+                                dataType: 'html',
+                                data: {
+                                    id        : id,
+                                    lang      : '{{{ lang }}}',
+                                    name_table: '{{ name_table }}',
+                                },
+                                cache: false,
+                                success: function (html)
+                                {
+                                    $('.alb-modal{{ name_table }} > div > div > div > .modal-title').html('Редактировать описание');
+                                    $('.modal-lgAl{{ name_table }}').css({width: '600px'});
+                                    $('#alb-modal{{ name_table }}').modal('show');
+                                    $('.bodyModal{{ name_table }}').html(html);
+
+                                    setTimeout(function () {
+                                        $('.btnsav{{ name_table }}').attr('data-id', ''+id+'')
+                                    }, 300);
+                                }
+                            });
+                        }
+
+                        function sendEditImg{{ name_table }}(id) {
+                            var text = $('[name="{{ name_table }}text_img_edit"]').val();
+                            var name = $('[name="{{ name_table }}name_img_edit"]').val();
+
+                            $.ajax
+                            ({
+                                type: "POST",
+                                url: "/admin/file_manager/set_edit",
+                                dataType: 'json',
+
+                                data: {
+                                    id: id,
+                                    name: name,
+                                    text: text,
+                                    sort: $('[name="{{ name_table }}sort_img_edit"]').val(),
+                                    save: true
+                                },
+
+                                cache: false,
+                                success: function (data) {
+                                    $('#alb-modal{{ name_table }}').modal('hide');
+                                    $('#img-name-' + id).html(name);
+                                    $('#img-text-' + id).html(text);
+                                }
+                            });
+                        }
+
+                        function toMain{{ name_table }}(id) {
+                            $.ajax
+                            ({
+                                type: "POST",
+                                url: "/admin/file_manager/to_main",
+                                dataType: 'json',
+                                data: {
+                                    id: id
+                                },
+                                cache: false,
+                                success: function (html)
+                                {
+                                    if(html.result === 'ok') {
+                                        $('.toMain{{ name_table }}').removeClass('glyphicon-check');
+                                        $('.toMain{{ name_table }}').addClass('glyphicon-unchecked');
+
+                                        $('.toMain{{ name_table }}' + id).addClass('glyphicon-check');
+                                        $('.toMain{{ name_table }}' + id).removeClass('glyphicon-unchecked');
+                                    }
+                                }
+                            });
+                        }
+                    </script>
+
+                    <br/>
+                    <span id="status"></span>
+                    <ul id="files"></ul>
+
+                    <div id="form_ij" style="width: 500px; margin: 0 auto;">
+                        <div id="form_ij_img" style="margin-bottom: 10px;text-align: center"></div>
+                        <!--/ получившийся рисунок /-->
+                        <div id="form_ij_for"></div>
+                        <!--/ форма для комментов /-->
+                    </div>
+
+                    <div class="row" id="row_crop">
+                        <div class="span12">
+                            <div class="jc-demo-box_e">
+                                <div class="jc-demo-box">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="error_s"></div>
+                    <div class="error_ok"></div>
+                    <div class="result_img" id="result_img"></div>
+                    <div class="crop_img" id="crop_img"></div>
+
+                    <div class="img"></div>
+
+                {{ else }}
+                    <button class="btn btn-primary" formaction="/admin/update/{{ name_table }}/{{ id_album }}/1" type="submit">Включить альбом</button>
+                {{/ if }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade alb-modal{{ name_table }}" tabindex="-1" id="alb-modal{{ name_table }}" role="dialog">
+    <div class="modal-dialog modal-lg modal-lgAl{{ name_table }}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="bodyModal{{ name_table }}"> </div>
+        </div>
+    </div>
+</div>
