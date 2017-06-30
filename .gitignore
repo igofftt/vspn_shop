@@ -58,3 +58,6 @@ typings/
 .env
 # WebStorm settings
 .idea/*
+
+# build
+dist/*
