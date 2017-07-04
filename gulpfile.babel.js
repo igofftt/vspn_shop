@@ -37,7 +37,7 @@ gulp.task('copy', () => gulp.src(
 	.pipe(gulp.dest(outDir)));
 
 gulp.task('htmlm', () => { // минификация html
-	return gulp.src(`${outDir}/app/assets/public/views/**/*.html`)
+	return gulp.src(`${outDir}/app/assets/views/**/*.html`)
 
 		.pipe(env.production(htmlmin({
 			collapseWhitespace           : true,
@@ -71,7 +71,7 @@ gulp.task('srv', cb => {
 	srv.start();
 
 	// вьюхи|json
-	gulp.watch(['./app/assets/public/views/**/*.html', './app/assets/public/views/**/*.hbs', './app/**/*.json'], e => {
+	gulp.watch(['./app/assets/views/**/*.html', './app/assets/views/**/*.hbs', './app/**/*.json'], e => {
 		gulp.src(e.path, {base: './'})
 			.pipe(gulp.dest(outDir))
 			.pipe(srv.notify());

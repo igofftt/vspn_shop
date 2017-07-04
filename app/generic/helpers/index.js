@@ -5,3 +5,4 @@ export {default as hbsOperators} from './hbs-operators';
 export {default as combineRoute} from './combine-route';
 export {default as capitalize} from './capitalize';
 export {default as queryParse} from './query-parse';
+export {default as storeGenerator} from './store-generator';

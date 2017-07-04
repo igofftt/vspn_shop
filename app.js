@@ -11,10 +11,14 @@ import passportStrategy from 'generic/passport';
 import {hbsOperators} from 'generic/helpers';
 import hbs from 'express-hbs';
 import fileUpload from 'express-fileupload';
+import {storeGenerator} from 'generic/helpers';
 
 const
 	app = express(),
 	env = dotenv.config();
+
+// init store
+app.use(storeGenerator);
 
 app.use(cookieSession(
 	{
@@ -31,7 +35,7 @@ if(app.get('env') === 'development') app.use(require('connect-livereload')());
 // app.use(storeGenerator());
 app.use(flash());
 app.use(passportStrategy);
-app.use(express.static('app/assets')); // static files
+app.use(express.static('app/assets/public')); // static files
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser());
@@ -47,14 +51,15 @@ app.use(fileUpload());
 app.set('view engine', 'hbs');
 
 // configure the view engine
-app.engine('hbs', hbs.express4({partialsDir: __dirname + '/app/views/'}));
+app.engine('hbs', hbs.express4({partialsDir: __dirname + '/app/assets/views/'}));
 
 // configure views path
-app.set('views', path.join(__dirname,'/app/views'));
+app.set('views', path.join(__dirname,'/app/assets/views'));
 
 // app init
 // app.use('/admin/*', indexApp.index);
-// app.use(indexApp.routes);
+app.use(indexApp.index);
+app.use(indexApp.routes);
 // app.use('/admin/*', indexApp.error404);
 // app.use('/admin/*', indexApp.error500);
 

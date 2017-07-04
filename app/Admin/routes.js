@@ -1,3 +1,6 @@
 import {combineRoute} from 'generic/helpers';
+import routesMain from './Main';
 import fileManager from 'app/generic/FileManager';
-export default combineRoute([fileManager.routes]);
+
+// TODO: "routesMain" must be the first
+export default combineRoute([routesMain.routes, fileManager.routes]);

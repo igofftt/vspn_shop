@@ -1,0 +1,34 @@
+<ul class="nav flex-]" id="side-menu">
+    <li>Left menu</li>
+    {{# each left_menu }}
+        {{# if r }}
+            {{# if m }}
+                <!-- временное решение -->
+                <li {{#iff ../table '==' 'lang' }}class="active"{{/iff }}>
+                    <a>
+                        <i class="fa fa-cubes"></i>
+                        {{ k }} <span class="fa fa-chevron-down"></span>
+                    </a>
+
+                    <ul class="nav nav-second-level">
+                        {{# each m }}
+                            <li {{#iff ../table '==' link_module }}class="active"{{/iff }}>
+                                <a href="/admin/index/{{ link_module }}">
+                                    <i class="{{ class_module }}"></i>
+                                    {{ name_module }}
+                                </a>
+                            </li>
+                        {{/ each }}
+                    </ul>
+                </li>
+            {{ else }}
+                <li {{#iff ../table '==' link_module }}class="active"{{/iff }}>
+                    <a href="/admin/index/{{ link_module }}">
+                        <i class="{{ class_module }}"></i>
+                        {{ name_module }}
+                    </a>
+                </li>
+            {{/ if }}
+        {{/ if }}
+    {{/ each }}
+</ul>

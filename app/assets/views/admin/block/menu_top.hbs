@@ -1,0 +1,57 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/admin/dashboard">Dashboard</a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/issues">Заявки</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/products">Товар</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/users">Пользователи</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/help">Помощь</a>
+            </li>
+        </ul>
+
+        <form class="form-inline mt-2 mt-md-0">
+            <div class="input-group">
+                <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        По всем
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#">По заявкам</a>
+                        <a class="dropdown-item" href="#">По товару</a>
+                        <a class="dropdown-item" href="#">По пользователям</a>
+                    </div>
+                </div>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-secondary" aria-expanded="false">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user.name }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="/admin/logout">Выйти</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
