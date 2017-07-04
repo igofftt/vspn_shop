@@ -19,7 +19,6 @@ router.route(['/admin/*', '/admin'])
 
 router.route(['/admin/login']) // рендер страницы авторизации
 	.get((req, res) => {
-	console.log('req.isAuthenticated()', req.isAuthenticated())
 		if(req.isAuthenticated())
 			return res.redirect('/admin/dashboard');
 
@@ -39,5 +38,4 @@ router.route(['/admin/login']) // рендер страницы авториза
 // logout
 router.route('/admin/logout').get((req, res) => { req.logout(); res.redirect('/admin/login'); });
 router.route('/admin/dashboard').get((req, res) => {dashboard(req, res)});
-
 export default router
