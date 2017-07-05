@@ -4,19 +4,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta content="width=device-width" name="viewport">
     <title>404</title>
-    <link rel=icon href=/media/favicon.ico>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,300i,400,400i,500,500i,700,700i&amp;subset=cyrillic-ext,latin-ext" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0;}
-        body {background-color: #dbe6f6;}
+        body {background-color: #313b3b;}
         html {
             font: 300 17px/1.2 'Roboto', sans-serif;
-            color: #666;
+            color: #313b3e;
             min-height: 100%;
             position: relative;
         }
         .mini-container {
-            margin: 0 auto;
+            margin: 10% auto;
             max-width: 700px;
             text-align: center;
         }
@@ -37,30 +35,23 @@
         }
         .button_field {
             text-align: center;
+            z-index: 1;
+            position: relative;
         }
         .button_field a {
-            background-color: #496dff;
+            background-color: #78415a;
             color: #ffffff;
             min-width: 8rem;
             display: inline-block;
-            font-family: MyriadBold;
             font-size: 0.9rem;
             line-height: 3rem;
             padding: 0 1.2rem;
             text-transform: uppercase;
             text-decoration: none;
+            border-radius: 50px;
         }
         .button_field a:hover {
-            background-color: #6281fc;
-        }
-        @media screen and (max-width: 768px){
-            html { font-size: 16px;}
-            .mini-container {
-                padding: 0 1.5rem;
-            }
-        }
-        @media screen and (max-width: 600px){
-            html { font-size: 14px;}
+            background-color: #781e37;
         }
     </style>
 </head>
@@ -68,11 +59,11 @@
     <div id="wrapper">
         <div id="main">
             <div class="mini-container">
-                404 admin
-                <p>Страница не найдена. Быть может она была перемещена или удалена.</p>
+                <div style="font-size: 200px;  color: #78415a;">404</div>
                 <div class="button_field">
-                    <a href="/">Вернуться на главную</a>
+                    <a href="/admin">Вернуться на главную</a>
                 </div>
+                <div style="z-index: 0;font-size: 200px;  color: #78415a; transform: rotate(90deg); margin-left: 50px">:{</div>
             </div>
         </div>
     </div>

@@ -60,8 +60,8 @@ app.set('views', path.join(__dirname,'/app/assets/views'));
 // app.use('/admin/*', indexApp.index);
 app.use(indexApp.index);
 app.use(indexApp.routes);
-// app.use('/admin/*', indexApp.error404);
-// app.use('/admin/*', indexApp.error500);
+app.use('/admin/*', indexApp.error404);
+app.use('/admin/*', indexApp.error500);
 
 // register operators hbs
 hbsOperators(hbs);

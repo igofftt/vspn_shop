@@ -2,28 +2,29 @@ import _ from 'lodash'
 import {getModule} from 'generic/helpers'
 
 export default (req, res, next) => {
-	req.store.setState('left_menu', [{name: 'nam'}])
+	const
+		setSt = (name, obj) => {
+			req.store.setState(name, obj);
+			next();
+		};
 
-	res.render = function render(view, options, callback) {
-		let
-			app = req.app,
-			done = callback,
-			opts = options || {},
-			self = this;
+	const
+		renderFn = m => setSt('left_menu', m),
 
-		// merge res.locals
-		opts._locals = self.locals;
+		q1 = () => {
+			let scr = 0;
 
-		// default callback to respond
-		done = done || function(err, str) {
-				if(err)
-					return req.next(err);
+			if(_.isFunction((req.uri || '').split))
+				scr = (req.uri || '').split('404').length;
 
-				self.send(str);
-			};
+			if(scr === 1)
+				getModule({req: req, res: res, userId: _.get(req, 'user.id')}, renderFn);
+			else
+				next()
+		};
 
-		return app.render(view, opts, done)
-	};
-
-	next()
+	if(!_.get(req, 'user.id'))
+		next();
+	else
+		q1();
 };

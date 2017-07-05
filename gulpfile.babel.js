@@ -15,6 +15,7 @@ gulp.task('rm', () => gulp.src(`${outDir}/*`).pipe(clean()));
 
 gulp.task('babel', () => gulp.src([
 	'./app/generic/**/*.js',
+	'./app/settings/**/*.js',
 	'./app/Admin/**/*.js',
 	'./app/Site/**/*.js',
 	'./app.js',

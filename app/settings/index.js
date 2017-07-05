@@ -1,8 +1,9 @@
-var
-	_ = require('dll/lodash');
+import _ from 'lodash';
+import adminModule from './admin_module';
 
-module.exports = _.extend({
+export default _.extend({
 	admin: {
+		module            : adminModule,
 		REDIRECT_LOGIN_URL: '',
 	},
 });

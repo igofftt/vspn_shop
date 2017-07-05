@@ -1,0 +1,78 @@
+[
+  {
+    "id": "issues",
+    "active": true,
+    "class_module": "fa fa-sitemap",
+    "link_module": "issues",
+    "name_module": "Заявки",
+    "sort": "1",
+    "m": [
+      {
+        "id": "new-issues",
+        "active": true,
+        "class_module": "fa fa-sitemap",
+        "link_module": "products",
+        "name_module": "Создать заявку",
+        "sort": "1",
+        "m": []
+      },
+      {
+        "id": "hot-issues",
+        "active": true,
+        "class_module": "fa fa-sitemap",
+        "link_module": "products",
+        "name_module": "Горящие заявки",
+        "sort": "1",
+        "m": []
+      },
+      {
+        "id": "archive",
+        "active": true,
+        "class_module": "fa fa-sitemap",
+        "link_module": "archive",
+        "name_module": "Архив",
+        "sort": "1",
+        "m": []
+      }
+    ]
+  },
+  {
+    "id": "products",
+    "active": true,
+    "class_module": "fa fa-sitemap",
+    "link_module": "products",
+    "name_module": "Товар",
+    "sort": "1",
+    "m": []
+  },
+
+  {
+    "id": "users",
+    "active": true,
+    "class_module": "fa fa-sitemap",
+    "link_module": "users",
+    "name_module": "Пользователи",
+    "sort": "1",
+    "m": []
+  },
+
+  {
+    "id": "site",
+    "active": true,
+    "class_module": "fa fa-sitemap",
+    "link_module": "site",
+    "name_module": "Сайт",
+    "sort": "1",
+    "m": []
+  },
+
+  {
+    "id": "help",
+    "active": true,
+    "class_module": "fa fa-sitemap",
+    "link_module": "help",
+    "name_module": "Помощь",
+    "sort": "5",
+    "m": []
+  }
+]

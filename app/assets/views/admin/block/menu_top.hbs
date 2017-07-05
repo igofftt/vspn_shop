@@ -6,21 +6,14 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/issues">Заявки</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/products">Товар</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/users">Пользователи</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/site">Сайт</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/help">Помощь</a>
-            </li>
+            {{# each left_menu }}
+                <li class="{{#iff ../parent_module '==' link_module }}active{{/iff }}">
+                    <a class="nav-link" href="/admin/index/{{ link_module }}">
+                        <i class="{{ class_module }}"></i>
+                        {{ name_module }}
+                    </a>
+                </li>
+            {{/ each }}
         </ul>
 
         <form class="form-inline mt-2 mt-md-0">
