@@ -1,0 +1,44 @@
+{{!< ../../admin/layout}}
+
+<div class="con">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h2>Пользователи</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/">Рабочий стол</a></li>
+                <li class="breadcrumb-item  active"><strong>Главный список</strong></li>
+            </ol>
+
+            <div class="ibox-tools">
+                {{# if module.x }}
+                    <a href="/admin/update/users" class="btn btn-primary">Добавить</a>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="">
+            <div class="form-group" style="margin: 15px 0">
+                <div class="input-group">
+                    <span class="input-group-addon">Фильтр: </span>
+
+                    <select onchange="window.location.href = this.value" id="select1" class="form-control select" autocomplete="off">
+                        <option value="/admin/index/users" {{#iff usertype '==' '' }}selected{{/iff}}>Все</option>
+                        <option value="/admin/index/users?usertype=user" {{#iff usertype '==' 'manager' }}selected{{/iff}}>Менеджеры</option>
+                        <option value="/admin/index/users?usertype=admin" {{#iff usertype '==' 'admin' }}selected{{/iff}}>Администраторы</option>
+                        <option value="/admin/index/users?usertype=user" {{#iff usertype '==' 'user' }}selected{{/iff}}>Пользователи</option>
+                        <option value="/admin/index/users?usertype=sellers" {{#iff usertype '==' 'sellers' }}selected{{/iff}}>Продавцы</option>
+                    </select>
+                </div>
+            </div>
+            <div class="list-group">
+                {{# each data }}
+                    <a href="/admin/update/users/{{ id }}?page={{{df page 1 }}}" class="list-group-item">{{ name }}</a>
+                {{/ each }}
+            </div>
+        </div>
+
+        <div class="pagination-block">
+            {{{ paginate }}}
+        </div>
+    </div>
+</div>
