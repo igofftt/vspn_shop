@@ -2,6 +2,7 @@ let
 	babel = require('gulp-babel'),
 	clean = require('gulp-clean'),
 	env = require('gulp-environments'),
+	errorHandler = require('gulp-error-handle'),
 	exec = require('child_process').exec,
 	gls = require('gulp-live-server'),
 	gulp = require('gulp'),
@@ -19,6 +20,7 @@ gulp.task('babel', () => gulp.src([
 	'./app.js',
 	'./app/index.js'], {base: './'})
 
+	.pipe(errorHandler())
 	.pipe(babel({presets: ['es2015']}))
 	.pipe(gulp.dest(outDir))
 );
@@ -56,6 +58,7 @@ gulp.task('htmlm', () => { // минификация html
 gulp.task('prodmods', cb => {
 	if(env.production())
 		return gulp.src('./package.json')
+			.pipe(errorHandler())
 			.pipe(gulp.dest(outDir))
 			.on('finish', () => {
 				// инсталлируем только dependency пакеты в папку с билдом
@@ -85,6 +88,7 @@ gulp.task('srv', cb => {
 		'./app.js',
 		'./app/index.js'], e => {
 		gulp.src(e.path, {base: './'})
+			.pipe(errorHandler())
 			.pipe(babel({presets: ['es2015']}))
 			.pipe(gulp.dest(`${outDir}`))
 			.on('finish', () => {

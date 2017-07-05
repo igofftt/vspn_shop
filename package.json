@@ -82,6 +82,7 @@
     "express-hbs": "^1.0.4",
     "fs": "0.0.1-security",
     "gm": "^1.23.0",
+    "gulp-error-handle": "^1.0.0",
     "locutus": "^2.0.8",
     "lodash": "^4.17.4",
     "pagination": "^0.4.4",
