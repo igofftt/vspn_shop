@@ -69,7 +69,7 @@
   {
     "id": "help",
     "active": true,
-    "class_module": "fa fa-sitemap",
+    "class_module": "fa fa-question-circle",
     "link_module": "help",
     "name_module": "Помощь",
     "sort": "5",

@@ -84,8 +84,9 @@ gulp.task('srv', cb => {
 	// *.js
 	gulp.watch([
 		'./app/generic/**/*.js',
+		'./app/settings/**/*.js',
 		'./app/Admin/**/*.js',
-		'./app/**/*.js',
+		'./app/Site/**/*.js',
 		'./app.js',
 		'./app/index.js'], e => {
 		gulp.src(e.path, {base: './'})
