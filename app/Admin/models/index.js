@@ -37,6 +37,8 @@ db = new Sequelize(connectionString, {logging: process.env.NODE_ENV === 'product
 db.userModel = db.import('./user');
 db.filesModel = db.import('./files');
 db.powerModel = db.import('./power');
+db.productsModel = db.import('./products');
+db.langModel = db.import('./lang');
 
 // for querying sql
 db.execute = (text, values) => pgPool.query(text, values);

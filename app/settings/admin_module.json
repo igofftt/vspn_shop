@@ -11,7 +11,7 @@
         "id": "new-issues",
         "active": true,
         "class_module": "fa fa-sitemap",
-        "link_module": "products",
+        "link_module": "new-issues",
         "name_module": "Создать заявку",
         "sort": "1",
         "m": []
@@ -20,7 +20,7 @@
         "id": "hot-issues",
         "active": true,
         "class_module": "fa fa-sitemap",
-        "link_module": "products",
+        "link_module": "hot-issues",
         "name_module": "Горящие заявки",
         "sort": "1",
         "m": []
@@ -43,7 +43,32 @@
     "link_module": "products",
     "name_module": "Товар",
     "sort": "1",
-    "m": []
+    "m": [
+      {
+        "id": "all-products",
+        "active": true,
+        "class_module": "fa fa-sitemap",
+        "link_module": "index",
+        "name_module": "Весь товар",
+        "sort": "1"
+      },
+      {
+        "id": "new-products",
+        "active": true,
+        "class_module": "fa fa-sitemap",
+        "link_module": "update",
+        "name_module": "Добавить товар",
+        "sort": "1"
+      },
+      {
+        "id": "removed-products",
+        "active": true,
+        "class_module": "fa fa-sitemap",
+        "link_module": "removed-products",
+        "name_module": "Удалённый товар",
+        "sort": "1"
+      }
+    ]
   },
 
   {

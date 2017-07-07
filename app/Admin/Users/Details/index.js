@@ -4,6 +4,10 @@ import {hex, getModule} from 'generic/helpers';
 
 const
 	index = (req, res, next) => {
+
+console.log('models.userMode', models.userMode)
+
+
 		const
 			queryUser = modules => models.userModel
 				.findById(req.params.id)
