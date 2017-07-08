@@ -1,0 +1,174 @@
+<link href="/admin/css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
+<link href="/admin/css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
+<!-- Data picker -->
+<link href="/admin/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInDown">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Выбор языка: <select id='locale-selector'></select></h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Редактирование события</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="event_type">Название</label>
+                    <input class="form-control" type="text" id="event_type" name="event_type" value="">
+                </div>
+
+                <div id="sandbox-container">
+                    <div class="input-daterange">
+                        <div class="form-group">
+                            <label for="event_start">Начало</label>
+                            <div class="input-group date">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input id="date_added" type="text" class="form-control" value="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="event_end">Конец</label>
+                            <div class="input-group date">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input id="date_modified" type="text" class="form-control" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="display: table; float: left">
+                    <button type="button" class="btn btn-danger text-left">Удалить</button>
+                </div>
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Mainly scripts -->
+<script src="/admin/js/plugins/fullcalendar/moment.min.js"></script>
+
+
+<script src="/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="/admin/js/plugins/pace/pace.min.js"></script>
+
+<!-- jQuery UI custom -->
+<script src="/admin/js/jquery-ui.custom.min.js"></script>
+
+<!-- Full Calendar -->
+<script src="/admin/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="/admin/js/plugins/fullcalendar/locale/ru.js"></script>
+
+<!-- Data picker -->
+<script src="/admin/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script>
+
+    $(document).ready(function() {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+        $('#sandbox-container .input-daterange').datepicker({
+            format: "yyyy-mm-dd",
+            language: "ru"
+        });
+
+        var initialLocaleCode = 'ru';
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listMonth'
+            },
+            defaultDate: '2017-05-12',
+            locale: initialLocaleCode,
+            buttonIcons: false, // show the prev/next text
+            weekNumbers: true,
+            navLinks: true, // can click day/week names to navigate views
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+
+            selectable: true,
+
+//            select: function(start, end) {
+//                var title = prompt('Event Title:');
+//                var eventData;
+//                if (title) {
+//                    eventData = {
+//                        title: title,
+//                        start: start,
+//                        end: end
+//                    };
+//                    $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+//                }
+//                $('#calendar').fullCalendar('unselect');
+//            },
+
+            dayClick: function(date, allDay, jsEvent, view) {
+            	$('#modalCalendar').modal('show');
+//                var newDate = $.fullCalendar.formatDate(date, format);
+//                event_start.val(newDate);
+//                event_end.val(newDate);
+//                formOpen('add');
+            },
+
+            events: [
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: '2017-05-16T16:00:00'
+                },
+            ]
+        });
+
+        // build the locale selector's options
+        $.each($.fullCalendar.locales, function(localeCode) {
+            $('#locale-selector').append(
+                    $('<option/>')
+                            .attr('value', localeCode)
+                            .prop('selected', localeCode == initialLocaleCode)
+                            .text(localeCode)
+            );
+        });
+
+        // when the selected option changes, dynamically change the calendar option
+        $('#locale-selector').on('change', function() {
+            if (this.value) {
+                $('#calendar').fullCalendar('option', 'locale', this.value);
+            }
+        });
+    });
+</script>

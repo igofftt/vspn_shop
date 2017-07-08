@@ -1,0 +1,59 @@
+<!-- Basic inputs -->
+<div class="panel panel-default" style="border-radius: 0">
+    <div class="panel-body">
+        <p>
+            <button
+                {{! count(json_decode($task->tasks, true)) }}
+                    data-n="0"
+                    type="button"
+                    class="add-tasks-btn{{ lang }} btn btn-success btn-icon"
+            >
+                <i class="fa fa-plus"></i>
+            </button>
+        </p>
+
+        <div class="tasks-con{{ lang }} form-group">
+            {{#each tasks_in_task as |k q| }}
+                <div class="tasksId-{{ k }} row" style="margin-bottom: 15px">
+                    <div class="col-md-10">
+                        <input type="text" name="tasks[{{ k }}][text]"  value="{{ q.text }}" class="form-control" />
+                        <input type="hidden" name="tasks[{{ k }}][status]" value="{{ q.status }}" />
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="button" onclick="deleteTasks{{ lang }}('.tasksId-{{ k }}')" class="btn btn-danger btn-icon">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+
+        <script>
+            function deleteTasks{{ lang }}(c) {
+                $(c).remove();
+            }
+
+            $('.add-tasks-btn{{ lang }}').click(function () {
+                var n = $(this).data('n');
+                $(this).data('n', n + 1);
+
+                $('.tasks-con{{ lang }}').append('<div class="tasksId-'+ n + '" style="margin-bottom: 15px">' +
+                        '<div class="col-md-6">' +
+                        '<input type="text" placeholder="Название" name="pl[location_text][' + n + '][{{ lang }}][text_l]" class="form-control" />' +
+                        '</div>' +
+                        '<div class="col-md-5">' +
+                        '<input type="text" placeholder="Расстояние" name="pl[location_text][' + n + '][{{ lang }}][text_r]" class="form-control" />' +
+                        '<input type="hidden" name="pl[location_text][' + n + '][{{ lang }}][status]" value="0" />' +
+                        '</div>' +
+                        '<div class="col-md-1">' +
+                        '<button type="button" onclick="deleteTasks{{ lang }}(\'.tasksId-'+ n + '\')" class="btn btn-danger btn-icon">' +
+                        '<i class="fa fa-minus"></i>' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="clear"></div>' +
+                        '</div>');
+            })
+        </script>
+    </div>
+</div>

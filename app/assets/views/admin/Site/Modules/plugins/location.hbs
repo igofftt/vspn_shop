@@ -1,0 +1,104 @@
+<p><input name="pl[location]" value="" id="inputLocation" class="form-control" placeholder="Место" type="text" /></p>
+<p><input name="pl[coordinates]" value="" id="inputCoordinates" class="form-control" placeholder="Координаты" type="text"></p>
+
+<div id="map-l" style="height: 300px; width: 100%;"></div>
+
+<script>
+    $(document).ready(function(){
+        (function () {
+            function dtabnewmap() {
+                ymaps.ready(function () {
+                    var myMap = new ymaps.Map("map-l", {
+                            center: [48.7110, 44.5264],
+                            zoom: 12,
+                            controls: ['zoomControl']
+                        }),
+                        // Создаем экземпляр класса ymaps.control.SearchControl
+                        mySearchControl = new ymaps.control.SearchControl({
+                            options: {
+                                noPlacemark: true
+                            }
+                        }),
+                        // Результаты поиска будем помещать в коллекцию.
+                        mySearchResults = new ymaps.GeoObjectCollection(null, {
+                            draggable: true,
+                            hasHint: false
+                        });
+
+                    myMap.controls.add(mySearchControl);
+                    myMap.geoObjects.add(mySearchResults);
+
+                    myMap.events.add('balloonopen', function (e) {
+                        var thisPlacemark = e.get('target');
+                        var coords = thisPlacemark.geometry.getCoordinates();
+
+                        ymaps.geocode(coords, {
+                            results: 1
+                        }).then(function (res) {
+                            var newContent = res.geoObjects.get(0) ?
+                                    res.geoObjects.get(0).properties.get('name') :
+                                    'Не удалось определить адрес.';
+
+                            // Задаем новое содержимое балуна в соответствующее свойство метки.
+                            thisPlacemark.properties.set('balloonContentBody', newContent);
+                        });
+
+                    });
+
+                    mySearchResults.events.add('dragstart', function (e) {
+                        var thisPlacemark = e.get('target');
+                        thisPlacemark.options.set('preset', 'islands#blueIcon');
+                    });
+
+                    mySearchResults.events.add('dragend', function (e) {
+                        var thisPlacemark = e.get('target');
+                        thisPlacemark.options.set('preset', 'islands#redIcon');
+                        var coords = thisPlacemark.geometry.getCoordinates();
+
+                        $("#inputCoordinates").val(coords[0].toPrecision(10) + ", " + coords[1].toPrecision(10));
+
+                        ymaps.geocode(coords, {
+                            results: 1
+                        }).then(function (res) {
+                            var newContent = res.geoObjects.get(0) ?
+                                    res.geoObjects.get(0).properties.get('name') :
+                                    'Не удалось определить адрес.';
+
+                            $("#inputLocation").val(res.geoObjects.get(0).properties.get('text'));
+                            // Задаем новое содержимое балуна в соответствующее свойство метки.
+                            thisPlacemark.properties.set('balloonContentBody', newContent);
+                        });
+                    });
+
+                    mySearchControl.events.add('resultselect', function (e) {
+                        var index = e.get('index');
+
+                        mySearchControl.getResult(index).then(function (res) {
+                            mySearchResults.add(res);
+                            var coords = res.geometry.getCoordinates();
+
+                            ymaps.geocode(coords, {
+                                results: 1
+                            }).then(function (res) {
+                                var newContent = res.geoObjects.get(0)
+                                        ? res.geoObjects.get(0).properties.get('name')
+                                        : 'Не удалось определить адрес.';
+
+                                $("#inputLocation").val(res.geoObjects.get(0).properties.get('text'));
+
+                                // Задаем новое содержимое балуна в соответствующее свойство метки.
+                                myMap.balloon.open(coords, newContent);
+                            });
+
+                            $("#inputCoordinates").val(coords[0].toPrecision(10) + ", " + coords[1].toPrecision(10));
+                        });
+                    }).add('submit', function () {
+                        mySearchResults.removeAll();
+                    })
+                });
+            }
+
+            dtabnewmap();
+        })();
+    });
+</script>

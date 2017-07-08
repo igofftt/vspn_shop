@@ -1,0 +1,45 @@
+{{!< ../../admin/layout}}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-12">
+        <h2>{{ modules.name_module }}</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/admin/">Рабочий стол</a>
+            </li>
+            <li class="active">
+                <strong>Главный список</strong>
+            </li>
+        </ol>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group" style="margin: 15px 0">
+                <div class="input-group">
+                    <span class="input-group-addon">Выберите действие: </span>
+
+                    <select onchange="$.adm.makeD(this.value)" id="select1" class="form-control select" autocomplete="off">
+                        <option value="0" id="defo">Выберите действие</option>
+                        <option value="edit">Редактировать</option>
+                        <option value="delete">Удалить</option>
+                        <option value="copy">Копировать</option>
+                    </select>
+                </div>
+
+                <div style="margin: 15px 0">
+                    <div class="error"></div>
+                    <div class="sass"></div>
+                    <input type="hidden" name="id_mt" class="id_mt"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{#if viewsWood }}
+    {{> admin/Modules/indexWood }}
+{{/if}}
+{{#if viewsTable }}
+    {{> admin/Modules/indexTable }}
+{{/if}}
+
