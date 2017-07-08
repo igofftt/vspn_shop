@@ -1,20 +1,20 @@
-{{!< ../../admin/layout}}
+{{!< ../../../admin/layout}}
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-12">
+    <div class="col col-lg-12">
         <h2>{{ modules.name_module }}</h2>
         <ol class="breadcrumb">
-            <li>
+            <li class="breadcrumb-item">
                 <a href="/admin/">Рабочий стол</a>
             </li>
-            <li class="active">
+            <li class="breadcrumb-item active">
                 <strong>Главный список</strong>
             </li>
         </ol>
     </div>
 
-    <div class="col-lg-12">
-        <div class="row">
+    <div class="col col-lg-12">
+        <div class="">
             <div class="form-group" style="margin: 15px 0">
                 <div class="input-group">
                     <span class="input-group-addon">Выберите действие: </span>
@@ -36,10 +36,10 @@
         </div>
     </div>
 </div>
-{{#if viewsWood }}
-    {{> admin/Modules/indexWood }}
+{{#if viewsTree }}
+    {{> admin/Site/Modules/indexTree }}
 {{/if}}
 {{#if viewsTable }}
-    {{> admin/Modules/indexTable }}
+    {{> admin/Site/Modules/indexTable }}
 {{/if}}
 

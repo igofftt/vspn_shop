@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import settings from 'app/settings';
 import models from 'app/Admin/models';
-import {listWood, listCategory} from 'generic/helpers';
+import {listTree, listCategory} from 'app/generic/helpers';
 
 export default (options, callback) => {
 	let
 		order = options.order || 'sort',
 		sort = options.sort || 'ASC',
 		table = options.table || 'menu',
-		type = options.type || 'wood',
+		type = options.type || 'tree',
 		where = _.merge(settings.where || {}, {order: `${order} ${sort}`, raw: true});
 
 	const
@@ -45,7 +45,7 @@ export default (options, callback) => {
 				if(type === 'category')
 					return listCategory(arrCat, options.lang);
 				else
-					return listWood(arrCat, options.lang);
+					return listTree(arrCat, options.lang);
 			} else
 				return {};
 		})

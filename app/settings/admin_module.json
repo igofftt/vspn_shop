@@ -110,7 +110,60 @@
     "link_module": "site",
     "name_module": "Сайт",
     "sort": "1",
-    "m": []
+    "m": [
+      {
+        "id": "all-products",
+        "active": true,
+        "class_module": "fa fa-sitemap",
+        "pre_link_module": "index",
+        "link_module": "menu",
+        "name_module": "Меню",
+        "parent_first": true,
+        "plugins": [
+          "name",
+          "text",
+          "title",
+          "author",
+          "keywords",
+          "description",
+          "order",
+          "class",
+          "controller",
+          "sys_cat",
+          "active",
+          "cat",
+          "album",
+          "sort"
+        ],
+        "sort": "1",
+        "views_module": "tree"
+      },
+      {
+        "id": "all-products",
+        "active": true,
+        "class_module": "fa fa-id-card",
+        "pre_link_module": "index",
+        "link_module": "main",
+        "name_module": "Главная страница",
+        "parent_first": true,
+        "sort": "1"
+      },
+      {
+        "id": "all-products",
+        "active": true,
+        "class_module": "fa fa-cog",
+        "pre_link_module": "index",
+        "link_module": "params",
+        "name_module": "Параметры",
+        "parent_first": true,
+        "plugins": [
+          "name",
+          "little_description",
+          "active"
+        ],
+        "sort": "1"
+      }
+    ]
   },
 
   {

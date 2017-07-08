@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export default (wood, lang) => {
+export default (tree, lang) => {
 	let
 		cj = '',
 		echo = '',
@@ -32,6 +32,6 @@ export default (wood, lang) => {
 		}
 	}
 
-	view_cat(wood, 0, 0);
+	view_cat(tree, 0, 0);
 	return echo
 };

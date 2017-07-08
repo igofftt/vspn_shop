@@ -34,8 +34,8 @@ const
 		};
 
 		if(inp['body']['type'] = 'insert')
-			return getCat({lang: langQuery, req, res, type: 'category'}, wood => resultR({
-				sel: inp['body']['text'].replace('{-option-}', wood),
+			return getCat({lang: langQuery, req, res, type: 'category'}, tree => resultR({
+				sel: inp['body']['text'].replace('{-option-}', tree),
 			}));
 		else
 			return resultR({sel: inp['body']['text']});

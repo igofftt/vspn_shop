@@ -1,0 +1,32 @@
+{{#contentFor "head"}}
+    <link href="/js/admin/plugins/jquery-fileTree/enhanced.css" rel="stylesheet" type="text/css" media="screen" />
+{{/contentFor}}
+
+<div class="con">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <div class="ibox-tools">
+                {{# if modules.x }}
+                    <a href="/admin/site/update/{{ table }}" class="btn btn-primary">Добавить</a>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="ibox-content">
+            {{{ tree }}}
+        </div>
+    </div>
+</div>
+
+{{#contentFor "footer"}}
+    <script type="text/javascript" src="/js/admin/plugins/jquery-fileTree/enhance.js"></script>
+    <script src="/js/admin/plugins/jquery-fileTree/jQuery.tree.js" type="text/javascript"></script>
+
+    <script>
+        $('.menu_tree').tree({expanded: 'li:first'});
+        $('input.flat').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+    </script>
+{{/contentFor}}

@@ -182,22 +182,29 @@ const
 		const
 			findAll = count => models[`${table}Model`]
 				.findAll({limit: limit, offset: offset, order: 'id ASC'})
-				.then(dataObl => getCat({lang: langQuery, req, res}, wood => _.assign({dataObl, wood})))
+				.then(dataObl => getCat({lang: langQuery, req, res}, tree => _.assign({dataObl, tree})))
 
 				.then(objResult => {
+
+					// console.log(' objResult.dataObl',  objResult)
+
+
 					let renderPage = modules => {
 						let columnSel = {};
 
 						for(let i = 0; _.get(modules, '0.column_index', {}).length > i; i++)
 							columnSel[i] = _.find(plugins, {sql_column: _.get(modules, '0.column_index', {})[i]});
 
-						res.render('admin/Modules/index', {
-							column : columnSel, // колонки для таблицы
-							count  : count, // общее кол-во статей
-							data   : objResult.dataObl, // статьи
-							mata   : {title: `Админ панель - ${modules[0].name_module}`},
-							modules: modules[0],
-							page   : page, // номер текущей страницы в пейджинге
+						res.render('admin/Site/Modules/index', {
+							column   : columnSel, // колонки для таблицы
+							count    : count, // общее кол-во статей
+							data     : objResult.dataObl, // статьи
+							left_menu: req.store.getState('left_menu'),
+							mata     : {title: `Админ панель - ${modules[0].name_module}`},
+							modules  : modules[0],
+
+							// номер текущей страницы в пейджинге
+							page: page,
 
 							paginate: boostrapPaginator({
 								current    : page,
@@ -207,11 +214,13 @@ const
 							})
 								.render(),
 
+							parent_module: 'site',
+
 							table     : table,
 							user      : req.user,
 							viewsTable: modules[0].views_module === 'table' ? 1 : 0,
-							viewsWood : modules[0].views_module === 'wood' ? 1 : 0,
-							wood      : objResult.wood,
+							viewsTree : modules[0].views_module === 'tree' ? 1 : 0,
+							tree      : objResult.tree,
 						});
 
 						return null

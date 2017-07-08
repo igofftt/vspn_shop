@@ -63,10 +63,12 @@ export default (options, callback) => {
 
 						if(!_.isEmpty(v.m) && name)
 							return _.compact(_.map(v.m, val => _.get(val, [keySearch]) === name && _.merge({
-								d: _.get(pw, 'd', 0),
-								r: _.get(pw, 'r', 0),
-								w: _.get(pw, 'w', 0),
-								x: _.get(pw, 'x', 0),
+
+								// TODO 1 replace on 0 after fix user right
+								d: _.get(pw, 'd', 1),
+								r: _.get(pw, 'r', 1),
+								w: _.get(pw, 'w', 1),
+								x: _.get(pw, 'x', 1),
 							}, val)))[0];
 
 						if(name === _.get(v, [keySearch]) || !name) {

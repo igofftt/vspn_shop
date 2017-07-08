@@ -9,7 +9,7 @@
                         <li class="nav-item">
                             <a
                                     class="nav-link {{#iff ../this_module '==' link_module }}active{{/iff }}"
-                                    href="/admin/{{ link_module }}/{{ ../../link_module }}"
+                                    href="/admin/{{#if parent_first }}{{ ../../link_module }}/{{ pre_link_module }}/{{ link_module }}{{ else }}{{ link_module }}/{{ ../../link_module }}{{/if}}"
                             >
                                 <i class="{{ class_module }}"></i>
                                 {{ name_module }}

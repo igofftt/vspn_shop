@@ -6,11 +6,11 @@ const
 	router = express.Router();
 
 // mainList
-router.route('/admin/index/:table?/:page?').get(mainList.index);
-router.route('/admin/modules/getData/:page?').post(mainList.getData);
+router.route('/admin/site/index/:table?/:page?').get(mainList.index);
+router.route('/admin/site/modules/getData/:page?').post(mainList.getData);
 
 // details
-router.route('/admin/update/:table?/:id?/:apply?').get(details.index).post(details.update);
-router.route('/admin/modules/getDataSingle').post(details.getDataSingle);
-router.route('/admin/modules/show_loader').post(details.showLoader);
+router.route('/admin/site/update/:table?/:id?/:apply?').get(details.index).post(details.update);
+router.route('/admin/site/modules/getDataSingle').post(details.getDataSingle);
+router.route('/admin/site/modules/show_loader').post(details.showLoader);
 export default router
