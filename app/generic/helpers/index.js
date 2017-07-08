@@ -7,3 +7,6 @@ export {default as capitalize} from './capitalize';
 export {default as queryParse} from './query-parse';
 export {default as storeGenerator} from './store-generator';
 export {default as getModule} from './get-module';
+export {default as getCat} from './get-cat';
+export {default as listCategory} from './list-category';
+export {default as listWood} from './list-wood';

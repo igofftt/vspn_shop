@@ -8,12 +8,6 @@
                 <li class="breadcrumb-item"><a href="/admin/">Рабочий стол</a></li>
                 <li class="breadcrumb-item  active"><strong>Главный список</strong></li>
             </ol>
-
-            <div class="ibox-tools">
-                {{# if module.x }}
-                    <a href="/admin/update/users" class="btn btn-primary">Добавить</a>
-                {{/if}}
-            </div>
         </div>
 
         <div class="">
@@ -29,7 +23,7 @@
             </div>
             <div class="list-group">
                 {{# each data }}
-                    <a href="/admin/update/users/{{ id }}?page={{{df page 1 }}}" class="list-group-item">{{ name }}</a>
+                    <a href="/admin/update/products/{{ id }}?page={{{df page 1 }}}" class="list-group-item">{{ name }}</a>
                 {{/ each }}
             </div>
         </div>

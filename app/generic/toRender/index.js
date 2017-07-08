@@ -6,6 +6,8 @@ export default (req, res, next) => {
 		setSt = (name, obj) => {
 			req.store.setState(name, obj);
 			next();
+
+			return null;
 		};
 
 	const

@@ -39,6 +39,7 @@ db.filesModel = db.import('./files');
 db.powerModel = db.import('./power');
 db.productsModel = db.import('./products');
 db.langModel = db.import('./lang');
+db.menuModel = db.import('./menu');
 
 // for querying sql
 db.execute = (text, values) => pgPool.query(text, values);

@@ -4,6 +4,7 @@ import fileManager from 'app/generic/FileManager';
 import Issues from './Issues';
 import Products from './Products';
 import Users from './Users';
+import _Tools from './_Tools';
 
 export default combineRoute(
 	[
@@ -14,4 +15,5 @@ export default combineRoute(
 		Issues.routes,
 		Products.routes,
 		Users.routes,
+		_Tools.routes,
 	]);

@@ -21,8 +21,8 @@ const
 
 		const resultR = obj => {
 			let html = `<div class="form-group">
-			<label class="control-label col-md-3 col-sm-3 col-xs-12">${inp.nameText}</label> 
-			<div class="col-md-6 col-sm-6 col-xs-12">
+			<label class="col control-label col-md-3 col-sm-3 col-xs-12">${inp.nameText}</label> 
+			<div class="col col-md-6 col-sm-6 col-xs-12">
 			<select name="${inp.nameAttr}${langArr}" id="${inp.idAttr}" class="form-control select2">
 			${obj.sel}
 			</select>
@@ -54,8 +54,8 @@ const
 			langArr = l ? '--options--' : '';
 
 		let html = `<div class="form-group">
-			<label class="control-label col-md-3 col-sm-3 col-xs-12">${inp.nameText}</label>
-			<div class="col-md-6 col-sm-6 col-xs-12">
+			<label class="col control-label col-md-3 col-sm-3 col-xs-12">${inp.nameText}</label>
+			<div class="col col-md-6 col-sm-6 col-xs-12">
 			<input type="text" name="${inp.nameAttr}${langArr}" id="${inp.idAttr}" class="form-control ${classAttr}" placeholder="${inp.nameText}">
 			</div>
 			<br class="clear"/>
@@ -77,8 +77,8 @@ const
 			langArr = l ? '--options--' : '';
 
 		let html = `<div class="form-group">
-			<label class="control-label col-md-3 col-sm-3 col-xs-12">${inp.nameText}</label>
-			<div class="col-md-6 col-sm-6 col-xs-12">
+			<label class="col control-label col-md-3 col-sm-3 col-xs-12">${inp.nameText}</label>
+			<div class="col col-md-6 col-sm-6 col-xs-12">
 			<textarea class="form-control ${classAttr}" id="${inp.idAttr}" name="${inp.nameAttr}${langArr}" placeholder="${inp.nameText}" rows="3"></textarea>
 			</div>
 			<br class="clear"/>
@@ -98,6 +98,9 @@ const
 	 * @private
 	 */
 	_switch = (c, n, l, req, res) => {
+
+// console.log('ccc', c, n, l)
+
 		if(c.typeField === 'input')
 			return _input(c, n, l);
 
@@ -114,14 +117,14 @@ const
 				html = _.get(c, 'body.text');
 			else
 				html = `<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12">${c.nameText}</label>
-				<div class="col-md-6 col-sm-6 col-xs-12">${_.get(c, 'body.text')}</div>
+				<label class="col control-label col-md-3 col-sm-3 col-xs-12">${c.nameText}</label>
+				<div class="col col-md-6 col-sm-6 col-xs-12">${_.get(c, 'body.text')}</div>
 				<br class="clear">
 				</div>`;
 		else
 			html = `<div class="form-group">
-			<label class="control-label col-md-3 col-sm-3 col-xs-12">${c.nameText}</label>
-			<div class="col-md-6 col-sm-6 col-xs-12"><div id="${c.name}"></div></div>
+			<label class="col control-label col-md-3 col-sm-3 col-xs-12">${c.nameText}</label>
+			<div class="col col-md-6 col-sm-6 col-xs-12"><div id="${c.name}"></div></div>
 			<br class="clear">
 			</div>`;
 

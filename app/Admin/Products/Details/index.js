@@ -8,7 +8,7 @@ const
 	index = (req, res, next) => {
 		let
 			id = parseInt(req.params.id) || 0,
-			plugins = settings.plugins,
+			plugins = settings.admin.plugins,
 			table = 'products';
 
 		const
@@ -86,33 +86,25 @@ const
 						return _.assign(objResult, {columnSel, moduleThis, pluginsThisHtml, pluginsThisLangHtml})
 				})
 
-				.then(objResult => {
-
-
-
-					res.render('admin/Products/details', {
+				.then(objResult => res.render('admin/Products/details', {
 					data          : JSON.stringify(objResult.dataObj),
 					id            : id,
 					lang          : objResult.langObj,
 					langShow      : !_.isEmpty(objResult.moduleThis.lang),
-					mata          : {title: `Админ панель - редактирование пользователя - ${_.get(objResult, 'userObj.title')}`},
 					left_menu     : req.store.getState('left_menu'),
+					mata          : {title: `Админ панель - редактирование - ${_.get(objResult, 'dataObj.title')}`},
 					module        : objResult.moduleThis,
 					modulesPower  : modules,
 					objData       : objResult.dataObj,
+					parent_module : table,
 					plugins       : objResult.pluginsThisHtml,
 					pluginsLang   : objResult.pluginsThisLangHtml,
 					pluginsLangStr: JSON.stringify(objResult.pluginsThisLangHtml),
 					pluginsStr    : JSON.stringify(objResult.pluginsThisHtml),
-
-						parent_module: table,
-						table         : table,
-						this_module  : 'update',
+					table         : table,
+					this_module   : 'update',
 					user          : req.user,
-				});
-
-					return null
-				})
+				}))
 
 				.catch(e => next(e));
 
@@ -127,7 +119,7 @@ const
 	update = (req, res) => {
 		let
 			id = _.get(req, 'params.id', 0),
-			table = req.params.table;
+			table = 'products';
 
 		// get object form data
 		let obj = {}, pl = _.get(req, 'body.pl', {});
@@ -146,8 +138,11 @@ const
 					return res.redirect(`/admin/index/${table}`);
 			};
 
+
+		console.log('	models[`${table}Model`]', id)
+
 		// create or update table row
-		if(id)
+		if(id && id > 0)
 			models[`${table}Model`].update(obj, {where: {id: id}}).then(() => endRedir());
 		else
 			models[`${table}Model`].create(obj).then(() => endRedir());

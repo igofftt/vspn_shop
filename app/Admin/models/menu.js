@@ -2,26 +2,27 @@ import Sequelize from 'sequelize';
 
 export default (sequelize, Datatypes) => {
 	return sequelize.define(
-		'products',
+		'menu',
 
 		{
-			active: Datatypes.INTEGER,
-			author: Datatypes.STRING(64),
-			cat   : Datatypes.INTEGER,
+			active    : Datatypes.INTEGER,
+			album     : Datatypes.INTEGER,
+			author    : Datatypes.STRING(128),
+			cat       : Datatypes.INTEGER,
+			class     : Datatypes.STRING(32),
+			controller: Datatypes.STRING(32),
 
 			created_at: {
 				field: 'created_at',
 				type : Sequelize.DATE,
 			},
-
 			deleted_at: {
 				field: 'deleted_at',
 				type : Sequelize.DATE,
 			},
 
 			description: Datatypes.STRING(512),
-			html_bottom: Datatypes.TEXT,
-			html_top   : Datatypes.TEXT,
+			fields_land: Datatypes.INTEGER,
 
 			id: {
 				autoIncrement: true,
@@ -32,10 +33,9 @@ export default (sequelize, Datatypes) => {
 			keywords: Datatypes.STRING(512),
 			name    : Datatypes.STRING(512),
 			sort    : Datatypes.INTEGER,
-			tags    : Datatypes.STRING(512),
+			sys_cat : Datatypes.STRING(32),
 			text    : Datatypes.TEXT,
 			title   : Datatypes.STRING(512),
-			to_main : Datatypes.INTEGER,
 
 			updated_at: {
 				field: 'updated_at',
@@ -46,31 +46,29 @@ export default (sequelize, Datatypes) => {
 		{
 			freezeTableName: true,
 			paranoid       : true,
-			tableName      : 'products',
+			tableName      : 'menu',
 			timestamps     : true,
 			underscored    : true,
 		});
 };
 
-// CREATE TABLE products (
-// id serial PRIMARY KEY,
-// 	author varchar(64),
+// CREATE TABLE menu (
+// 	id serial PRIMARY KEY,
 // 	name varchar(512) NOT NULL,
-// 	html_bottom text,
-// 	html_top text,
-// 	keywords varchar(512),
-// 	active integer NOT NULL DEFAULT '1',
-// 	cat integer,
-// 	sort integer,
-// 	tags varchar(512),
+// 	sys_cat varchar(32),
 // 	text text,
+// 	active integer NOT NULL DEFAULT '1',
+// 	cat integer DEFAULT '0',
 // 	title varchar(512),
-// 	to_main integer,
+// 	author varchar(128),
+// 	keywords varchar(512),
 // 	description varchar(512),
+// 	sort integer DEFAULT '0',
+// 	class varchar(32),
+// 	controller varchar(32),
+// 	album integer,
+// 	fields_land integer,
 // 	created_at timestamp NULL DEFAULT NULL,
-// 	deleted_at timestamp NULL DEFAULT NULL,
-// 	updated_at timestamp NULL DEFAULT NULL
+// 	deleted_at  timestamp NULL DEFAULT NULL,
+// 	updated_at  timestamp NULL DEFAULT NULL
 // );
-
-
-
