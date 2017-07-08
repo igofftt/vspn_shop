@@ -1,1 +1,136 @@
-[]
+[
+  {
+    "name": "name",
+    "typeField": "input",
+    "nameText": "Название",
+    "nameAttr": "pl[name]",
+    "description": "Текстовое поле инпут для названия",
+    "idAttr": "inputName",
+    "sql_column": "name"
+  },
+  {
+    "name": "text",
+    "classAttr": "area",
+    "typeField": "textarea",
+    "nameText": "Полное описание",
+    "nameAttr": "pl[text]",
+    "description": "Текстовое поле \"Полное описание\"",
+    "idAttr": "textareaText",
+    "sql_column": "text"
+  },
+  {
+    "name": "title",
+    "typeField": "input",
+    "nameText": "Title",
+    "nameAttr": "pl[title]",
+    "description": "Мета поле инпут для Title",
+    "idAttr": "inputTitle",
+    "sql_column": "title",
+    "tabs": "meta"
+  },
+  {
+    "name": "author",
+    "typeField": "input",
+    "nameText": "Author",
+    "nameAttr": "pl[author]",
+    "description": "Мета поле инпут для Author",
+    "idAttr": "inputAuthor",
+    "sql_column": "author",
+    "tabs": "meta"
+  },
+  {
+    "name": "keywords",
+    "typeField": "textarea",
+    "nameText": "Keywords",
+    "nameAttr": "pl[keywords]",
+    "description": "Мета поле Keywords",
+    "idAttr": "textareaKeywords",
+    "sql_column": "keywords",
+    "tabs": "meta"
+  },
+  {
+    "name": "description",
+    "typeField": "textarea",
+    "nameText": "Description",
+    "nameAttr": "pl[description]",
+    "description": "Мета поле Description",
+    "idAttr": "textareaDescription",
+    "sql_column": "description",
+    "tabs": "meta"
+  },
+  {
+    "name": "html_top",
+    "typeField": "textarea",
+    "typeView": "accordion",
+    "nameText": "Html top",
+    "nameAttr": "pl[html_top]",
+    "description": "Html вставки \"html_top\"",
+    "idAttr": "textareaHtml_top",
+    "sql_column": "html_top",
+    "tabs": "html_insert"
+  },
+  {
+    "name": "html_bottom",
+    "typeField": "textarea",
+    "typeView": "accordion",
+    "nameText": "Html bottom",
+    "nameAttr": "pl[html_bottom]",
+    "description": "Html вставки \"html_bottom\"",
+    "idAttr": "textareaHtml_bottom",
+    "sql_column": "html_bottom",
+    "tabs": "html_insert"
+  },
+  {
+    "name": "order",
+    "typeField": "input",
+    "nameText": "Сортировка",
+    "nameAttr": "pl[order]",
+    "description": "Текстовое поле инпут \"Порядок сортировки\"",
+    "idAttr": "inputOrder",
+    "sql_column": "order"
+  },
+  {
+    "name": "class",
+    "typeField": "input",
+    "nameText": "Class",
+    "nameAttr": "pl[class]",
+    "description": "Текстовое поле инпут \"Class\"",
+    "idAttr": "inputClass",
+    "sql_column": "class"
+  },
+  {
+    "name": "active",
+    "typeField": "select",
+    "nameText": "Статус отображения",
+    "nameAttr": "pl[active]",
+    "description": "Текстовое поле селект \"Active\" для назначения статуса отображения",
+    "idAttr": "inputActive",
+    "sql_column": "active",
+    "body": {
+      "text": "<option value=\"1\">Отображается</option><option value=\"0\">Не отображается</option>",
+      "type": "insert"
+    }
+  },
+  {
+    "name": "tags",
+    "typeField": "input",
+    "nameText": "Теги",
+    "nameAttr": "pl[tags]",
+    "description": "Текстовое поле инпут \"tags (Теги)\"",
+    "idAttr": "inputTags",
+    "sql_column": "tags"
+  },
+  {
+    "name": "cat",
+    "typeField": "select",
+    "nameText": "Категория",
+    "nameAttr": "pl[cat]",
+    "description": "Текстовое поле селект \"Cat\" для выбора категории",
+    "idAttr": "inputCat",
+    "sql_column": "cat",
+    "body": {
+      "text": "<option value=\"0\">Главная (без категории)</option>{-option-}",
+      "type": "replace"
+    }
+  }
+]

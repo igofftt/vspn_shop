@@ -34,6 +34,17 @@
         "sort": "1",
         "m": []
       }
+    ],
+    "plugins": [
+      "name",
+      "text",
+      "active",
+      "tags",
+      "cat",
+      "title",
+      "author",
+      "keywords",
+      "description"
     ]
   },
   {
@@ -68,6 +79,17 @@
         "name_module": "Удалённый товар",
         "sort": "1"
       }
+    ],
+    "plugins": [
+      "name",
+      "text",
+      "active",
+      "tags",
+      "cat",
+      "title",
+      "author",
+      "keywords",
+      "description"
     ]
   },
 
