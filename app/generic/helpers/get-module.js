@@ -3,17 +3,11 @@ import settings from 'app/settings';
 import models from 'app/Admin/models';
 import {getArrayVal} from 'generic/helpers';
 
-import express from 'express';
-
-const
-	app = express();
-
 export default (options, callback) => {
 	let
 		keySearch = options.keySearch || 'link_module',
 		module = settings.admin.module,
 		name = options.name,
-		req = options.req,
 		user = _.get(options, 'req.user'),
 		userId = options.userId;
 
@@ -23,11 +17,11 @@ export default (options, callback) => {
 				return callback(m);
 			else
 				return m;
-		}
+		};
 
 	if(_.get(user, 'usertype') === 'admin') {
 		module = _.compact(
-			_.map(module, (v, k) => {
+			_.map(module, v => {
 				if(_.isUndefined(v))
 					return;
 
@@ -42,7 +36,7 @@ export default (options, callback) => {
 					return false;
 
 				return v
-			})
+			}),
 		);
 
 		// sorting by order
@@ -54,22 +48,15 @@ export default (options, callback) => {
 		})
 
 			.then(rower => {
+				const
+					checkModule = m => !_.isEmpty(m) && _.compact(_.map(m, val => _.get(val, [keySearch]) === name && val));
+
 				module = _.compact(
 					_.map(module, v => {
 						if(_.isUndefined(v))
 							return;
 
 						let pw = _.find(rower, r => r.id_menu === v.id && r);
-
-						if(!_.isEmpty(v.m) && name)
-							return _.compact(_.map(v.m, val => _.get(val, [keySearch]) === name && _.merge({
-
-								// TODO 1 replace on 0 after fix user right
-								d: _.get(pw, 'd', 1),
-								r: _.get(pw, 'r', 1),
-								w: _.get(pw, 'w', 1),
-								x: _.get(pw, 'x', 1),
-							}, val)))[0];
 
 						if(name === _.get(v, [keySearch]) || !name) {
 							v = _.merge({
@@ -79,19 +66,19 @@ export default (options, callback) => {
 								r: _.get(pw, 'r', 1),
 								w: _.get(pw, 'w', 1),
 								x: _.get(pw, 'x', 1),
-							}, v);
+							}, v ? v : checkModule(v.m));
 
 							let m = v.name_module.split('=>');
 							v['k'] = m[0].trim();
-						} else {
-							return false;
 						}
+						else
+							return false;
 
 						if(!v.active)
 							return false;
 
 						return v
-					})
+					}),
 				);
 
 				// sorting by order
