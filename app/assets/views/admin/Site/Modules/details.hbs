@@ -1,21 +1,16 @@
-{{!< ../../admin/layout}}
-{{#contentFor "head"}}
-    <link href="/admin/css/plugins/codemirror/codemirror.css" rel="stylesheet">
-    <link href="/admin/css/plugins/codemirror/dracula.css" rel="stylesheet">
-{{/contentFor}}
-
+{{!< ../../../admin/layout}}
 <div class="con">
-    <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
             <h2>{{ module.name_module }}</h2>
             <ol class="breadcrumb">
-                <li>
+                <li class="breadcrumb-item">
                     <a href="/admin/">Рабочий стол</a>
                 </li>
-                <li>
-                    <a href="/admin/index/{{ table }}">Главный список</a>
+                <li class="breadcrumb-item">
+                    <a href="/admin/site/index/{{ table }}">Главный список</a>
                 </li>
-                <li class="active">
+                <li class="breadcrumb-item active">
                     <strong>{{# if id}}Редактирование{{ else }}Добавление{{/if}}</strong>
                 </li>
             </ol>
@@ -30,23 +25,25 @@
         <div class="ibox-content">
             <form method="post" class="form-modules form-horizontal form-label-left">
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a
-                                    href="#url-00-tab"
-                                    id="00-tab"
-                                    role="tab"
-                                    data-toggle="tab"
-                                    aria-expanded="true"
-                            >
-                                Основные
-                            </a>
-                        </li>
+                    {{# if langShow }}
+                        <ul id="myTab" class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="nav-item">
+                                <a
+                                        href="#url-00-tab"
+                                        class="nav-link active"
+                                        id="00-tab"
+                                        role="tab"
+                                        data-toggle="tab"
+                                        aria-expanded="true"
+                                >
+                                    Основные
+                                </a>
+                            </li>
 
-                        {{# if langShow }}
                             {{#each lang as |val key| }}
-                                <li role="presentation" class="">
+                                <li role="presentation" class="nav-item">
                                     <a
+                                            class="nav-link"
                                             href="#url-{{ key }}-tab"
                                             id="{{ key }}-tab"
                                             role="tab"
@@ -57,11 +54,11 @@
                                     </a>
                                 </li>
                             {{/each}}
-                        {{/if}}
-                    </ul>
+                        </ul>
+                    {{/if}}
 
                     <div id="myTabContent" class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active in" id="url-00-tab" aria-labelledby="00-tab">
+                        <div role="tabpanel" class="tab-pane active" id="url-00-tab" aria-labelledby="00-tab">
                             <div class="wrapper wrapper-content animated fadeIn">
                                 {{#each plugins as |v| }}
                                     {{{ v.html_top }}}
@@ -223,8 +220,8 @@
                 <div class="text-right" style="margin-bottom: 15px">
                     <div class="loader"></div>
                     <button class="btn btn-success" type="submit">Сохранить</button>
-                    <button class="btn btn-primary" formaction="/admin/update/{{ table }}/{{{df id 0}}}/1" type="submit">Применить</button>
-                    <button class="btn btn-default" formaction="/admin/index/{{ table }}" type="submit">Отменить</button>
+                    <button class="btn btn-primary" formaction="/admin/site/update/{{ table }}/{{{df id 0}}}/1" type="submit">Применить</button>
+                    <button class="btn btn-default" formaction="/admin/site/index/{{ table }}" type="submit">Отменить</button>
                 </div>
             </form>
         </div>
@@ -233,68 +230,6 @@
 
 {{#contentFor "footer"}}
     <script type="text/javascript" src="/js/lodash.min.js"></script>
-    <script src="/admin/js/plugins/tinymce/tinymce.min.js"></script>
-
-    <!-- CodeMirror -->
-    <script src="/admin/js/plugins/codemirror/codemirror.js"></script>
-    <script src="/admin/js/plugins/codemirror/mode/javascript/javascript.js"></script>
-
-    <script>
-        tinymce.init({
-            selector: ".area",
-            plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste",
-                " emoticons imagetools fullscreen"
-            ],
-            toolbar: "fullscreen insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fontselect fontsizeselect"
-            + 'print preview media | emoticons ',
-            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-            image_class_list: [
-                {title: 'None', value: ''},
-                {title: 'Clear', value: 'clear'},
-                {title: 'Thumbnail', value: 'thumbnail'}
-            ],
-            class_list: [
-                {title: 'None', value: ''},
-                {title: 'Clear', value: 'clear'},
-                {title: 'Thumbnail', value: 'thumbnail'}
-            ],
-
-            menubar: true,
-            image_advtab: true,
-            image_dimensions: true,
-//            image_prepend_url: "/",
-            document_base_url : "/",
-            relative_urls: false,
-            language: "ru",
-            font_formats: "Andale Mono=andale mono,times;"+
-            "Arial=arial,helvetica,sans-serif;"+
-            "Arial Black=arial black,avant garde;"+
-            "Book Antiqua=book antiqua,palatino;"+
-            "Comic Sans MS=comic sans ms,sans-serif;"+
-            "Courier New=courier new,courier;"+
-            "Georgia=georgia,palatino;"+
-            "Helvetica=helvetica;"+
-            "Impact=impact,chicago;"+
-            "Symbol=symbol;"+
-            "Tahoma=tahoma,arial,helvetica,sans-serif;"+
-            "Terminal=terminal,monaco;"+
-            "Times New Roman=times new roman,times;"+
-            "Trebuchet MS=trebuchet ms,geneva;"+
-            "Verdana=verdana,geneva;"+
-            "Webdings=webdings;"+
-            "Wingdings=wingdings,zapf dingbats"
-        });
-        tinymce.init({
-            selector: ".area_min, .area-min",
-            menubar: false,
-            language: "ru"
-        });
-    </script>
-
-    {{# if data }}  {{/if}}
     <script>
         $(document).ready(function () {
             var plugins = {{{ pluginsStr }}};
@@ -307,7 +242,7 @@
 
             $.ajax({
                 cache: false,
-                url: '/admin/modules/getDataSingle',
+                url: '/admin/_tools/getDataSingle',
                 data: {id: '{{ id }}', table: '{{ table }}'},
                 type: 'post',
                 dataType: 'JSON',
@@ -334,35 +269,19 @@
                     _.map(plugins, (v, k) => {
                         text = body[k];
 
+
+
                         if((v.plugins || {}).typeField === 'select' && text) {
+
+                            console.log($('#select' + ucfirst(k)).html())
+
                             $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
                         } else {
                             $('[name="pl[' + k + ']"]').val(_.unescape(text));
                         }
                     });
-
-                    setTimeout(function() {
-                        CodeMirror.fromTextArea(document.getElementById("textareaHtml_top"), {
-                            lineNumbers: true,
-                            matchBrackets: true,
-                            styleActiveLine: true,
-                            foldGutter: true,
-                            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-                            extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
-                        });
-
-                        CodeMirror.fromTextArea(document.getElementById("textareaHtml_bottom"), {
-                            lineNumbers: true,
-                            matchBrackets: true,
-                            styleActiveLine: true,
-                            foldGutter: true,
-                            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-                            extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
-                        });
-                    }, 500)
                 }
             });
         })
     </script>
-    <script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 {{/contentFor}}

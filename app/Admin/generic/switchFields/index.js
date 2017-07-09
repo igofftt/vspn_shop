@@ -98,9 +98,6 @@ const
 	 * @private
 	 */
 	_switch = (c, n, l, req, res) => {
-
-// console.log('ccc', c, n, l)
-
 		if(c.typeField === 'input')
 			return _input(c, n, l);
 

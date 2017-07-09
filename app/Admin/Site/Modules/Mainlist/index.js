@@ -215,12 +215,11 @@ const
 								.render(),
 
 							parent_module: 'site',
-
-							table     : table,
-							user      : req.user,
-							viewsTable: modules[0].views_module === 'table' ? 1 : 0,
-							viewsTree : modules[0].views_module === 'tree' ? 1 : 0,
-							tree      : objResult.tree,
+							table        : table,
+							user         : req.user,
+							viewsTable   : modules[0].views_module === 'table' ? 1 : 0,
+							viewsTree    : modules[0].views_module === 'tree' ? 1 : 0,
+							tree         : objResult.tree,
 						});
 
 						return null

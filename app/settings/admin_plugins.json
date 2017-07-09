@@ -104,7 +104,7 @@
     "nameText": "Статус отображения",
     "nameAttr": "pl[active]",
     "description": "Текстовое поле селект \"Active\" для назначения статуса отображения",
-    "idAttr": "inputActive",
+    "idAttr": "selectActive",
     "sql_column": "active",
     "body": {
       "text": "<option value=\"1\">Отображается</option><option value=\"0\">Не отображается</option>",
@@ -126,11 +126,55 @@
     "nameText": "Категория",
     "nameAttr": "pl[cat]",
     "description": "Текстовое поле селект \"Cat\" для выбора категории",
-    "idAttr": "inputCat",
+    "idAttr": "selectCat",
     "sql_column": "cat",
     "body": {
       "text": "<option value=\"0\">Главная (без категории)</option>{-option-}",
       "type": "replace"
     }
+  },
+  {
+    "name": "controller",
+    "typeField": "input",
+    "nameText": "Controller",
+    "nameAttr": "pl[controller]",
+    "description": "Текстовое поле инпут \"Controller\"",
+    "idAttr": "inputController",
+    "sql_column": "controller"
+  },
+  {
+    "name": "sys_cat",
+    "typeField": "select",
+    "nameText": "Системная категория",
+    "nameAttr": "pl[sys_cat]",
+    "description": "Текстовое поле селект \"Sys_cat\" для назначения стилей элементу",
+    "idAttr": "selectSys_cat",
+    "sql_column": "sys_cat",
+    "body": {
+      "text": "<option value=\"\">Не исползуется</option><option value=\"main\">Главная</option><option value=\"gallery\">Галерея</option><option value=\"catalog\">Каталог</option><option value=\"actions\">Акции</option><option value=\"news\">Новости</option>",
+      "type": "insert"
+    }
+  },
+  {
+    "name": "album",
+    "typeField": "album",
+    "nameText": "Изображение",
+    "nameAttr": "pl[album]",
+    "description": "Плагин \"Album\" для выбора создания альбома",
+    "idAttr": "inputAlbum",
+    "sql_column": "album",
+    "body": {
+      "text": "<div id=\"album\"></div>",
+      "type": "album"
+    }
+  },
+  {
+    "name": "sort",
+    "typeField": "input",
+    "nameText": "Сортировка",
+    "nameAttr": "pl[sort]",
+    "description": "Текстовое поле инпут \"Сортировка(имя сортируемой таблицы)\"",
+    "idAttr": "inputSort",
+    "sql_column": "sort"
   }
 ]

@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import models from 'app/Admin/models';
 import settings from 'app/settings';
-import {getModule, _switch} from 'generic/helpers';
+import {getModule} from 'generic/helpers';
+import {_switch} from 'app/Admin/generic/switchFields';
 
 const
 
@@ -26,7 +27,7 @@ const
 	index = (req, res, next) => {
 		let
 			id = parseInt(req.params.id) || 0,
-			plugins = settings.plugins,
+			plugins = settings.admin.plugins,
 			table = req.params.table;
 
 		const
@@ -34,7 +35,7 @@ const
 				.findById(id)
 				.then(dataObj => {
 					if(id && !dataObj) {
-						res.redirect(`/admin/index/${table}/`);
+						res.redirect(`/admin/site/index/${table}/`);
 						return next();
 					}
 
@@ -90,7 +91,7 @@ const
 								plugins: pluginSingleSwitch,
 							};
 
-						if(o.i > o.count)
+						if(o.i >= o.count)
 							return _.assign(objResult, {columnSel, moduleThis, pluginsThisHtml, pluginsThisLangHtml});
 
 						// create html fields
@@ -99,18 +100,20 @@ const
 					};
 
 					if(pluginsThis.length)
-						return forEachPlugins({count: pluginsThis.length, i: 0, plugin: pluginsThis[0]})();
+						return forEachPlugins({count: (pluginsThis.length - 1), i: 0, plugin: pluginsThis[0]})();
 				})
 
-				.then(objResult => { res.render('admin/Modules/details', {
+				.then(objResult => { res.render('admin/Site/Modules/details', {
 					data          : JSON.stringify(objResult.dataObj),
 					id            : id,
 					lang          : objResult.langObj,
 					langShow      : !_.isEmpty(objResult.moduleThis.lang),
+					left_menu     : req.store.getState('left_menu'),
 					mata          : {title: `Админ панель - редактирование пользователя - ${_.get(objResult, 'userObj.title')}`},
 					module        : objResult.moduleThis,
 					modulesPower  : modules,
 					objData       : objResult.dataObj,
+					parent_module : 'site',
 					plugins       : objResult.pluginsThisHtml,
 					pluginsLang   : objResult.pluginsThisLangHtml,
 					pluginsLangStr: JSON.stringify(objResult.pluginsThisLangHtml),
@@ -174,9 +177,9 @@ const
 		const
 			endRedir = () => {
 				if(_.get(req, 'params.apply'))
-					return res.redirect(`/admin/update/${table}/${id}`);
+					return res.redirect(`/admin/site/update/${table}/${id}`);
 				else
-					return res.redirect(`/admin/index/${table}`);
+					return res.redirect(`/admin/site/index/${table}`);
 			};
 
 		// create or update table row

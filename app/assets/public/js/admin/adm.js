@@ -40,7 +40,7 @@
 				setTimeout('$(".error").html("").show(0)', 3000);
 			} else {
 				if(v == 'edit') {
-					window.location = "/admin/update/" + this.conf.get('link_module') + "/" + checked_set
+					window.location = "/admin/site/update/" + this.conf.get('link_module') + "/" + checked_set
 				}
 
 				if(v == 'delete') {
@@ -48,7 +48,7 @@
 				}
 
 				if(v == 'copy') {
-					window.location = "/admin/copy/" + this.conf.get('link_module') + "/" + checked_set
+					window.location = "/admin/site/copy/" + this.conf.get('link_module') + "/" + checked_set
 				}
 			}
 
@@ -128,7 +128,7 @@
 
 			$.ajax({
 				cache: false,
-				url: '/admin/rowDelete',
+				url: '/admin/_tools/rowDelete',
 				data: dataString,
 				type: 'post',
 				dataType: 'JSON',
