@@ -1,26 +1,7 @@
-{{!< ../../admin/layout}}
-
 <div class="con">
-    <div class=" wrapper border-bottom white-bg page-heading">
+    <div class="wrapper border-bottom white-bg page-heading">
         <div class="col col-md-12">
-            <h2>{{ module.name_module }}</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/admin/">Рабочий стол</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="/admin/index/{{ table }}">Главный список</a>
-                </li>
-                <li class="breadcrumb-item active">
-                    <strong>{{# if id}}Редактирование{{ else }}Добавление{{/if}}</strong>
-                </li>
-            </ol>
-
-            <div class="ibox-tools">
-                {{# if modules.x }}
-                    <a href="/admin/update/{{ table }}" class="btn btn-primary">Добавить</a>
-                {{/if}}
-            </div>
+            <h4>{{# if id}}Редактирование товара{{ else }}Добавление товара{{/if}}</h4>
         </div>
 
         <div class="ibox-content">
@@ -31,88 +12,67 @@
                     {{{ v.html_bottom }}}
                 {{/each}}
 
-                <div class="text-right" style="margin-bottom: 15px">
+                <div class="text-right bottom-panel">
                     <div class="loader"></div>
                     <button class="btn btn-success" type="submit">Сохранить</button>
                     <button class="btn btn-primary" formaction="/admin/update/{{ table }}/{{{df id 0}}}/1" type="submit">Применить</button>
-                    <a class="btn btn-default" type="button" href="/admin/index/{{ table }}">Отменить</a>
+                    <a class="btn btn-default" onclick="editM('hide')" type="button" href="javascript:void(0)">Отменить</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-{{#contentFor "footer"}}
-    <script type="text/javascript" src="/js/lodash.min.js"></script>
 
-    {{# if data }}  {{/if}}
-    <script>
-        $(document).ready(function () {
-            var plugins = {{{ pluginsStr }}};
-            var pluginsLang = {{{ pluginsLangStr }}};
+<script type="text/javascript" src="/js/lodash.min.js"></script>
+<script>
+    function loadProduct() {
+        var plugins = {{{ pluginsStr }}};
+        var pluginsLang = {{{ pluginsLangStr }}};
 
-            function ucfirst( str ) {
-                var f = str.charAt(0).toUpperCase();
-                return f + str.substr(1, str.length-1);
+        function ucfirst(str) {
+            var f = str.charAt(0).toUpperCase();
+            return f + str.substr(1, str.length - 1);
+        }
+
+        $.ajax({
+            cache: false,
+            url: '/admin/_tools/getDataSingle',
+            data: {id: '{{ id }}', table: '{{ table }}'},
+            type: 'post',
+            dataType: 'JSON',
+            success: function(data) {
+                var text, body = data.data || {};
+
+                if(_.isEmpty(body))
+                    return false;
+
+                _.map(pluginsLang, (v, k) => {
+                    text = _.unescape(body[k]);
+
+                    try {
+                        text = JSON.parse(text);
+                        if(text) {
+                            $('[name="pl[' + k + '][ru]"]').val(_.unescape(text.ru));
+                            $('[name="pl[' + k + '][en]"]').val(_.unescape(text.en));
+                        }
+                    } catch(err) {
+                        // обработка ошибки
+                    }
+                });
+
+                _.map(plugins, (v, k) => {
+                    text = body[k];
+
+                    if((v.plugins || {}).typeField === 'select' && text) {
+                        $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
+                    } else {
+                        $('[name="pl[' + k + ']"]').val(_.unescape(text));
+                    }
+                });
             }
+        });
+    }
 
-            $.ajax({
-                cache: false,
-                url: '/admin/_tools/getDataSingle',
-                data: {id: '{{ id }}', table: '{{ table }}'},
-                type: 'post',
-                dataType: 'JSON',
-                success: function(data) {
-                    var text, body = data.data || {};
-
-                    if(_.isEmpty(body))
-                        return false;
-
-                    _.map(pluginsLang, (v, k) => {
-                        text = _.unescape(body[k]);
-
-                        try {
-                            text = JSON.parse(text);
-                            if(text) {
-                                $('[name="pl[' + k + '][ru]"]').val(_.unescape(text.ru));
-                                $('[name="pl[' + k + '][en]"]').val(_.unescape(text.en));
-                            }
-                        } catch (err) {
-                            // обработка ошибки
-                        }
-                    });
-
-                    _.map(plugins, (v, k) => {
-                        text = body[k];
-
-                        if((v.plugins || {}).typeField === 'select' && text) {
-                            $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
-                        } else {
-                            $('[name="pl[' + k + ']"]').val(_.unescape(text));
-                        }
-                    });
-
-                    setTimeout(function() {
-                        CodeMirror.fromTextArea(document.getElementById("textareaHtml_top"), {
-                            lineNumbers: true,
-                            matchBrackets: true,
-                            styleActiveLine: true,
-                            foldGutter: true,
-                            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-                            extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
-                        });
-
-                        CodeMirror.fromTextArea(document.getElementById("textareaHtml_bottom"), {
-                            lineNumbers: true,
-                            matchBrackets: true,
-                            styleActiveLine: true,
-                            foldGutter: true,
-                            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-                            extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
-                        });
-                    }, 500)
-                }
-            });
-        })
-    </script>
-{{/contentFor}}
+    loadProduct();
+</script>

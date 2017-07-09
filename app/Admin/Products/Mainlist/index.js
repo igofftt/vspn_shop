@@ -18,7 +18,7 @@ export default (req, res, next) => {
 			.findAll({limit: limit, offset: offset, order: 'id ASC', where: where})
 
 			.then(objData => getModule({name: 'products', req, res, userId: req.user.id},
-				module => { return {module, objData}}
+				module => { return {module, objData}; },
 			))
 
 			.then(objResult => res.render('admin/Products/index', {

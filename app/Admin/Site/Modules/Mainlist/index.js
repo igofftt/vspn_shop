@@ -185,10 +185,6 @@ const
 				.then(dataObl => getCat({lang: langQuery, req, res}, tree => _.assign({dataObl, tree})))
 
 				.then(objResult => {
-
-					// console.log(' objResult.dataObl',  objResult)
-
-
 					let renderPage = modules => {
 						let columnSel = {};
 
@@ -216,10 +212,10 @@ const
 
 							parent_module: 'site',
 							table        : table,
+							tree         : objResult.tree,
 							user         : req.user,
 							viewsTable   : modules[0].views_module === 'table' ? 1 : 0,
 							viewsTree    : modules[0].views_module === 'tree' ? 1 : 0,
-							tree         : objResult.tree,
 						});
 
 						return null

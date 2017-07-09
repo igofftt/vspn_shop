@@ -64,14 +64,6 @@
         "sort": "1"
       },
       {
-        "id": "new-products",
-        "active": true,
-        "class_module": "fa fa-sitemap",
-        "link_module": "update",
-        "name_module": "Добавить товар",
-        "sort": "1"
-      },
-      {
         "id": "removed-products",
         "active": true,
         "class_module": "fa fa-sitemap",

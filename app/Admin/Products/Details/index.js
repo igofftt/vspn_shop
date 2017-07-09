@@ -91,7 +91,7 @@ const
 					id            : id,
 					lang          : objResult.langObj,
 					langShow      : !_.isEmpty(objResult.moduleThis.lang),
-					left_menu     : req.store.getState('left_menu'),
+					// left_menu     : req.store.getState('left_menu'),
 					mata          : {title: `Админ панель - редактирование - ${_.get(objResult, 'dataObj.title')}`},
 					module        : objResult.moduleThis,
 					modulesPower  : modules,
@@ -103,7 +103,7 @@ const
 					pluginsStr    : JSON.stringify(objResult.pluginsThisHtml),
 					table         : table,
 					this_module   : 'update',
-					user          : req.user,
+					// user          : req.user,
 				}))
 
 				.catch(e => next(e));

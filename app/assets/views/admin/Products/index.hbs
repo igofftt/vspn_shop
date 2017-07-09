@@ -21,15 +21,37 @@
                     </select>
                 </div>
             </div>
-            <div class="list-group">
-                {{# each data }}
-                    <a href="/admin/update/products/{{ id }}?page={{{df page 1 }}}" class="list-group-item">{{ name }}</a>
-                {{/ each }}
+
+            <div class="panel-tools">
+                <button class="btn active" type="button" data-type="grid"><i class="fa fa-th-large"></i></button>
+                <button class="btn" type="button" data-type="list"><i class="fa fa-align-justify" aria-hidden="true"></i></button>
             </div>
+
+            <div class="ibox-tools">
+                {{# if module.x }}
+                    <a data-id="" href="javascript:void(0)" data-table="products" class="btn btn-edit edit-link">Добавить</a>
+                {{/if}}
+            </div>
+
+            {{# each data }}
+                <div class="list-dr grid edit-link" data-table="products" data-id="{{ id }}">
+                    <a href="javascript:void(0)" data-table="products">
+                        {{ name }}
+                    </a>
+                </div>
+            {{/ each }}
         </div>
 
-        <div class="pagination-block">
-            {{{ paginate }}}
-        </div>
+        <div class="pagination-block">{{{ paginate }}}</div>
     </div>
 </div>
+
+<script>
+    $('.panel-tools > button').click(function() {
+        if($(this).data('type') === 'grid') $('.list-dr').removeClass().addClass('list-dr edit-link grid');
+        if($(this).data('type') === 'list') $('.list-dr').removeClass().addClass('list-dr edit-link list');
+
+        $('.panel-tools > button').removeClass('active');
+        $(this).addClass('active');
+    })
+</script>
