@@ -36,7 +36,7 @@
 		}],
 
 		"consistent-return"              : 0,
-		"curly"                          : [2, "multi"],
+		"curly"                          : [0, "multi"],
 		"eol-last"                       : [1],
 		"flowtype/sort-keys"             : [2, "asc", {"caseSensitive": false,  "natural": true}],
 		"flowtype/space-after-type-colon": [2, "always"],
@@ -97,6 +97,7 @@
 
 			"overrides": {
 				"catch" : {"after": false, "before": true},
+				"else"  : {"after": true, "before": true},
 				"export": {"after": true, "before": false},
 				"from"  : {"after": true, "before": true},
 				"import": {"after": true, "before": false},
