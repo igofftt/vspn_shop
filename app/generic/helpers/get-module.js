@@ -49,7 +49,7 @@ export default (options, callback) => {
 
 			.then(rower => {
 				const
-					checkModule = m => !_.isEmpty(m) && _.compact(_.map(m, val => _.get(val, [keySearch]) === name && val));
+					checkModule = m => !_.isEmpty(m) && _.compact(_.map(m, val => _.get(val, [keySearch]) === name && val))[0];
 
 				module = _.compact(
 					_.map(module, v => {
@@ -57,6 +57,10 @@ export default (options, callback) => {
 							return;
 
 						let pw = _.find(rower, r => r.id_menu === v.id && r);
+
+						// check pod module m
+						if(!_.isEmpty(checkModule(v.m)))
+							v = checkModule(v.m);
 
 						if(name === _.get(v, [keySearch]) || !name) {
 							v = _.merge({
@@ -66,7 +70,7 @@ export default (options, callback) => {
 								r: _.get(pw, 'r', 1),
 								w: _.get(pw, 'w', 1),
 								x: _.get(pw, 'x', 1),
-							}, v ? v : checkModule(v.m));
+							}, v);
 
 							let m = v.name_module.split('=>');
 							v['k'] = m[0].trim();
