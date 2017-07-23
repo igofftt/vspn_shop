@@ -21,6 +21,6 @@ const
 	},
 
 	index = toRender,
-	routes = combineRoute([Admin.routes/*, Site.routes*/]);
+	routes = combineRoute([Admin.routes, Site.routes]);
 
 export default {error404, error500, index, routes}

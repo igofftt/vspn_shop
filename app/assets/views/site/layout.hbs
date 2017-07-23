@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ mata.description }}">
+    <meta name="author" content="{{ mata.author }}">
+    <title>{{ mata.title }}</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width" name="viewport">
+
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100i,300,300i,400,500,600,700,800,900&amp;subset=cyrillic-ext,latin-ext" rel="stylesheet">
+    <link href="/css/site/icomoon.css" type="text/css" rel="stylesheet">
+    <link href="/css/site/jquery.selectbox.css" type="text/css" rel="stylesheet">
+    <link href="/css/site/nouislider.css" type="text/css" rel="stylesheet">
+    <link href="/css/site/style.css" type="text/css" rel="stylesheet">
+    {{{ block "head" }}}
+</head>
+
+<body class="fixed-sidebar no-skin-config full-height-layout">
+<div id="wrapper">
+    {{> site/block/header }}
+    {{{body}}}
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/site/scripts.js"></script>
+    <script type="text/javascript" src="/js/site/jquery.selectbox-0.2.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.1.0/wNumb.min.js"></script>
+    <script type="text/javascript" src="/js/site/nouislider.min.js"></script>
+    {{{ block "footer" }}}
+</div>
+</body>
+</html>

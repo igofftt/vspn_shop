@@ -7,9 +7,11 @@ let
 	gls = require('gulp-live-server'),
 	gulp = require('gulp'),
 	htmlmin = require('gulp-htmlmin'),
-	outDir = env.production() ? './build/greecobooking' : './build/debug',
+	outDir = env.production() ? './' : './debug',
 	runSequence = require('run-sequence');
 
+
+console.log('outDir', outDir)
 // очистка папки назначения
 gulp.task('rm', () => gulp.src(`${outDir}/*`).pipe(clean()));
 
@@ -126,5 +128,5 @@ gulp.task('srv', cb => {
 	cb();
 });
 
-gulp.task('build', () => { runSequence('rm', 'babel', 'copy', 'htmlm', 'prodmods') });
+gulp.task('dist', () => { runSequence('rm', 'babel', 'copy', 'htmlm', 'prodmods') });
 gulp.task('default', () => { runSequence('rm', 'babel', 'copy', 'prodmods', 'srv') });

@@ -4,5 +4,6 @@ import express from 'express'
 const
 	router = express.Router();
 
-router.route('/').get((req, res) => {Index.index(req, res)});
+router.route('/catalog').get(Index.indexCatalog);
+router.route('/product/:id?').get(Index.catalogProduct);
 export default router
