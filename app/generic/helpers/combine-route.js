@@ -1,11 +1,8 @@
 import _ from 'lodash'
-import express from 'express';
-
-let
-	router = express.Router();
 
 export default r => {
 	let lTmp = [];
+
 	for(let i = 0; r.length > i; i++ ) {
 		let v = r[i];
 
@@ -16,8 +13,8 @@ export default r => {
 	}
 
 	let
-		routesAll = router;
-	routesAll.stack = _.compact(_.map(lTmp, g => g.route && g));
+		routesAll = {};
 
+	routesAll.stack = _.compact(_.map(lTmp, g => g.route && g));
 	return routesAll
 };

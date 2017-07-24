@@ -15,7 +15,11 @@ import {storeGenerator} from 'generic/helpers';
 
 const
 	app = express(),
-	env = dotenv.config();
+	env = dotenv.config(),
+	routers = express.Router();
+
+// replace empty stack on to all routes
+routers.stack = indexApp.routes.stack;
 
 // init store
 app.use(storeGenerator);
@@ -26,7 +30,7 @@ app.use(cookieSession(
 		resave           : false,
 		saveUninitialized: false,
 		secret           : 'woot',
-	}
+	},
 ));
 
 // подключение livereload
@@ -59,12 +63,11 @@ app.set('views', path.join(__dirname,'/app/assets/views'));
 // app init
 // app.use('/admin/*', indexApp.index);
 app.use(indexApp.index);
-app.use(indexApp.routes);
+app.use(routers);
 app.use('/admin/*', indexApp.error404);
 app.use('/admin/*', indexApp.error500);
 
 // register operators hbs
 hbsOperators(hbs);
 app.listen(8030);
-
 export default app;
