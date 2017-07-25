@@ -20,6 +20,8 @@ const
 			getMenu = callback => models.menuModel
 				.findAll({order: 'id ASC', raw: true})
 				.then(dataObl => req.store.setState('site.menu', dataObl, callback));
+
+		return getMenu(getMenuTop);
 	},
 
 	indexCatalog = (req, res, next) => {
