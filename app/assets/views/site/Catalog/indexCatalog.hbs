@@ -1,4 +1,16 @@
 {{!< ../layout}}
+<style>
+    .bgCategories {
+        width: 100%;
+        height: auto;
+        opacity: 0.1;
+        background-repeat: no-repeat;
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        filter: blur(5px);
+    }
+</style>
+
 <div id="main">
     <div class="container">
         <div class="breadcrumbs">
@@ -65,369 +77,25 @@
                         </fieldset>
                     </form>
                 </aside>
-                <div class="catalog__main">
-                    <ul>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                        <div class="rank">
-                                            <span>12 отзывов</span>
-                                            <span class="stars">
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starhalf"></use> </svg></i>
-                                                    </span>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                        <div class="rank">
-                                            <span>12 отзывов</span>
-                                            <span class="stars">
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starhalf"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starempty"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starempty"></use> </svg></i>
-                                                    </span>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                        <div class="rank">
-                                            <span>12 отзывов</span>
-                                            <span class="stars">
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starempty"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starempty"></use> </svg></i>
-                                                    </span>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                        <div class="rank">
-                                            <span>12 отзывов</span>
-                                            <span class="stars">
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                        <i><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_starfull"></use> </svg></i>
-                                                    </span>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="item__text">
-                                        <p>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру</p>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                        <span class="old">3 000 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="item__text">
-                                        <p>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру</p>
-                                    </div>
 
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="item__text">
-                                        <p>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру</p>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="/product/1" class="item__description">
-                                    <div class="item__img">
-                                        <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
-                                        <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
-                                    </div>
-                                    <div class="item__head">
-                                        <h5>Старый кирпич</h5>
-                                    </div>
-                                    <div class="item__text">
-                                        <p>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру</p>
-                                    </div>
-                                    <div class="price">
-                                        <span class="new">1 500 &#8381;</span>
-                                    </div>
-                                </a>
-                                <div class="spinner">
-                                    <div class="spinner__counts">
-                                        <button class="minus"><i class="icon-minus"></i></button>
-                                        <span>10</span>
-                                        <button class="plus"><i class="icon-plus"></i></button>
-                                    </div>
-                                    <a href="#">В корзину</a>
-                                </div>
-                            </div>
-                        </li>
+                <div class="catalog__main">
+                    <ul class="selResult">
+                        <p><img style="padding-top: 20px" src="/images/site/logo.png" class="bgCategories"/></p>
                     </ul>
-                    <div class="pagination layout">
-                        <div class="btn-field">
-                            <a href="#" class="btn">Следующая страница</a>
+
+                    <input type="hidden" name="pagination-page" value="{{ page }}">
+                    <input type="hidden" name="category" value="{{ category }}">
+
+                    <div class="pagination layout paginator">
+                        <div class="btn-field next-only">
+                            <a href="javascript:void(0)" class="btn">Следующая страница</a>
                         </div>
                         <div class="pages">
-                            <div class="pages-field">
-                                <a href="#"><i class="icon-keyboard_arrow_left"></i></a>
-                                <span>12</span>
-                                <a href="#"><i class="icon-keyboard_arrow_right"></i></a>
-                                <span class="total">из 15</span>
+                            <div class="pages-field paginator">
+                                <a href="javascript:void(0)" class="prev"><i class="icon-keyboard_arrow_left"></i></a>
+                                <span class="current-page"></span>
+                                <a href="javascript:void(0)" class="next"><i class="icon-keyboard_arrow_right"></i></a>
+                                <span class="total">из <span></span></span>
                             </div>
                         </div>
                     </div>
@@ -436,3 +104,20 @@
         </section>
     </div>
 </div>
+
+{{#contentFor "footer"}}
+    <!-- filters-categories -->
+    <script src="/js/site/filters-categories.js"></script>
+    <script>
+        $(document).ready(function(){
+            filCat.initialize({
+                cont      : '.selResult',
+                num       : '.selReN > .i',
+                pagination: true,
+                url_req   : '/',
+            });
+
+            setTimeout(filCat.selectCatalogs(), 0);
+        });
+    </script>
+{{/contentFor}}
