@@ -130,7 +130,7 @@ var
 									return false;
 
 								return false;
-							}, 100)
+							})
 						}
 					},
 
