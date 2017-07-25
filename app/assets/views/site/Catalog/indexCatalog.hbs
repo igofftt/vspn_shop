@@ -2,8 +2,8 @@
 <div id="main">
     <div class="container">
         <div class="breadcrumbs">
-            <a href="#" class="home"><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_home"></use> </svg></a>
-            <a href="#">Каталог</a>
+            <a href="/" class="home"><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_home"></use> </svg></a>
+            <a href="/catalog">Каталог</a>
             <span>Формы</span>
         </div>
         <section class="catalog">
@@ -22,10 +22,11 @@
                         <fieldset>
                             <div class="form-selects">
                                 <select class="custom-select">
-                                    <option value="Формы">Формы</option>
-                                    <option value="Раздел">Раздел</option>
-                                    <option value="Раздел">Раздел</option>
-                                    <option value="Раздел">Раздел</option>
+                                    {{# each menuTop }}
+                                        {{#iff cat '==' 0 }}
+                                            <option value="{{ ../id }}">{{ ../name }}</option>
+                                        {{/iff}}
+                                    {{/ each }}
                                 </select>
                             </div>
                         </fieldset>
@@ -68,7 +69,7 @@
                     <ul>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
@@ -93,7 +94,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
@@ -118,7 +119,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
@@ -143,7 +144,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
@@ -168,7 +169,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
@@ -203,7 +204,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
@@ -238,7 +239,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
@@ -273,7 +274,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
@@ -308,7 +309,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
@@ -336,7 +337,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
@@ -364,7 +365,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>
@@ -391,7 +392,7 @@
                         </li>
                         <li>
                             <div class="item">
-                                <a href="#" class="item__description">
+                                <a href="/product/1" class="item__description">
                                     <div class="item__img">
                                         <div class="_mn" style="background-image: url('/images/site/items/item03.png')"></div>
                                         <div class="_hv" style="background-image: url('/images/site/items/item04.png')"></div>

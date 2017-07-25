@@ -41,6 +41,9 @@ export default (options, callback) => {
 					arrCat[row.cat][Object.keys(arrCat[row.cat]).length] = row;
 				}
 
+				if(type === 'array')
+					return arrCat
+
 				//возвращаем массив
 				if(type === 'category')
 					return listCategory(arrCat, options.lang);
