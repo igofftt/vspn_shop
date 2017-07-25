@@ -24,7 +24,7 @@ export default (req, res, next) => {
 					count    : count, // общее кол-во статей
 					data     : objResult.objData, // статьи
 					left_menu: req.store.getState('left_menu'),
-					mata     : {title: 'Админ панель - все пользователи'},
+					meta     : {title: 'Админ панель - все пользователи'},
 					module   : objResult.module[0],
 
 					// номер текущей страницы в пейджинге

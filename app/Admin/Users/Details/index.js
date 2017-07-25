@@ -24,7 +24,7 @@ console.log('models.userMode', models.userMode)
 					left_menu    : req.store.getState('left_menu'),
 					id           : req.params.id,
 					hex          : hex(Date.now().toString()),
-					mata         : {title: `Админ панель - редактирование пользователя - ${_.get(objResult.objUser, 'title')}`},
+					meta         : {title: `Админ панель - редактирование пользователя - ${_.get(objResult.objUser, 'title')}`},
 					modulesPower : modules,
 					parent_module: 'users',
 					table        : 'users',

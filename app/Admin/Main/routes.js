@@ -24,7 +24,7 @@ router.route(['/admin/login']) // рендер страницы авториза
 
 		res.render('admin/login', {
 			error: req.flash('error').toString(),
-			mata : {title: 'Админ панель'},
+			meta : {title: 'Админ панель'},
 		});
 	})
 

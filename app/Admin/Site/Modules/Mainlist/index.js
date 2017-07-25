@@ -196,7 +196,7 @@ const
 							count    : count, // общее кол-во статей
 							data     : objResult.dataObl, // статьи
 							left_menu: req.store.getState('left_menu'),
-							mata     : {title: `Админ панель - ${modules[0].name_module}`},
+							meta     : {title: `Админ панель - ${modules[0].name_module}`},
 							modules  : modules[0],
 
 							// номер текущей страницы в пейджинге

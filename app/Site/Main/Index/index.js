@@ -5,7 +5,7 @@ const
 		const
 			renderPage = () => res.render('site/Main/indexPage', {
 				error        : req.flash('error').toString(),
-				mata         : {title: 'VSPN'},
+				meta         : {title: 'VSPN'},
 				menuTop      : req.store.getState('site.menuTop'),
 				parent_module: 'indexPage',
 				this_module  : 'indexPage',

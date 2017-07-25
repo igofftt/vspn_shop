@@ -109,7 +109,7 @@ const
 					lang          : objResult.langObj,
 					langShow      : !_.isEmpty(objResult.moduleThis.lang),
 					left_menu     : req.store.getState('left_menu'),
-					mata          : {title: `Админ панель - редактирование пользователя - ${_.get(objResult, 'userObj.title')}`},
+					meta          : {title: `Админ панель - редактирование пользователя - ${_.get(objResult, 'userObj.title')}`},
 					module        : objResult.moduleThis,
 					modulesPower  : modules,
 					objData       : objResult.dataObj,
