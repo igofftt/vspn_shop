@@ -35,7 +35,7 @@ const
 				menu         : req.store.getState('site.menu'),
 				menuTop      : req.store.getState('site.menuTop'),
 				meta         : {title: 'VSPN'},
-				page         : query.page || 0,
+				page         : query.page || 1,
 				parent_module: 'indexPage',
 				this_module  : 'indexPage',
 				user         : req.user,
@@ -58,7 +58,7 @@ const
 
 		const
 			toJson = j => res.json({
-				current_page: query.page || 0,
+				current_page: query.page || 1,
 				last_page   : parseInt(j.length/show) > 0 ? parseInt(j.length) : 1,
 				products    : {data: j},
 				result      : 'ok',
