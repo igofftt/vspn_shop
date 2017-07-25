@@ -52,7 +52,7 @@ var
 					input_search: inputSearch,
 				};
 
-				$(this.cont).html('<p>Загрузка...</p>');
+				$(this.cont).css({opacity: 0.3});
 
 				$.ajax({
 					cache   : false,
@@ -105,7 +105,8 @@ var
 							t += '<div class="text-center clear">' + data.pagination + '</div>';
 
 							if(data.products.total === 0)
-								t = '<p>По таким параметрам ничего не найдено ):</p>';
+								t = '<p>По таким параметрам ничего не найдено ):' +
+									'<img src="/images/shop/logo.png" class="bgCategories"/></p>';
 
 							$(filCat.num).html(data.products.total);
 							$(filCat.cont).html(t);
@@ -132,6 +133,8 @@ var
 								return false;
 							})
 						}
+
+						$(filCat.cont).animate({opacity: 1}, 150);
 					},
 
 					type: 'post',
