@@ -49,7 +49,6 @@ const
 		const
 			renderPage = () => res.render('site/Catalog/indexCatalog', {
 				brand        : req.store.getState('site.brand'),
-				brandf        : console.log(req.store.getState('site.brand')),
 				category     : req.params.id,
 				error        : req.flash('error').toString(),
 				menu         : req.store.getState('site.menu'),
