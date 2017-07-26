@@ -60,18 +60,19 @@ const
 				user         : req.user,
 			}),
 
+			getMenuTop = () => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
+				req.store.setState('site.menuTop', tree, renderPage)),
+
+
 			getBrand = () => models.brandModel
 				.findAll({order: 'id ASC', raw: true})
-				.then(dataObl => req.store.setState('site.brand', dataObl, renderPage)),
-
-			getMenuTop = () => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
-				req.store.setState('site.menuTop', tree, getBrand)),
+				.then(dataObl => req.store.setState('site.brand', dataObl, getMenuTop)),
 
 			getMenu = callback => models.menuModel
 				.findAll({order: 'id ASC', raw: true})
 				.then(dataObl => req.store.setState('site.menu', dataObl, callback));
 
-		return getMenu(getMenuTop);
+		return getMenu(getBrand);
 	},
 
 	/**
