@@ -1,7 +1,58 @@
+import _ from 'lodash';
 import models from 'app/Admin/models';
 import {getCat, queryParse} from 'generic/helpers';
 
 const
+
+	/**
+	 *
+	 * @param req
+	 * @param res
+	 * @param next
+	 */
+	addToCart = (req, res, next) => {
+		let
+			cart = [],
+			get_data = req.body.get_data,
+			id = req.body.id,
+			idd = false,
+			quantity = req.body.quantity,
+			type = req.body.type;
+
+		if(type === 'add') {
+			for(let i = 0; cart.length > i; i++)
+				if(cart[i].id === id) {
+					idd = true;
+					break;
+				}
+
+			if(!idd)
+				_.merge(cart, {[id]: {id: id, quantity: quantity}})
+		}
+
+		if(type === 'remove') {
+			for(let i = 0; cart.length > i; i++)
+				if(cart[i].id === id) {
+					_.unset(cart, i);
+					break;
+				}
+
+			//$this->requests->session()->put('cart', $cart);
+		}
+
+		const
+			getProducts = callback => models.productsModel
+				.findAll({limit: show, offset: 50, order: 'id ASC', raw: true})
+				.then(dataObl => req.store.setState('site.products.data', dataObl, callback)),
+
+			toJson = res.json({
+			//	cart    : getsessions(),
+				products: req.store.getState('site.products'),
+				result  : 'ok',
+			})
+
+		return getProducts(toJson)
+	},
 
 	/**
 	 * Functions forming index page a product
@@ -83,23 +134,33 @@ const
 	 */
 	postCatalog = (req, res, next) => {
 		let
-			query = queryParse(req),
+			currentPage = queryParse(req).page || 1,
 			show = 12;
 
+		let
+			offset = (currentPage - 1) < 0 ? 0 : (currentPage - 1) * show;
+
 		const
-			toJson = j => res.json({
-				current_page: query.page || 1,
-				last_page   : parseInt(j.length/show) > 0 ? parseInt(j.length) : 1,
-				products    : {data: j},
-				result      : 'ok',
-				total       : j.length,
-			}),
+			toJson = j => {
+				let count = req.store.getState('site.products.count');
+
+				return res.json({
+					current_page: currentPage,
+					last_page   : count/show > 0 ? (count/show).toFixed(0) : 1,
+					products    : req.store.getState('site.products'),
+					result      : 'ok',
+					total       : j.length,
+				})
+			},
+
+			getProductsCount = () => models.productsModel.count()
+				.then(dataObl => req.store.setState('site.products.count', dataObl, toJson)),
 
 			getProducts = callback => models.productsModel
-				.findAll({order: 'id ASC', raw: true})
-				.then(dataObl => req.store.setState('site.menu', dataObl, callback));
+				.findAll({limit: show, offset: offset, order: 'id ASC', raw: true})
+				.then(dataObl => req.store.setState('site.products.data', dataObl, callback));
 
-		return getProducts(toJson);
+		return getProducts(getProductsCount);
 	};
 
-export default {catalogProduct, indexCatalog, postCatalog}
+export default {addToCart, catalogProduct, indexCatalog, postCatalog}

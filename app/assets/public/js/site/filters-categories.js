@@ -1,5 +1,28 @@
 var
 	filCat = {
+		addToCart: function(id, type) {
+			$.ajax
+			({
+				cache: false,
+
+				data: {
+					get_data: true,
+					id      : id,
+					type    : type,
+					weights : (parseFloat($('.product-' + id + ' .weight > span').html()) * 1000).toFixed(2),
+				},
+
+				dataType: 'JSON',
+
+				success: function(data) {
+					if(data.result === 'ok') {
+					}
+				},
+
+				type: 'post',
+				url : '/catalog/add_to_cart',
+			})
+		},
 
 		// helper formatting price
 		hlPrice: function hlPrice(s) {
@@ -27,7 +50,35 @@ var
 				$('.iCheck-helper').click(function() {
 					filCat.selectCatalogs();
 				});
+
+				filCat.paginationCatalogs();
 			}, 100)
+		},
+
+		// select catalogs
+		paginationCatalogs: function() {
+			$('.paginator > .next, .paginator > .next-only').click(function() {
+				let
+					currentPage = parseInt($('[name=current-page]').val()),
+					lastPage = $('[name=last-page]').val(),
+					nexP = currentPage + 1;
+
+				if(lastPage >= nexP) {
+					$('[name=current-page]').val(_.isNaN(nexP) ? 1 : nexP);
+					filCat.selectCatalogs();
+				}
+			});
+
+			$('.paginator > .prev').click(function() {
+				let
+					currentPage = parseInt($('[name=current-page]').val()),
+					nexP = currentPage - 1;
+
+				if(nexP >= 1) {
+					$('[name=current-page]').val(nexP > 1 ? nexP : 1);
+					filCat.selectCatalogs();
+				}
+			});
 		},
 
 		searchGo: function searchGo(e) {
@@ -35,7 +86,6 @@ var
 				filCat.selectCatalogs();
 		},
 
-		// select catalogs
 		selectCatalogs: function() {
 			let filterGroup, inputSearch, page, request;
 			filterGroup = $('.filterGroup > div.active').data('filterGroup');
@@ -44,7 +94,7 @@ var
 				filterGroup = -1;
 
 			inputSearch = $('[name=input_search]').val();
-			page = $('[name=pagination-page]').val();
+			page = $('[name=current-page]').val();
 
 			if(1) {
 				request = {
@@ -61,18 +111,16 @@ var
 
 					success: function(data) {
 						if(data['result'] === 'ok') {
-							let d = [], nexP = 1, t = '';
-
+							let d = [], t = '';
 							$('.paginator .current-page').html(page);
 							$('.paginator .total > span').html(data.last_page);
 
-							if(page <= 1)
+							if(page >= data.last_page)
 								$('.paginator .next-only').css('display', 'none');
 							else
 								$('.paginator .next-only').css('display', 'block');
 
-							for(let i = 0; data.products.data.length > i; i++)
-							{
+							for(let i = 0; data.products.data.length > i; i++) {
 								d = data.products.data[i];
 
 								t += '<li>' +
@@ -95,11 +143,15 @@ var
 									'</a>' +
 									'<div class="spinner">' +
 									'<div class="spinner__counts">' +
-									'<button class="minus"><i class="icon-minus"></i></button>' +
-									'<span>10</span>' +
-									'<button class="plus"><i class="icon-plus"></i></button>' +
+									'<button class="minus" onclick="filCat.sumQuantity(' + d.id + ', \'minus\')" >' +
+									'<i class="icon-minus"></i>' +
+									'</button>' +
+									'<span class="quantity">10</span>' +
+									'<button class="plus" onclick="filCat.sumQuantity(' + d.id + ', \'plus\')">' +
+									'<i class="icon-plus"></i>' +
+									'</button>' +
 									'</div>' +
-									'<a href="#">В корзину</a>' +
+									'<a href="javascript:void(0)" onclick="filCat.addToCart(' + d.id + ', \'add\')">В корзину</a>' +
 									'</div>' +
 									'</div>' +
 									'</li>';
@@ -114,35 +166,37 @@ var
 							$(filCat.num).html(data.products.total);
 							$(filCat.cont).html(t);
 							console.log('result: ', data)
-
-							$('.paginator > .next, .paginator > .next-only').click(function() {
-								nexP = data.products.current_page + 1;
-								$('[name=pagination-page]').val(_.isNaN(nexP) ? 1 : nexP);
-								filCat.selectCatalogs();
-							});
-
-							$('.paginator > .prev').click(function() {
-								nexP = data.products.current_page - 1;
-								$('[name=pagination-page]').val(nexP > 1 ? nexP : 1);
-								filCat.selectCatalogs();
-							});
-
-							$('.pagination').click(function(ev) {
-								page = ev.target.innerText;
-
-								if(data.products.current_page === page)
-									return false;
-
-								return false;
-							})
 						}
 
+						$('[name=last-page]').val(data.last_page);
+						$('[name=current-page]').val(data.current_page)
 						$(filCat.cont).animate({opacity: 1}, 150);
 					},
 
 					type: 'post',
 					url : '/catalog?page=' + page,
 				});
+			}
+		},
+
+		/**
+		 * plus or minus weight meat
+		 * @param id
+		 * @param type
+		 */
+		sumQuantity: function(id, type) {
+			let
+				currentQuantityCont = $('.products-' + id + ' .quantity'),
+				quant;
+
+			if(type === 'plus') {
+				quant = (parseFloat(currentQuantityCont.html()) + 1).toFixed(0);
+				currentQuantityCont.html(quant);
+			} else {
+				quant = (parseFloat(currentQuantityCont.html()) - 1).toFixed(0);
+
+				if(parseFloat(currentQuantityCont.html()) > 1)
+					currentQuantityCont.html(quant);
 			}
 		},
 	};
