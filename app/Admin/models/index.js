@@ -40,6 +40,7 @@ db.powerModel = db.import('./power');
 db.productsModel = db.import('./products');
 db.langModel = db.import('./lang');
 db.menuModel = db.import('./menu');
+db.brandModel = db.import('./brand');
 
 // for querying sql
 db.execute = (text, values) => pgPool.query(text, values);

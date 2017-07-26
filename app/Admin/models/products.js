@@ -7,6 +7,7 @@ export default (sequelize, Datatypes) => {
 		{
 			active: Datatypes.INTEGER,
 			author: Datatypes.STRING(64),
+			brand : Datatypes.INTEGER,
 			cat   : Datatypes.INTEGER,
 
 			created_at: {
@@ -20,6 +21,7 @@ export default (sequelize, Datatypes) => {
 			},
 
 			description: Datatypes.STRING(512),
+			discount   : Datatypes.INTEGER,
 			html_bottom: Datatypes.TEXT,
 			html_top   : Datatypes.TEXT,
 
@@ -31,6 +33,7 @@ export default (sequelize, Datatypes) => {
 
 			keywords: Datatypes.STRING(512),
 			name    : Datatypes.STRING(512),
+			price   : Datatypes.STRING(512),
 			sort    : Datatypes.INTEGER,
 			tags    : Datatypes.STRING(512),
 			text    : Datatypes.TEXT,

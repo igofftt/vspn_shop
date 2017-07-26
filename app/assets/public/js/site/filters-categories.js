@@ -86,9 +86,12 @@ var
 									'<h5>' + d.name + '</h5>' +
 									'</div>' +
 									'<div class="price">' +
-									'<span class="new">1 500 &#8381;</span>' +
-									'<span class="old">3 000 &#8381;</span>' +
-									'</div>' +
+									'<span class="new">' + d.price + ' &#8381;</span>';
+
+								if(d.discount > 0)
+									t += '<span class="old">' + (d.price - d.price / 100 * d.discount) + ' &#8381;</span>';
+
+								t += '</div>' +
 									'</a>' +
 									'<div class="spinner">' +
 									'<div class="spinner__counts">' +

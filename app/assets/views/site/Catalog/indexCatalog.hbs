@@ -61,18 +61,12 @@
                         <p>Бренд</p>
                         <fieldset>
                             <div class="form-checks">
-                                <div class="input-check">
-                                    <input type="checkbox" id="check01">
-                                    <label for="check01">Cona</label>
-                                </div>
-                                <div class="input-check">
-                                    <input type="checkbox" id="check02">
-                                    <label for="check02">Cona название в две строки</label>
-                                </div>
-                                <div class="input-check">
-                                    <input type="checkbox" id="check03">
-                                    <label for="check03">Cona</label>
-                                </div>
+                                {{# each brand }}
+                                    <div class="input-check">
+                                        <input value="{{ id }}" type="checkbox" id="check{{ id }}">
+                                        <label for="check{{ id }}">{{ name }}</label>
+                                    </div>
+                                {{/ each }}
                             </div>
                         </fieldset>
                     </form>
