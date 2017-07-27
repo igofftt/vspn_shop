@@ -16,12 +16,12 @@
         <div class="breadcrumbs">
             <a href="/" class="home"><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_home"></use> </svg></a>
             <a href="/catalog">Каталог</a>
-            <span>Формы</span>
+            <span class="name-current-cat"></span>
         </div>
         <section class="catalog">
             <header>
-                <h1>Формы</h1>
-                <span class="count">15 000 товаров</span>
+                <h1 class="name-current-cat"></h1>
+                <span class="count"><span></span> товаров</span>
                 <div class="view">
                     <i class="list"><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_menu-list"></use> </svg></i>
                     <i class="pallet active"><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_menu-palett"></use> </svg></i>
@@ -31,16 +31,20 @@
                 <aside>
                     <form action="#">
                         <p>Раздел</p>
-                        <fieldset>
+                        <fieldset class="categories-main-fieldset">
                             <div class="form-selects">
-                                <select class="custom-select">
+                                <select class="custom-select" name="categories-select" autocomplete="off">
                                     {{# each menu }}
                                         {{#iff cat '==' 0 }}
-                                            <option value="{{ ../id }}">{{ ../name }}</option>
+                                            <option value="{{ ../id }}" {{# iff ../id '==' ../../category }}selected{{/iff}}>
+                                                {{ ../name }}
+                                            </option>
                                         {{/iff}}
                                     {{/ each }}
                                 </select>
                             </div>
+
+                            <div class="sub-categories-cont"></div>
                         </fieldset>
                         <p>Толщина камня</p>
                         <fieldset>
@@ -77,9 +81,9 @@
                         <p><img style="padding-top: 20px" src="/images/site/logo.png" class="bgCategories"/></p>
                     </ul>
 
-                    <input type="hidden" name="current-page" value="{{ page }}">
-                    <input type="hidden" name="category" value="{{ category }}">
-                    <input type="hidden" name="last-page" value="">
+                    <input type="hidden" name="current-page" autocomplete="off" value="{{ page }}">
+                    <input type="hidden" name="category" autocomplete="off" value="{{ category }}">
+                    <input type="hidden" name="last-page" autocomplete="off" value="">
 
                     <div class="pagination layout paginator">
                         <div class="btn-field next-only">

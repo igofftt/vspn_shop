@@ -35,12 +35,17 @@ var
 			this.url  = '/';
 			this.cont = this.conf.cont;
 			this.num  = this.conf.num;
+			filCat.selectCategory($('[name=category]').val())
 			filCat.loadOnclick()
 		},
 
 		// подгружаем обработчки событий
 		loadOnclick: function loadOnclick() {
 			setTimeout(function() {
+				$('[name=categories-select]').on('change', function() {
+					filCat.selectCategory($(this).val())
+				});
+
 				$('.filterGroup > div').click(function() {
 					$('.filterGroup > div').removeClass('active');
 					$(this).addClass('active');
@@ -87,8 +92,12 @@ var
 		},
 
 		selectCatalogs: function() {
-			let filterGroup, inputSearch, page, request;
-			filterGroup = $('.filterGroup > div.active').data('filterGroup');
+			let
+				category = $('[name=category]').val(),
+				filterGroup = $('.filterGroup > div.active').data('filterGroup'),
+				inputSearch,
+				page,
+				request;
 
 			if(_.isUndefined(filterGroup))
 				filterGroup = -1;
@@ -98,6 +107,7 @@ var
 
 			if(1) {
 				request = {
+					category    : category,
 					filter_group: filterGroup,
 					input_search: inputSearch,
 				};
@@ -159,11 +169,11 @@ var
 
 							t += '<div class="text-center clear">' + data.pagination + '</div>';
 
-							if(data.products.total === 0)
-								t = '<p>По таким параметрам ничего не найдено ):' +
-									'<img src="/images/shop/logo.png" class="bgCategories"/></p>';
+							if(!data.products.count)
+								t = '<li style="width: 100%">По таким параметрам ничего не найдено ):' +
+									'<img src="/images/site/logo.png" class="bgCategories"/></li>';
 
-							$(filCat.num).html(data.products.total);
+							$(filCat.num).html(data.products.count);
 							$(filCat.cont).html(t);
 							console.log('result: ', data)
 						}
@@ -177,6 +187,51 @@ var
 					url : '/catalog?page=' + page,
 				});
 			}
+		},
+
+		selectCategory: function(category) {
+			let oldCat = $('[name=category]').val();
+
+			$.ajax({
+				cache   : false,
+				data    : {category: category},
+				dataType: 'JSON',
+
+				success: function(data) {
+					if(data['result'] === 'ok') {
+						let curLoc, t = '';
+						t += '<div class="form-checks sub-categories-cont" style="margin-top: 15px">';
+
+						for(let i = 0; data.subCategories.length > i; i++) {
+							d = data.subCategories[i];
+
+							t += '<div class="input-check">' +
+								'<input name="categories-sub[]" value="' + d.name + '" type="checkbox" id="check-sub' + d.name + '">' +
+								'<label for="check-sub' + d.name + '">' + d.name + '</label>' +
+							'</div>';
+						}
+
+						t += '</div>';
+						$('.sub-categories-cont').html(t);
+
+						$('.name-current-cat').html(data.current_category.name);
+						$('[name=category]').val(data.current_category.id);
+						$('header .count > span').html(data.products.count);
+						curLoc = window.location.href.replace('catalog/' + oldCat, 'catalog/' + data.current_category.id);
+
+						try {
+							window.history.pushState(null, data.current_category.name, curLoc);
+							filCat.selectCatalogs();
+							return;
+						} catch(e) {}
+
+						window.location.hash = '#' + curLoc;
+					}
+				},
+
+				type: 'post',
+				url : '/catalog/get_category_and_sub',
+			});
 		},
 
 		/**

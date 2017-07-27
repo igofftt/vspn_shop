@@ -88,6 +88,31 @@ const
 	},
 
 	/**
+	 * Functions forming object menu
+	 * @param req
+	 * @param res
+	 */
+	getCategoryAndSub = (req, res) => {
+		let
+			category = req.body.category || 0;
+
+		const
+			toJson = () => res.json({
+				current_category: req.store.getState('site.currentCategory'),
+				products        : req.store.getState('site.products'),
+				result          : 'ok',
+			}),
+
+			getCurrentCategory = () => models.menuModel.findById(category)
+				.then(dataObl => req.store.setState('site.currentCategory', dataObl, toJson)),
+
+			getProductsCount = () => models.productsModel.count({where: {'id': category}})
+				.then(dataObl => req.store.setState('site.products.cogunt', dataObl, getCurrentCategory));
+
+		return getProductsCount();
+	},
+
+	/**
 	 * Functions forming index page a catalog
 	 * @param req
 	 * @param res
@@ -134,6 +159,7 @@ const
 	 */
 	postCatalog = (req, res, next) => {
 		let
+			category = req.body.category || 0,
 			currentPage = queryParse(req).page || 1,
 			show = 12;
 
@@ -145,22 +171,30 @@ const
 				let count = req.store.getState('site.products.count');
 
 				return res.json({
-					current_page: currentPage,
-					last_page   : count/show > 0 ? (count/show).toFixed(0) : 1,
-					products    : req.store.getState('site.products'),
-					result      : 'ok',
-					total       : j.length,
+					current_category: req.store.getState('site.currentCategory'),
+					current_page    : currentPage,
+					last_page       : count/show > 0 ? (count/show).toFixed(0) : 1,
+					products        : req.store.getState('site.products'),
+					subCategories   : req.store.getState('site.subCategories'),
+					result          : 'ok',
+					total           : j.length,
 				})
 			},
 
-			getProductsCount = () => models.productsModel.count()
+			getProductsCount = () => models.productsModel.count({where: {cat: category}})
 				.then(dataObl => req.store.setState('site.products.count', dataObl, toJson)),
 
-			getProducts = callback => models.productsModel
-				.findAll({limit: show, offset: offset, order: 'id ASC', raw: true})
-				.then(dataObl => req.store.setState('site.products.data', dataObl, callback));
+			getCurrentCategory = () => models.menuModel.findById(category)
+				.then(dataObl => req.store.setState('site.currentCategory', dataObl, getProductsCount)),
 
-		return getProducts(getProductsCount);
+			subCategories = () => models.menuModel.findAll({order: 'name ASC', raw: true, where: {'cat': category}})
+				.then(dataObl => req.store.setState('site.subCategories', dataObl, getCurrentCategory)),
+
+			getProducts = () => models.productsModel
+				.findAll({limit: show, offset: offset, order: 'id ASC', raw: true, where: {'cat': category}})
+				.then(dataObl => req.store.setState('site.products.data', dataObl, subCategories));
+
+		return getProducts();
 	};
 
-export default {addToCart, catalogProduct, indexCatalog, postCatalog}
+export default {addToCart, catalogProduct, getCategoryAndSub, indexCatalog, postCatalog}
