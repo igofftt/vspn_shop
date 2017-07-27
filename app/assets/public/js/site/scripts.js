@@ -1,153 +1,134 @@
-$(document).ready(function(){
+$(document).ready(function() {
+	/* custom selects*/
+	function customSelects() {
+		$('.custom-select').select2({
+			width: '100%',
+		});
+	}
 
-    /* custom selects*/
-    function customSelects() {
-        $('.custom-select').each(function () {
-            $(this).selectbox();
-        })
-    }
+	/* custom range */
+	function customRange() {
+		let
+			$range_price = document.getElementById('price_range'),
+			$range_width = document.getElementById('width_range');
 
-    /* custom range */
+		noUiSlider.create($range_width, {
+			connect : [true, false],
+			range   : {max: [ 100 ], min: [ 0 ]},
+			start   : [70],
+			step    : 5,
+			tooltips: [ wNumb({decimals: 0, postfix: ' mm', thousand: '&nbsp;'}) ],
+		});
 
-    function customRange() {
-        var $range_width = document.getElementById('width_range'),
-            $range_price = document.getElementById('price_range');
+		let
+			$input0 = document.getElementById('input-with-keypress-0'),
+			$input1 = document.getElementById('input-with-keypress-1'),
+			inputs = [$input0, $input1];
 
-        noUiSlider.create($range_width, {
-            start: [70],
-            step: 5,
-            connect: [true, false],
-            tooltips: [ wNumb({ decimals: 0, thousand: '&nbsp;', postfix: ' mm' }) ],
-            range: {
-                'min': [ 0 ],
-                'max': [ 100 ]
-            }
-        });
+		noUiSlider.create($range_price, {
+			connect: [false, true, false],
 
-        var $input0 = document.getElementById('input-with-keypress-0'),
-            $input1 = document.getElementById('input-with-keypress-1');
-        var inputs = [$input0, $input1];
+			format: wNumb({
+				decimals: 0,
+				postfix : ' ₽',
+				thousand: ' ',
+			}),
 
-        noUiSlider.create($range_price, {
-            start: [0, 10000],
-            step: 100,
-            connect: [false, true, false],
-            range: {
-                'min': [ 0 ],
-                'max': [ 20000 ]
-            },
-            format: wNumb({
-                decimals: 0,
-                thousand: ' ',
-                postfix: ' ₽'
-            })
-        });
+			range: {max: [20000], min: [0]},
+			start: [0, 10000],
+			step : 100,
+		});
 
-        $range_price.noUiSlider.on('update', function( values, handle ) {
-            inputs[handle].value = values[handle];
-        });
+		$range_price.noUiSlider.on('update', (values, handle) => {
+			inputs[handle].value = values[handle];
+		});
 
-        /* change input in range */
+		/* change input in range */
+		function setSliderHandle(i, value) {
+			let r = [null,null];
+			r[i] = value;
+			$range_price.noUiSlider.set(r);
+		}
 
-        function setSliderHandle(i, value) {
-            var r = [null,null];
-            r[i] = value;
-            $range_price.noUiSlider.set(r);
-        }
+		inputs.forEach((input, handle) => {
+			input.addEventListener('change', function() {
+				setSliderHandle(handle, this.value);
+			});
 
-        inputs.forEach(function(input, handle) {
+			input.addEventListener('keydown', e => {
+				switch(e.which) {
+				case 13:
+					setSliderHandle(handle, this.value);
+					break;
+				}
+			});
+		});
+	}
 
-            input.addEventListener('change', function(){
-                setSliderHandle(handle, this.value);
-            });
+	/* spinner counts */
+	function spinners() {
+		let $spinnerBox = $('.spinner__counts');
 
-            input.addEventListener('keydown', function( e ) {
+		$spinnerBox.each(function() {
+			let $thisSpinner = $(this);
+			let _current = $thisSpinner.find('span').text();
 
-                switch ( e.which ) {
-                    case 13:
-                        setSliderHandle(handle, this.value);
-                        break;
-                }
-            });
-        });
+			$thisSpinner.find('.minus').click(function() {
+				if(_current > 0) {
+					_current--;
+					$thisSpinner.find('span').text(_current);
+				}
+			});
 
-    }
+			$thisSpinner.find('.plus').click(function() {
+				_current++;
+				$thisSpinner.find('span').text(_current);
+			})
+		})
+	}
 
-    /* spinner counts */
+	/* catalog view */
+	$('.view i').click(function() {
+		$('.view i').removeClass('active');
+		$(this).addClass('active');
 
-    function spinners() {
+		if($(this).hasClass('list'))
+			$('.catalog__content').addClass('list_view')
+		else
+			$('.catalog__content').removeClass('list_view')
+	})
 
-        var $spinnerBox = $('.spinner__counts');
+	/* grid font */
+	let font = 1;
 
-        $spinnerBox.each(function () {
-            var $thisSpinner = $(this);
-            var _current = $thisSpinner.find('span').text();
+	function gridFont() {
+		let winWidth = $(window).width();
 
-            $thisSpinner.find('.minus').click(function () {
-                if(_current > 0){
-                    _current--;
-                    $thisSpinner.find('span').text(_current);
-                }
-            })
-            $thisSpinner.find('.plus').click(function () {
-                _current++;
-                $thisSpinner.find('span').text(_current);
-            })
-        })
-    }
+		if(winWidth > 1800)
+			font = 1;
 
+		else {
+			let k = winWidth/1800;
+			font = k;
+		}
 
-    /* catalog view */
+		$('.grid').css('font-size',font+'em');
+	}
 
-    $('.view i').click(function () {
-        $('.view i').removeClass('active');
-        $(this).addClass('active');
-        if($(this).hasClass('list')){
-            $('.catalog__content').addClass('list_view')
-        }
-        else {
-            $('.catalog__content').removeClass('list_view')
-        }
-    })
+	if($('.custom-select').length > 0)
+		customSelects();
 
+	if($('.form-range').length > 0)
+		customRange();
 
-    /* grid font */
+	if($('.spinner__counts').length > 0)
+		spinners();
 
-    var font = 1;
-    function gridFont(){
-        var winWidth = $(window).width();
-        if(winWidth > 1800){
-            font = 1;
-        }
-        else {
-            var k = winWidth/1800;
-            font = k;
-        }
-        $('.grid').css('font-size',font+'em');
-    }
+	if($('.grid').length > 0)
+		gridFont()
 
-
-
-
-
-    if($('.custom-select').length > 0){
-        customSelects();
-    }
-    if($('.form-range').length > 0){
-        customRange();
-    }
-    if($('.spinner__counts').length > 0){
-        spinners();
-    }
-    if($('.grid').length > 0){
-        gridFont()
-    }
-
-
-    $(window).resize(function(){
-        if($('.grid').length > 0){
-            gridFont()
-        }
-    })
-
+	$(window).resize(function() {
+		if($('.grid').length > 0)
+			gridFont()
+	})
 });
