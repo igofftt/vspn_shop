@@ -14,10 +14,10 @@ $(document).ready(function() {
 
 		noUiSlider.create($range_width, {
 			connect : [true, false],
-			range   : {max: [ 100 ], min: [ 0 ]},
+			range   : {max: [100], min: [0]},
 			start   : [70],
 			step    : 5,
-			tooltips: [ wNumb({decimals: 0, postfix: ' mm', thousand: '&nbsp;'}) ],
+			tooltips: [wNumb({decimals: 0, postfix: ' mm', thousand: '&nbsp;'})],
 		});
 
 		let
@@ -93,10 +93,10 @@ $(document).ready(function() {
 		$(this).addClass('active');
 
 		if($(this).hasClass('list'))
-			$('.catalog__content').addClass('list_view')
+			$('.catalog__content').addClass('list_view');
 		else
 			$('.catalog__content').removeClass('list_view')
-	})
+	});
 
 	/* grid font */
 	let font = 1;
@@ -108,8 +108,7 @@ $(document).ready(function() {
 			font = 1;
 
 		else {
-			let k = winWidth/1800;
-			font = k;
+			font = winWidth/1800;
 		}
 
 		$('.grid').css('font-size',font+'em');
@@ -125,10 +124,10 @@ $(document).ready(function() {
 		spinners();
 
 	if($('.grid').length > 0)
-		gridFont()
+		gridFont();
 
 	$(window).resize(function() {
 		if($('.grid').length > 0)
-			gridFont()
+			gridFont();
 	})
 });
