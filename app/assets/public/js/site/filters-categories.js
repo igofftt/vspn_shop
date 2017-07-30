@@ -1,6 +1,8 @@
 var
 	filCat = {
 		addToCart: function(id, type) {
+			$('.product-cart-shop-' + id).remove();
+
 			$.ajax
 			({
 				cache: false,
@@ -16,6 +18,100 @@ var
 
 				success: function(data) {
 					if(data.result === 'ok') {
+						let
+							p = $('.shop-cart').offset(),
+							parent = $('.product-' + id),
+							parentTmp;
+
+						if(type === 'add') {
+							parent
+								.clone()
+								.addClass('product-' + id + '-tmp product-tmp ')
+								.removeClass('col-md-4')
+
+								.css({
+									height: parent.height(),
+									left  : parent.offset().left + 15,
+									top   : parent.offset().top - $('html').scrollTop(),
+									width : parent.width(),
+								})
+
+								.appendTo('.product-' + id);
+
+							parentTmp = $('.product-' + id + '-tmp');
+
+							parentTmp.animate({
+								left   : p.left - parentTmp.width() / 2.5,
+								opacity: .8,
+								top    : p.top - parentTmp.height() / 2.5,
+							}, 500);
+
+							parentTmp.addClass('animate');
+
+							function animateAddCart() {
+								let div = $('.shop-cart');
+								div.animate({opacity: .5}, 300);
+								div.animate({opacity: 1}, 150);
+							}
+
+							setTimeout(function() { parentTmp.remove(); animateAddCart(); }, 1150);
+						}
+
+						let allPrice = 0, d, t = '';
+
+						for(let i = 0; data.product.data.length > i; i++) {
+							d = data.product.data[i];
+							let weights = data.cart[d.id].weights || 0;
+							let price =((d.price_money - (d.price_money / 100 * d.discount || 0)) / 1000) * weights;
+
+							t += '<li class="product-cart-shop-' + d.id + '">' +
+								'<div class="shopping-basket">' +
+								'<div class="col-xs-6 col-sm-6 col-md-3 i thumbnail">';
+
+							if(_.isEmpty(d.file))
+								t += '<img src="/images/files/small/no_img.png"/>';
+							else
+							if(d.crop)
+								t += '<img src="/images/files/small/' + d.crop +'"/>';
+							else
+								t += '<img src="/images/files/small/' + d.file +'"/>';
+
+							t +='</div>' +
+								'<div class="col-xs-6 col-sm-6 col-md-5 t">' +
+								'<p>' + d.cat_parent + '</p><span>' + d.name + '</span>' +
+								'</div>' +
+
+								'<div class="col-xs-6 col-sm-6 col-md-3 p">' +
+								'<span>' + price + '<i class=" glyphicon glyphicon-ruble"></i></span>' +
+								'</div>' +
+								'<div class="col-xs-6 col-sm-6 col-md-1 c">' +
+								'<a href="javascript:void(0)" onclick="filCat.addToCart(' + d.id + ', \'remove\')">' +
+								'<i class="glyphicon glyphicon-remove"></i>' +
+								'</a>' +
+								'</div>' +
+								'</div>' +
+								'</li>';
+
+							allPrice = allPrice + price;
+						}
+
+						if(type !== 'remove')
+							$('#basketCont').html(t);
+
+						$('.basket_dropdown > .a').removeClass('hidden');
+						$('.btn-link-time').removeClass('hidden');
+						$('.basket_dropdown_btn > .b > span').html(allPrice);
+						$('.moneyTop').html(allPrice);
+
+						if(!data.product.data.length) {
+							$('.basket_dropdown > .a').addClass('hidden');
+							$('.shop-cart > .p').addClass('hidden');
+							$('.btn-link-time').addClass('hidden');
+							$('.basketCont').html('<p>Корзина пуста</p><img src="/images/shop/logo.png" class="bgCategories">');
+							$('#basketCont').html('<p>Корзина пуста</p>');
+							$('.moneyTop').html(0);
+						} else
+							$('.shop-cart > .p').html(data.product.data.length).removeClass('hidden')
 					}
 				},
 
@@ -123,7 +219,7 @@ var
 						if(data['result'] === 'ok') {
 							let d = [], t = '';
 							$('.paginator .current-page').html(page);
-							$('.paginator .total > span').html(data.last_page);
+							$('.paginator .total > span').html(data.last_page > 0 ? data.last_page : 1);
 
 							if(page >= data.last_page)
 								$('.paginator .next-only').css('display', 'none');
@@ -133,8 +229,8 @@ var
 							for(let i = 0; data.products.data.length > i; i++) {
 								d = data.products.data[i];
 
-								t += '<li>' +
-									'<div class="item products-' + d.id + '">' +
+								t += '<li class="product-' + d.id + '">' +
+									'<div class="item">' +
 									'<a href="/product/' + d.id + '" class="item__description">' +
 									'<div class="item__img">' +
 									'<div class="_mn" style="background-image: url(\'/images/site/items/item01.png\')"></div>' +
@@ -241,7 +337,7 @@ var
 		 */
 		sumQuantity: function(id, type) {
 			let
-				currentQuantityCont = $('.products-' + id + ' .quantity'),
+				currentQuantityCont = $('.product-' + id + ' .quantity'),
 				quant;
 
 			if(type === 'plus') {
