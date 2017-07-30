@@ -1,0 +1,87 @@
+$bg: #ecf0f4;
+$text: #292929;
+$bluetext: #b5bcc4;
+$greytext: #adaeaf;
+$border: #d1d7de;
+$button: #ffd54f;
+$barkbutton: #ff8f00;
+$tab: #997400;
+$link: #359df5;
+
+
+
+%boxSize {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+%fullBlock {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+%valign {
+  display: inline-block;
+  vertical-align: middle;
+}
+%cover {
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+@mixin boxShadow($x,$y,$sh,$tr,$color) {
+  -webkit-box-shadow: $x $y $sh $tr $color;
+  -moz-box-shadow: $x $y $sh $tr $color;
+  box-shadow: $x $y $sh $tr $color;
+}
+@mixin boxShadowInset($x,$y,$sh,$tr,$color,$inset) {
+  -webkit-box-shadow: $x $y $sh $tr $color $inset;
+  -moz-box-shadow: $x $y $sh $tr $color $inset;
+  box-shadow: $x $y $sh $tr $color $inset;
+}
+@mixin transit($tr){
+  -webkit-transition: $tr;
+  -moz-transition: $tr;
+  -ms-transition: $tr;
+  -o-transition: $tr;
+  transition: $tr;
+}
+@mixin transform($tr){
+  -webkit-transform: $tr;
+  -moz-transform: $tr;
+  -ms-transform: $tr;
+  -o-transform: $tr;
+  transform: $tr;
+}
+@mixin translate($x,$y){
+  -webkit-transform: translate($x,$y);
+  -moz-transform: translate($x,$y);
+  -ms-transform: translate($x,$y);
+  -o-transform: translate($x,$y);
+  transform: translate($x,$y);
+}
+@mixin media($media,$w) {
+  @if $media == hover {
+    @media screen and (min-width:$w+'px'){@content;}
+  }
+  @else {
+    @media screen and (max-width:$w+'px'){@content;}
+  }
+}
+
+.layout:after {content: ""; display: block; clear: both;}
+.tableBox {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  & > div {
+    display: table;
+    width: 100%;
+    height: 100%;
+    & > div {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+}

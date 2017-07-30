@@ -1,0 +1,404 @@
+.catalog {
+  header {
+    border-bottom: 1px solid $border;
+    position: relative;
+    padding-bottom: 8px;
+    h1 {
+      @extend %valign;
+      font-size: 1.55rem;
+      line-height: 1.5;
+    }
+    h3 {
+      font-size: 1.5rem;
+      line-height: 1.5;
+    }
+    .count {
+      @extend %valign;
+      background-color: #fff;
+      color: $bluetext;
+      @include boxShadow(0,0,4px,0,rgba(0,0,0,0.15));
+      font-size: 0.8rem;
+      margin-left: 14px;
+      padding: 7px;
+      position: relative;
+      border-radius: 3px;
+      &:before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        @include boxShadow(0,0,4px,0,rgba(0,0,0,0.15));
+        right: 100%;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        margin: auto -4px auto 0;
+        -webkit-transform: rotate(41deg) skewX(-8deg);
+        -moz-transform: rotate(41deg) skewX(-8deg);
+        -ms-transform: rotate(41deg) skewX(-8deg);
+        -o-transform: rotate(41deg) skewX(-8deg);
+        transform: rotate(41deg) skewX(-8deg);
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        top: 3px;
+        bottom: 3px;
+        background-color: #fff;
+        left: 0;
+      }
+    }
+    .view {
+      position: absolute;
+      top: 0;
+      right: 0;
+      white-space: nowrap;
+      i {
+        @extend %valign;
+        @extend %boxSize;
+        padding: 8px;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin: 0 4px;
+        background-color: #fff;
+        svg {fill: $border}
+        @include boxShadow(0,1px,2px,0,rgba(0,0,0,0.15));
+        &.active {
+          background-color: $button;
+          svg {fill: #fff}
+        }
+      }
+    }
+  }
+  &__content {
+    padding-top: 26px;
+    aside {
+      float: left;
+      width: 180px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 3px;
+      padding: 8px 0;
+      background-color: #fff;
+      @include boxShadow(0,1px,1px,0,rgba(0,0,0,0.15));
+      form {
+        p {
+          border-top: 1px solid $bg;
+          padding: 10px 20px 5px;
+          margin-top: 18px;
+          margin-bottom: 5px;
+          &:first-child {
+            border: none;
+            margin-top: 0;
+          }
+        }
+        fieldset {
+          margin: 0 20px;
+        }
+      }
+    }
+
+  }
+  &__main {
+    padding-left: 210px;
+    .preview & {
+      padding-left: 0;
+    }
+    ul {
+      font-size: 0;
+      margin: 0 -15px;
+      .list_view & {
+        margin-bottom: 20px;
+      }
+      li {
+        font-size: 1rem;
+        display: inline-block;
+        width: 25%;
+        vertical-align: top;
+        padding: 0 15px 30px;
+        .preview & {
+          width: 20%;
+        }
+        @extend %boxSize;
+        .list_view & {
+          width: 100%;
+          display: block;
+          padding-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+.item {
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  padding-bottom: 42px;
+  border-radius: 3px;
+  @include boxShadow(0,1px,1px,0,rgba(0,0,0,0.15));
+  @include transit(all 0.3s);
+  .list_view & {
+    padding-bottom: 0;
+  }
+  &__description {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: inherit;
+    .list_view & {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  &__head {
+    .rank {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      span {
+        @extend %valign;
+        i {
+          @extend %valign;
+          width: 15px;
+          height: 15px;
+        }
+      }
+      .stars {
+        display: block;
+        margin-top: 5px;
+        .list_view & {
+          display: inline-block;
+          border-left: 2px solid $border;
+          margin: 0 0 0 10px;
+          padding: 0 0 3px 10px;
+        }
+      }
+    }
+    .list_view & {
+      flex-shrink: 500;
+      width: 100%;
+      text-align: left;
+      padding: 0 15px;
+    }
+  }
+  &__text {
+    .list_view & {
+      flex-shrink: 500;
+      padding: 0 15px;
+      width: 100%;
+      text-align: left;
+      align-items: center;
+      align-self: stretch;
+      display: flex;
+      border-left: 1px solid $bg;
+    }
+  }
+  &__img {
+    width: 100%;
+    padding-top: 78%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+    border-radius: 3px 3px 0 0;
+    .list_view & {
+      width: 102px;
+      padding-top: 78px;
+      border: 5px solid transparent;
+      margin: 0;
+    }
+    div {
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: absolute;
+      bottom: 0;
+      @include transit(all 0.3s);
+      left: 0;
+      @extend %fullBlock;
+      &._hv {
+        bottom: 100%;
+      }
+    }
+  }
+  h5 {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  p {
+    font-size: 0.7rem;
+    padding-top: 4px;
+  }
+  .price {
+    margin-top: 12px;
+    position: relative;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 9px 0;
+    &:before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      height: 1px;
+      left: 20px;
+      right: 20px;
+      background-color: $border;
+      .list_view & {
+        display: none;
+      }
+    }
+    span {
+      @extend %valign;
+      margin: 0 3px;
+      &.old {
+        font-size: 0.78rem;
+        color: $bluetext;
+        text-decoration: line-through;
+      }
+    }
+    .list_view & {
+      align-items: center;
+      align-self: stretch;
+      display: flex;
+      border-left: 1px solid $bg;
+      margin: 0;
+      padding: 0 0 38px;
+      justify-content: center;
+      width: 176px;
+    }
+  }
+  .spinner {
+    position: absolute;
+    bottom: 3px;
+    left: 3px;
+    right: 3px;
+    z-index: 1;
+    .list_view & {
+      bottom: 0;
+      right: 0;
+      left: auto;
+      width: 176px;
+      border-radius: 0 0 3px 0;
+    }
+
+    a {
+      @extend %valign;
+      text-align: center;
+      width: 50%;
+      font-size: 0.8rem;
+      color: inherit;
+      line-height: 36px;
+    }
+  }
+  &:hover {
+    @include media(hover,1025){
+      @include translate(0,-5px);
+      .item__img div._mn {
+        bottom: -100%;
+      }
+      .item__img div._hv {
+        bottom: 0;
+      }
+    }
+  }
+}
+
+.pagination {
+  padding-left: 33.3333%;
+  .btn-field {
+    float: left;
+    width: 50%;
+  }
+  .pages {
+    text-align: right;
+    &-field {
+      background-color: #fff;
+      border-radius: 3px;
+      height: 36px;
+      display: inline-block;
+      line-height: 36px;
+      a, span {
+        @extend %valign;
+        font-size: 0.9rem;
+        text-align: center;
+        min-width: 26px;
+        @extend %boxSize;
+      }
+      .total {
+        padding: 0 16px;
+        border-left: 1px solid $bg;
+      }
+    }
+
+  }
+}
+
+.range-inputs {
+  display: flex;
+  justify-content: space-between;
+  input {
+    border: 1px solid $border;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 12px;
+    padding: 3px 5px;
+    width: 65px;
+    @extend %boxSize;
+  }
+}
+
+.input-check {
+  position: relative;
+  font-weight: 400;
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+
+  label {
+    display: block;
+    padding-bottom: 4px;
+    padding-left: 30px;
+    padding-top: 4px;
+    position: relative;
+    cursor: pointer;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border: 1px solid $border;
+      border-radius: 2px;
+    }
+    &:after {
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20240.608%20240.608%22%20enable-background%3D%22new%200%200%20240.608%20240.608%22%3E%3Cpath%20d%3D%22m208.79%2029.972l31.819%2031.82-148.84%20148.84-91.76-91.76%2031.819-31.82%2059.944%2059.942%20117.03-117.03%22%20fill%3D%22%23ffd54f%22/%3E%3C/svg%3E');
+      background-repeat: no-repeat;
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: 5px;
+      left: 5px;
+      display: none;
+    }
+  }
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    width: 0;
+    height: 0;
+    &:checked {
+      & ~ label {
+        &:before {border-color: $button;}
+        &:after {display: block}
+      }
+    }
+  }
+}

@@ -1,0 +1,300 @@
+.spinner {
+  background-color: $button;
+  border-radius: 3px;
+  font-size: 0;
+  white-space: nowrap;
+  @extend %boxSize;
+  padding: 2px;
+  max-width: 215px;
+  &:hover {
+    background-color: $barkbutton;
+  }
+  &__counts {
+    @extend %valign;
+    width: 50%;
+    text-align: center;
+    font-size: 0;
+    background-color: #fff;
+    border-radius: 3px;
+    button,span {
+      @extend %valign;
+      width: 33.3333%;
+      @extend %boxSize;
+    }
+    span {
+      font-size: 0.85rem;
+      border-left: 1px solid $border;
+      border-right: 1px solid $border;
+      line-height: 24px;
+    }
+    button {
+      background-color: transparent;
+      border: none;
+      font-size: 0.9rem;
+      line-height: 36px;
+      &.minus {
+        font-size: 0.7rem;
+      }
+      &:hover {
+       color: $barkbutton;
+      }
+    }
+  }
+  a {
+    @extend %valign;
+    text-align: center;
+    width: 50%;
+    font-size: 0.8rem;
+    color: inherit;
+    line-height: 36px;
+  }
+}
+
+.gallery-box {
+  width: 100%;
+  padding-top: 56%;
+  position: relative;
+  figure {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @extend %fullBlock;
+    border-radius: 3px;
+    &.hidden {display: none}
+  }
+  .gallery-main {
+    position: absolute;
+    right: 0;
+    width: 79%;
+    height: 100%;
+    top: 0;
+    figure {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    button {
+      position: absolute;
+      width: 30px;
+      height: 60px;
+
+      color: $greytext;
+      top: 50%;
+      margin-top: -30px;
+      background-color: #fff;
+      @include boxShadow(0,0,4px,0,rgba(0,0,0,0.15));
+      border: none;
+      border-radius: 3px;
+      z-index: 2;
+      &.next {
+        right: -15px;
+      }
+      &.prev {
+        left: -15px;
+      }
+      i {
+        line-height: 60px;
+        font-size: 20px;
+      }
+    }
+  }
+  .gallery-list {
+    position: absolute;
+    left: 0;
+    top: -8px;
+    bottom: -8px;
+    width: 21%;
+    @extend %boxSize;
+    padding-right: 30px;
+    ul {
+      @extend %fullBlock;
+      li {
+        width: 100%;
+        height: 25%;
+        @extend %boxSize;
+        padding: 8px 0;
+        div {
+          @extend %fullBlock;
+          cursor: pointer;
+        }
+        .current {
+          @include boxShadowInset(0,0,0,2px,$button,inset);
+        }
+      }
+    }
+  }
+}
+
+.product {
+  margin-bottom: 45px;
+  header {
+    margin-bottom: 30px;
+  }
+  &__gallery {
+    float: left;
+    width: 50%;
+    @extend %boxSize;
+    padding-right: 15px;
+    padding-top: 8px;
+  }
+  &__characters {
+    float: left;
+    width: 50%;
+    @extend %boxSize;
+    padding-left: 15px;
+    h1 {
+      font-size: 2.55rem;
+      line-height: 1.5;
+      padding-bottom: 8px;
+      border-bottom: 1px solid $border;
+      margin-bottom: 17px;
+    }
+    dl {
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      dd,dt {@extend %valign;}
+    }
+    .price {
+      line-height: 1.6;
+      margin-bottom: 8px;
+      span,
+      strong {
+        @extend %valign;
+        margin-right: 6px;
+      }
+      strong {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      .discount {
+        font-size: 0.9rem;
+        color: $greytext;
+      }
+    }
+  }
+  &__tabs {
+    background-color: #fff;
+    border-radius: 3px;
+    @include boxShadow(0,0,4px,0,rgba(0,0,0,0.15));
+    nav {
+      border-bottom: 1px solid $bg;
+      font-size: 0.9rem;
+      .tab {
+        @extend %valign;
+        cursor: pointer;
+        padding: 20px 28px;
+        border-right: 1px solid $bg;
+        &:last-child {border: none}
+        position: relative;
+        &:before {
+          content: "";
+          top: -1px;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background-color: $button;
+          opacity: 0;
+          position: absolute;
+        }
+        &.current {
+          color: $tab;
+          &:before {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    &_main {
+      padding: 43px 108px;
+    }
+  }
+}
+
+.text-box {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  h1 {
+    font-size: 1.53rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 1.16rem;
+    font-weight: 400;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+  p {
+    margin-bottom: 20px;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px 0;
+  }
+  a {
+    color: $link;
+  }
+  blockquote {
+    margin: 20px 0;
+    background-color: #fffbed;
+    padding: 16px 20px;
+    position: relative;
+    font-style: italic;
+    font-weight: 300;
+    &:before {
+      content: "\e977";
+      font-family: 'icomoon' !important;
+      width: 26px;
+      height: 26px;
+      position: absolute;
+      top: -11px;
+      left: -8px;
+      font-size: 27px;
+      line-height: 26px;
+      color: $button;
+      font-style: normal;
+    }
+  }
+  strong {font-weight: 600}
+  ol {
+    counter-reset: list;
+    margin-bottom: 18px;
+    li {
+      margin-bottom: 7px;
+      padding-left: 20px;
+      position: relative;
+      &:before {
+        content: counter(list, decimal);
+        counter-increment: list;
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: $button;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+    }
+  }
+  ul {
+    margin-bottom: 18px;
+    li {
+      padding-left: 15px;
+      position: relative;
+      margin-bottom: 7px;
+      &:before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $button;
+      }
+    }
+  }
+}

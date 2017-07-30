@@ -1,0 +1,80 @@
+.grid {
+  font-size: 1em;
+  padding: 74px 15px 0;
+  header {
+    border-bottom: 1px solid $border;
+    padding-bottom: 18px;
+    h1 {
+      @extend %valign;
+      font-size: 2.2rem;
+      line-height: 1.5;
+    }
+  }
+  &__content {
+    & > div {
+      margin: 15px -15px;
+    }
+  }
+  &__item {
+    float: left;
+    &.block-right {
+      float: right;
+    }
+    &.fig {
+      &_square {
+        .grid__link {
+          padding-top: 100%;
+        }
+      }
+      &_rect {
+        .grid__link {
+          padding-top: 50%;
+        }
+      }
+      &_big {
+        width: 40%;
+      }
+      &_small {
+        width: 20%;
+      }
+    }
+
+  }
+  &__link {
+    display: block;
+    width: 100%;
+    position: relative;
+    a {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      left: 15px;
+      bottom: 15px;
+      border-radius: 8px;
+      overflow: hidden;
+      color: inherit;
+      font-size: 2.2em;
+      font-weight: 700;
+      @extend %boxSize;
+      padding-left: 1.2em;
+      padding-right: 1.2em;
+      display: flex;
+      align-items: center;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      h3 {
+        font: inherit;
+      }
+      .valign-top & {
+        padding-bottom: 50%;
+      }
+      .halign-center & {
+        justify-content: center;
+      }
+      .color-white & {
+        color: #fff;
+      }
+    }
+  }
+}

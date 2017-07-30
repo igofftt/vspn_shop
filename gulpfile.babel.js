@@ -7,11 +7,10 @@ let
 	gls = require('gulp-live-server'),
 	gulp = require('gulp'),
 	htmlmin = require('gulp-htmlmin'),
-	outDir = env.production() ? './' : './debug',
-	runSequence = require('run-sequence');
+	outDir = env.production() ? './' : './dist/',
+	runSequence = require('run-sequence'),
+	sass = require('gulp-sass');
 
-
-console.log('outDir', outDir)
 // очистка папки назначения
 gulp.task('rm', () => gulp.src(`${outDir}/*`).pipe(clean()));
 
@@ -108,6 +107,14 @@ gulp.task('srv', cb => {
 			.pipe(gulp.dest(`${outDir}/app/assets/public/css`));
 	});
 
+	// sass
+	gulp.watch('./app/assets/public/sass/**/*.scss', ['sass'])
+		.on('finish', () => {
+			srv.stop();
+			srv.start();
+			console.log('server restarted');
+		});
+
 	// js frontend
 	gulp.watch('./app/assets/public/js/**/*.js', e => {
 		gulp.src(e.path, {base: './app/assets/public/js'})
@@ -128,5 +135,11 @@ gulp.task('srv', cb => {
 	cb();
 });
 
+gulp.task('sass', () => {
+	return gulp.src('./app/assets/public/sass/**/*.scss')
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest(`${outDir}/app/assets/public/css`))
+});
+
 gulp.task('dist', () => { runSequence('rm', 'babel', 'copy', 'htmlm', 'prodmods') });
-gulp.task('default', () => { runSequence('rm', 'babel', 'copy', 'prodmods', 'srv') });
+gulp.task('default', () => { runSequence('rm', 'babel', 'copy', 'prodmods', 'srv', 'sass') });
