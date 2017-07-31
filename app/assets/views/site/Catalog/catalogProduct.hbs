@@ -3,12 +3,25 @@
     <div class="container">
         <div class="breadcrumbs">
             <a href="/" class="home"><svg> <use xlink:href="/images/site/svg/sprite.svg#icon_home"></use> </svg></a>
-            <a href="/catalog">Каталог</a>
-            <a href="/catalog/1">Формы</a>
-            <span>Формы для камня</span>
+            {{# each menu as |v| }}
+                {{# iff ../product.cat '==' v.id }}
+                    {{# iff v.cat '==' '0' }}
+                        <span>{{ v.name }}</span>
+                    {{ else }}
+                        <a href="/catalog/{{ v.id }}">{{ v.name }}</a>
+
+                        {{# each ../../menu as |val| }}
+                            {{# iff v.cat '==' val.id }}<span>{{ val.name }}</span>{{/iff}}
+                        {{/ each }}
+                    {{/iff}}
+                {{/iff}}
+            {{/ each }}
+
+            <!--<a href="/catalog/1">Формы</a>-->
+            <!--<span>Формы для камня</span>-->
         </div>
         <section class="product">
-            <header class="layout">
+            <header class="layout product-{{ product.id }}" data-animations="false">
                 <div class="product__gallery">
                     <div class="gallery-box" id="gallery">
                         <div class="gallery-main">
@@ -43,7 +56,7 @@
                     </div>
                 </div>
                 <div class="product__characters">
-                    <h1>Формы для камня</h1>
+                    <h1>{{ product.name }}</h1>
                     <dl>
                         <dt>Размер формы:</dt>
                         <dd>54x52x2,5 см</dd>
@@ -65,16 +78,20 @@
                         <dd>5 кг</dd>
                     </dl>
                     <div class="price">
-                        <strong>4 500 &#8381;</strong>
-                        <span class="discount">Со скидкой 50%</span>
+                        <strong>{{ product.price_current }} &#8381;</strong>
+                        {{# if product.discount }}<span class="discount">Со скидкой {{ product.discount }}%</span>{{/if}}
                     </div>
                     <div class="spinner">
                         <div class="spinner__counts">
-                            <button class="minus"><i class="icon-minus"></i></button>
-                            <span>10</span>
-                            <button class="plus"><i class="icon-plus"></i></button>
+                            <button class="minus" onclick="filCat.sumQuantity('{{ product.id }}', 'minus')">
+                                <i class="icon-minus"></i>
+                            </button>
+                            <span class="quantity">10</span>
+                            <button class="plus" onclick="filCat.sumQuantity('{{ product.id }}', 'plus')">
+                                <i class="icon-plus"></i>
+                            </button>
                         </div>
-                        <a href="#">В корзину</a>
+                        <a href="javascript:void(0)" onclick="filCat.addToCart('{{ product.id }}', 'add')">В корзину</a>
                     </div>
                 </div>
             </header>
@@ -85,27 +102,8 @@
                     <span class="tab">Отзывы</span>
                     <span class="tab">Обзоры</span>
                 </nav>
-                <div class="product__tabs_main">
-                    <div class="text-box">
-                        <h1>Как создать структуру интервью h1</h1>
-                        <h2>Чтобы наглядно показать структуру интервью, мы выбрали наш кейс. h2</h2>
-                        <p>Сайт рыбатекст поможет дизайнеру, верстальщику, <a href="#">вебмастеру сгенерировать</a> несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</p>
-                        <img src="/images/site/gallery/temp-gallery-07.jpg" alt="img">
-                        <blockquote> Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений.</blockquote>
-                        <p>Сайт рыбатекст поможет дизайнеру, верстальщику, <a href="#">вебмастеру сгенерировать</a> несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях:</p>
-                        <ol>
-                            <li>Сайт рыбатекст поможет дизайнеру</li>
-                            <li>Сайт рыбатекст поможет дизайнеру</li>
-                            <li>Сайт рыбатекст поможет дизайнеру</li>
-                        </ol>
-                        <p><strong>Сайт рыбатекст поможет дизайнеру</strong></p>
-                        <ul>
-                            <li>Сайт рыбатекст поможет дизайнеру</li>
-                            <li>Сайт рыбатекст поможет дизайнеру</li>
-                            <li>Сайт рыбатекст поможет дизайнеру</li>
-                        </ul>
-                    </div>
-                </div>
+
+                <div class="product__tabs_main"><div class="text-box">{{ product.text }}</div></div>
             </div>
         </section>
         <section class="catalog preview">
@@ -246,3 +244,22 @@
         </section>
     </div>
 </div>
+
+{{#contentFor "footer"}}
+    <!-- filters-categories -->
+    <script src="/js/site/filters-categories.js"></script>
+    <script>
+        $(document).ready(function(){
+            filCat.initialize({
+                cont      : '.selResult',
+                isLoadCat : false,
+                num       : '.selReN > .i',
+                pagination: true,
+                url_req   : '/',
+            });
+
+            setTimeout(filCat.selectCatalogs(), 0);
+        });
+    </script>
+    <script type="text/javascript" src="/js/site/gallery.js"></script>
+{{/contentFor}}

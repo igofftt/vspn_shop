@@ -61,30 +61,47 @@ const
 	 * @param next
 	 */
 	catalogProduct = (req, res, next) => {
+		let
+			id = req.params.id;
+
 		const
+			mathObj = obj => _.merge(obj, {price_current: obj.price - (obj.price / 100 * obj.discount)}),
+
 			renderPage = () => res.render('site/Catalog/catalogProduct', {
-				brand        : req.store.getState('site.brand'),
-				error        : req.flash('error').toString(),
-				menu         : req.store.getState('site.menu'),
-				menuTop      : req.store.getState('site.menuTop'),
-				meta         : {title: 'VSPN'},
+				brand  : req.store.getState('site.brand'),
+				error  : req.flash('error').toString(),
+				menu   : req.store.getState('site.menu'),
+				menuTop: req.store.getState('site.menuTop'),
+
+				meta: {
+					author     : req.store.getState('site.product').author || '',
+					description: req.store.getState('site.product').description || '',
+					keywords   : req.store.getState('site.product').keywords || '',
+					title      : 'VSPN - ' + req.store.getState('site.product').name || '',
+				},
+
 				parent_module: 'indexPage',
+				product      : mathObj(req.store.getState('site.product')),
 				this_module  : 'indexPage',
 				user         : req.user,
 			}),
 
+			getMenuTop = () => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
+				req.store.setState('site.menuTop', tree, renderPage)),
+
+			getProduct = () => models.productsModel
+				.findById(id, {raw: true, where: {active: 1}})
+				.then(dataObl => req.store.setState('site.product', dataObl, getMenuTop)),
+
 			getBrand = () => models.brandModel
 				.findAll({order: 'id ASC', raw: true})
-				.then(dataObl => req.store.setState('site.brand', dataObl, renderPage)),
+				.then(dataObl => req.store.setState('site.brand', dataObl, getProduct)),
 
-			getMenuTop = () => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
-				req.store.setState('site.menuTop', tree, getBrand)),
-
-			getMenu = callback => models.menuModel
+			getMenu = () => models.menuModel
 				.findAll({order: 'id ASC', raw: true})
-				.then(dataObl => req.store.setState('site.menu', dataObl, callback));
+				.then(dataObl => req.store.setState('site.menu', dataObl, getBrand));
 
-		return getMenu(getMenuTop);
+		return getMenu();
 	},
 
 	/**

@@ -23,7 +23,7 @@ var
 							parent = $('.product-' + id),
 							parentTmp;
 
-						if(type === 'add') {
+						if(type === 'add' && parent.data('animations') !== false) {
 							parent
 								.clone()
 								.addClass('product-' + id + '-tmp product-tmp ')
@@ -131,8 +131,9 @@ var
 			this.url  = '/';
 			this.cont = this.conf.cont;
 			this.num  = this.conf.num;
-			filCat.selectCategory($('[name=category]').val())
-			filCat.loadOnclick()
+			this.isLoadCat = this.conf.isLoadCat == undefined ? true : this.conf.isLoadCat;
+			filCat.selectCategory($('[name=category]').val());
+			filCat.loadOnclick();
 		},
 
 		// подгружаем обработчки событий
@@ -188,6 +189,9 @@ var
 		},
 
 		selectCatalogs: function() {
+			if(!this.isLoadCat)
+				return false;
+
 			let
 				category = $('[name=category]').val(),
 				filterGroup = $('.filterGroup > div.active').data('filterGroup'),
@@ -249,7 +253,7 @@ var
 									'</a>' +
 									'<div class="spinner">' +
 									'<div class="spinner__counts">' +
-									'<button class="minus" onclick="filCat.sumQuantity(' + d.id + ', \'minus\')" >' +
+									'<button class="minus" onclick="filCat.sumQuantity(' + d.id + ', \'minus\')">' +
 									'<i class="icon-minus"></i>' +
 									'</button>' +
 									'<span class="quantity">10</span>' +
@@ -286,6 +290,9 @@ var
 		},
 
 		selectCategory: function(category) {
+			if(!this.isLoadCat)
+				return false;
+
 			let oldCat = $('[name=category]').val();
 
 			$.ajax({
