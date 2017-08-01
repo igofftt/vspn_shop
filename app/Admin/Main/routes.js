@@ -8,7 +8,7 @@ const
 // middleware для проверки на авторизацию
 router.route(['/admin/*', '/admin'])
 	.get((req, res, next) => {
-		if(req.originalUrl === '/admin')
+		if(req.originalUrl === '/admin' || req.originalUrl === '/admin/')
 			return res.redirect('/admin/login');
 
 		if(req.isAuthenticated() || req.originalUrl === '/admin/login')
