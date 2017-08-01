@@ -6,7 +6,7 @@
             {{# each menu as |v| }}
                 {{# iff ../product.cat '==' v.id }}
                     {{# iff v.cat '==' '0' }}
-                        <span>{{ v.name }}</span>
+                        <a href="/catalog/{{ v.id }}">{{ v.name }}</a>
                     {{ else }}
                         <a href="/catalog/{{ v.id }}">{{ v.name }}</a>
 
@@ -17,8 +17,7 @@
                 {{/iff}}
             {{/ each }}
 
-            <!--<a href="/catalog/1">Формы</a>-->
-            <!--<span>Формы для камня</span>-->
+            <span>{{ product.name }}</span>
         </div>
         <section class="product">
             <header class="layout product-{{ product.id }}" data-animations="false">
@@ -97,13 +96,18 @@
             </header>
             <div class="product__tabs">
                 <nav>
-                    <span class="tab current">Описание</span>
-                    <span class="tab">Характеристика</span>
-                    <span class="tab">Отзывы</span>
-                    <span class="tab">Обзоры</span>
+                    <span class="tab current" data-tab="tab-1">Описание</span>
+                    <span class="tab" data-tab="tab-2">Характеристика</span>
+                    <span class="tab" data-tab="tab-3">Отзывы</span>
+                    <span class="tab" data-tab="tab-4">Обзоры</span>
                 </nav>
 
-                <div class="product__tabs_main"><div class="text-box">{{ product.text }}</div></div>
+                <div class="product__tabs_main current" data-tab="tab-1">
+                    <div class="text-box">{{ product.text }}</div>
+                </div>
+                <div class="product__tabs_main" data-tab="tab-2"><div class="text-box">Характеристика</div></div>
+                <div class="product__tabs_main" data-tab="tab-3"><div class="text-box">Отзывы</div></div>
+                <div class="product__tabs_main" data-tab="tab-4"><div class="text-box">Обзоры</div></div>
             </div>
         </section>
         <section class="catalog preview">

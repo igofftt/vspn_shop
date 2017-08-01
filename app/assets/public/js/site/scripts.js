@@ -129,5 +129,24 @@ $(document).ready(function() {
 	$(window).resize(function() {
 		if($('.grid').length > 0)
 			gridFont();
+	});
+
+	// tabs
+	$('.tab').click(function() {
+		let
+			currentTab = $(this),
+			parent = currentTab.parent(),
+			parent_parent = parent.parent();
+
+		if(parent_parent.hasClass('product__tabs')) {
+			parent.children().removeClass('current');
+			parent_parent.children('.product__tabs_main').removeClass('current');
+			currentTab.addClass('current');
+
+			parent_parent.children('.product__tabs_main').map((t, r) => {
+				if($(r).data('tab') === currentTab.data('tab'))
+					$(r).addClass('current');
+			})
+		}
 	})
 });

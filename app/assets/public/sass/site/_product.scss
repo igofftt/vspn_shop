@@ -206,6 +206,10 @@
     }
     &_main {
       padding: 43px 108px;
+      display: none;
+      &.current {
+        display: block;
+      }
     }
   }
 }
