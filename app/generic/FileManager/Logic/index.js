@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {hex, getModule} from 'generic/helpers';
 import models from 'app/Admin/models';
 import gm from 'gm';
+import path from 'path';
 
 const
 
@@ -12,7 +13,7 @@ const
 	 */
 	getCrop = (req, res) => models.filesModel
 			.findById(req.body.id)
-			.then(objFile => res.render('admin/FileManager/cropImage', {file: objFile})),
+			.then(objFile => res.render('modulesGeneric/FileManager/cropImage', {file: objFile})),
 
 	/**
 	 * function init modal window to edit
@@ -35,7 +36,7 @@ const
 
 		return models.filesModel
 		.findById(req.body.id)
-		.then(objFile => res.render('admin/FileManager/getEdit', {
+		.then(objFile => res.render('modulesGeneric/FileManager/getEdit', {
 			file      : objFile,
 			lang      : lang,
 			name_table: nameTable,
@@ -75,7 +76,7 @@ const
 		return models.filesModel
 			.findAll({raw: true, where: {active: 1, id_album: idAlbum, name_table: nameTable}})
 
-			.then(objFiles => res.render('admin/FileManager/showLoader', {
+			.then(objFiles => res.render('modulesGeneric/FileManager/showLoader', {
 				files     : objFiles,
 				hex       : hex(Date.now().toString()),
 				id_album  : idAlbum,
@@ -125,9 +126,12 @@ const
 
 		// check file
 		if(file) {
-			let pathOriginal = `./app/assets/images/files/original/${nameHexExt}`;
-			let pathSmall = `./app/assets/images/files/small/${nameHexExt}`;
-			let pathBig = `./app/assets/images/files/big/${nameHexExt}`;
+			let pathOriginal = `./app/assets/public/images/files/original/${nameHexExt}`;
+			let pathSmall = `./app/assets/public/images/files/small/${nameHexExt}`;
+			let pathBig = `./app/assets/public/images/files/big/${nameHexExt}`;
+			let pathOriginalApp = `${process.env.PWD}/app/assets/public/images/files/original/${nameHexExt}`;
+			let pathSmallApp = `${process.env.PWD}/app/assets/public/images/files/small/${nameHexExt}`;
+			let pathBigApp = `${process.env.PWD}/app/assets/public/images/files/big/${nameHexExt}`;
 
 			const
 				queryFiles = () =>gm(pathOriginal).filesize((err, filesize) => {
@@ -141,6 +145,24 @@ const
 						size      : filesize,
 						type      : ext,
 					};
+
+					// Original
+					file.mv(pathOriginalApp, errBild => {
+						if(errBild)
+							return res.status(500).send(errBild);
+					});
+
+					// Small
+					file.mv(pathSmallApp, errBild => {
+						if(errBild)
+							return res.status(500).send(errBild);
+					});
+
+					// Big
+					file.mv(pathBigApp, errBild => {
+						if(errBild)
+							return res.status(500).send(errBild);
+					});
 
 					// TODO добавить проверку на to_main
 					return models.filesModel
@@ -172,7 +194,7 @@ const
 
 			const
 				cropResizeBig = module => {
-					// crop & resize to small
+					// crop & resize to big
 					gm(pathOriginal).size((err, size) => {
 						let width = _.get(module, 'big_width', 1000), widthCrop = _.get(module, 'big_width', 1000);
 						let height = _.get(module, 'big_height', 800), heightCrop = _.get(module, 'big_height', 800);
@@ -192,6 +214,8 @@ const
 							});
 					})
 				};
+
+console.log('pathOriginal', pathOriginal)
 
 			// save original
 			file.mv(pathOriginal, errBild => {

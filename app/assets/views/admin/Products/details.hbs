@@ -10,6 +10,24 @@
                     {{{ v.html_top }}}
                     {{{ v.html }}}
                     {{{ v.html_bottom }}}
+
+                    {{# iff v.plugins.name '==' 'album' }}
+                        <script>
+                            $.ajax({
+                                type: "post",
+                                url: "/admin/file_manager/show_loader",
+                                data: {
+                                    name_table : '{{ ../../table }}',
+                                    id_album   : '{{ ../../id }}'
+                                },
+                                cache: false,
+                                dataType: "html",
+                                success: function (data) {
+                                    $('#album').html(data);
+                                }
+                            })
+                        </script>
+                    {{/iff}}
                 {{/each}}
 
                 <div class="text-right bottom-panel">

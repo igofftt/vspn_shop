@@ -26,30 +26,25 @@
                         <div class="gallery-main">
                             <button class="next"><i class="icon-chevron-thin-right"></i></button>
                             <button class="prev"><i class="icon-chevron-thin-left"></i></button>
-                            <figure data-item="1" class="current" style="background-image: url('/images/site/gallery/temp-gallery-01.jpg')"></figure>
+                            <figure
+                                    data-item="0"
+                                    class="current"
+                                    style="background-image: url('/images/files/small/{{ files.0.file }}')"
+                            ></figure>
                         </div>
                         <div class="gallery-list">
                             <ul>
-                                <li>
-                                    <div>
-                                        <figure class="current" data-item="1" style="background-image: url('/images/site/gallery/temp-gallery-02.jpg')"></figure>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <figure data-item="2" style="background-image: url('/images/site/gallery/temp-gallery-03.jpg')"></figure>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <figure data-item="3" style="background-image: url('/images/site/gallery/temp-gallery-04.jpg')"></figure>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <figure data-item="4" style="background-image: url('/images/site/gallery/temp-gallery-05.jpg')"></figure>
-                                    </div>
-                                </li>
+                                {{# each files as |v k| }}
+                                    <li>
+                                        <div>
+                                            <figure
+                                                    class="{{# iff k '==' '0' }}current{{/iff}}"
+                                                    data-item="{{ k }}"
+                                                    style="background-image: url('/images/files/small/{{ v.file }}')"
+                                            ></figure>
+                                        </div>
+                                    </li>
+                                {{/ each }}
                             </ul>
                         </div>
                     </div>

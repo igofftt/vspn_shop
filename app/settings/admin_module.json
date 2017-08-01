@@ -75,6 +75,7 @@
     "plugins": [
       "name",
       "text",
+      "album",
       "active",
       "tags",
       "cat",

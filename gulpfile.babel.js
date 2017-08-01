@@ -101,6 +101,12 @@ gulp.task('srv', cb => {
 			});
 	});
 
+	// watch which json
+	gulp.watch('./app/settings/*.json', e => {
+		gulp.src(e.path, {base: './app/settings/'})
+			.pipe(gulp.dest(`${outDir}/app/settings/`));
+	});
+
 	// css frontend
 	gulp.watch('./app/assets/public/css/**/*.css', e => {
 		gulp.src(e.path, {base: './app/assets/public/css'})

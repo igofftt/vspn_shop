@@ -70,6 +70,7 @@ const
 			renderPage = () => res.render('site/Catalog/catalogProduct', {
 				brand  : req.store.getState('site.brand'),
 				error  : req.flash('error').toString(),
+				files  : req.store.getState('site.files.product'),
 				menu   : req.store.getState('site.menu'),
 				menuTop: req.store.getState('site.menuTop'),
 
@@ -93,9 +94,13 @@ const
 				.findById(id, {raw: true, where: {active: 1}})
 				.then(dataObl => req.store.setState('site.product', dataObl, getMenuTop)),
 
+			getFiles = () => models.filesModel
+				.findAll({limit: 10, raw: true, where: {active: 1, id_album: id, name_table: 'products'}})
+				.then(dataObl => req.store.setState('site.files.product', dataObl, getProduct)),
+
 			getBrand = () => models.brandModel
 				.findAll({order: 'id ASC', raw: true})
-				.then(dataObl => req.store.setState('site.brand', dataObl, getProduct)),
+				.then(dataObl => req.store.setState('site.brand', dataObl, getFiles)),
 
 			getMenu = () => models.menuModel
 				.findAll({order: 'id ASC', raw: true})
