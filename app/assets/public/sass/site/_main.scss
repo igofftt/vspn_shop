@@ -192,7 +192,7 @@ svg {@extend %fullBlock;}
       width: 31px;
       height: 27px;
       position: relative;
-      span {
+       > span {
         color: $button;
         font-weight: 600;
         position: absolute;
@@ -289,4 +289,8 @@ svg {@extend %fullBlock;}
     height: 12px;
     color: $border;
   }
+}
+
+.hidden {
+  display: none;
 }

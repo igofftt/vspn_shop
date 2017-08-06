@@ -12,18 +12,24 @@ $(document).ready(function() {
 			$range_price = document.getElementById('price_range'),
 			$range_width = document.getElementById('width_range');
 
+		let
+			widthRangeMax = parseInt($('[name=width-range-max]').val()),
+			widthRangeMin = parseInt($('[name=width-range-min]').val());
+
+		console.log(widthRangeMax)
+
 		noUiSlider.create($range_width, {
 			connect : [true, false],
-			range   : {max: [100], min: [0]},
-			start   : [70],
-			step    : 5,
+			range   : {max: [widthRangeMax], min: [widthRangeMin]},
+			start   : [widthRangeMax/2],
+			step    : 1,
 			tooltips: [wNumb({decimals: 0, postfix: ' mm', thousand: '&nbsp;'})],
 		});
 
 		let
-			$input0 = document.getElementById('input-with-keypress-0'),
-			$input1 = document.getElementById('input-with-keypress-1'),
-			inputs = [$input0, $input1];
+			inputMin = document.getElementById('width-price-min'),
+			inputMax = document.getElementById('width-price-max'),
+			inputs = [inputMin, inputMax];
 
 		noUiSlider.create($range_price, {
 			connect: [false, true, false],
@@ -34,13 +40,13 @@ $(document).ready(function() {
 				thousand: ' ',
 			}),
 
-			range: {max: [20000], min: [0]},
-			start: [0, 10000],
-			step : 100,
+			range: {max: [parseFloat(inputMax.value)], min: [parseFloat(inputMin.value)]},
+			start: [0, (inputMax.value/2)],
+			step : 10,
 		});
 
 		$range_price.noUiSlider.on('update', (values, handle) => {
-			inputs[handle].value = values[handle];
+			inputs[handle].value = (values[handle]);
 		});
 
 		/* change input in range */
@@ -149,4 +155,35 @@ $(document).ready(function() {
 			})
 		}
 	})
+
+	let findBySel = function(el, nameSearch, selector, searchBy) {
+		let
+			result = el,
+			_selector = selector || 'tagName';
+
+		while(((result || {})[_selector] || 'undefined').toLowerCase() !== nameSearch.toLowerCase()) {
+			if(!result) {
+				break;
+			}
+
+			result = (result ||{})[searchBy ? searchBy + 'Node' : 'parentNode'];
+		}
+
+		return result;
+	};
+
+	let closeDropdown = function(el) {
+		let element = findBySel(el.target, 'dropdown', 'id');
+
+		if(!element) {
+			$('#' + $('[data-dropdown]').data('dropdown')).removeClass('show');
+			$('body').off('click', closeDropdown);
+		}
+	};
+
+	$('[data-dropdown]').click(function() {
+		$('#' + $(this).data('dropdown')).addClass('show');
+		$('body').off('click', closeDropdown);
+		$('body').on('click', closeDropdown);
+	});
 });

@@ -16,13 +16,37 @@
                 <div class="enter">
                     <a href="#">Войти</a>
                 </div>
-                <a href="#" class="basket shop-cart">
-                    <i>
-                        <svg> <use xlink:href="/images/site/svg/sprite.svg#icon_cart"></use> </svg>
-                        <span>45 000</span>
-                    </i>
-                    <p>Корзина</p>
-                </a>
+
+                <div class="dropdown" id="dropdown">
+                    <a href="javascript:void(0)" data-dropdown="dropdown-shop-cart" class="basket shop-cart dropbtn">
+                        <i>
+                            <svg> <use xlink:href="/images/site/svg/sprite.svg#icon_cart"></use> </svg>
+                            <span class="selReN"><span></span> руб.</span>
+                        </i>
+
+                        <p>Корзина</p>
+                    </a>
+
+                    <div id="dropdown-shop-cart" class="dropdown__content">
+                        <div class="angle"></div>
+                        <p class="title">Корзина</p>
+                        <div class="basketCont" id="basketCont"><p>Корзина пуста</p></div>
+
+                        <div class="">
+                            <div class="basket_dropdown_btn hidden">
+                                <div style="width: 49%; display: inline-table;">
+                                    <p>Итог:</p>
+                                    <span></span>
+                                </div>
+                                <div style="width: 50%; display: inline-table;">
+                                    <button type="button" class="btn btn-danger" onclick="href('/shop/basket')">
+                                        Перейти в корзину
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

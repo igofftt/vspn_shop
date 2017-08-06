@@ -33,7 +33,8 @@ export default (sequelize, Datatypes) => {
 
 			keywords: Datatypes.STRING(512),
 			name    : Datatypes.STRING(512),
-			price   : Datatypes.STRING(512),
+			params  : Datatypes.JSON,
+			price   : Datatypes.INTEGER,
 			sort    : Datatypes.INTEGER,
 			tags    : Datatypes.STRING(512),
 			text    : Datatypes.TEXT,
@@ -70,6 +71,7 @@ export default (sequelize, Datatypes) => {
 // 	title varchar(512),
 // 	to_main integer,
 // 	description varchar(512),
+// 	params json,
 // 	created_at timestamp NULL DEFAULT NULL,
 // 	deleted_at timestamp NULL DEFAULT NULL,
 // 	updated_at timestamp NULL DEFAULT NULL

@@ -63,19 +63,21 @@
 
                             <div class="sub-categories-cont"></div>
                         </fieldset>
-                        <p>Толщина камня</p>
+                        <p>{{ params_name }}</p>
                         <fieldset>
                             <div class="form-range">
                                 <div id="width_range"></div>
                             </div>
+                            <input type="hidden" name="width-range-max" value="{{ filters.params.0.val_max }}">
+                            <input type="hidden" name="width-range-min" value="{{ filters.params.0.val_min }}">
                         </fieldset>
                         <p>Цена</p>
                         <fieldset>
                             <div class="form-range">
                                 <div id="price_range" class="twice"></div>
                                 <div class="range-inputs">
-                                    <input type="text" id="input-with-keypress-0">
-                                    <input type="text" id="input-with-keypress-1">
+                                    <input type="text" id="width-price-min" value="{{ filters.price.0.price_min }}">
+                                    <input type="text" id="width-price-max" value="{{ filters.price.0.price_max }}">
                                 </div>
                             </div>
                         </fieldset>

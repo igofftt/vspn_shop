@@ -1,8 +1,6 @@
 var
 	filCat = {
 		addToCart: function(id, type) {
-			$('.product-cart-shop-' + id).remove();
-
 			$.ajax
 			({
 				cache: false,
@@ -10,8 +8,8 @@ var
 				data: {
 					get_data: true,
 					id      : id,
+					quantity: parseFloat($('.product-' + id + ' .quantity').html()),
 					type    : type,
-					weights : (parseFloat($('.product-' + id + ' .weight > span').html()) * 1000).toFixed(2),
 				},
 
 				dataType: 'JSON',
@@ -59,14 +57,14 @@ var
 
 						let allPrice = 0, d, t = '';
 
-						for(let i = 0; data.product.data.length > i; i++) {
-							d = data.product.data[i];
-							let weights = data.cart[d.id].weights || 0;
-							let price =((d.price_money - (d.price_money / 100 * d.discount || 0)) / 1000) * weights;
+						for(let i = 0; data.products.data.length > i; i++) {
+							d = data.products.data[i];
+							let quantity = data.cart[d.id].quantity || 0;
+							let price = (d.price - (d.price / 100 * d.discount || 0)) * quantity;
 
 							t += '<li class="product-cart-shop-' + d.id + '">' +
 								'<div class="shopping-basket">' +
-								'<div class="col-xs-6 col-sm-6 col-md-3 i thumbnail">';
+								'<div style="width: 25%; display: inline-table">';
 
 							if(_.isEmpty(d.file))
 								t += '<img src="/images/files/small/no_img.png"/>';
@@ -77,16 +75,16 @@ var
 								t += '<img src="/images/files/small/' + d.file +'"/>';
 
 							t +='</div>' +
-								'<div class="col-xs-6 col-sm-6 col-md-5 t">' +
-								'<p>' + d.cat_parent + '</p><span>' + d.name + '</span>' +
+								'<div style="width: 40%; display: inline-table">' +
+								'<span>' + d.name + '</span>' +
 								'</div>' +
 
-								'<div class="col-xs-6 col-sm-6 col-md-3 p">' +
-								'<span>' + price + '<i class=" glyphicon glyphicon-ruble"></i></span>' +
+								'<div style="width: 25%; display: inline-table">' +
+								'<span>' + price + 'руб.' +
 								'</div>' +
-								'<div class="col-xs-6 col-sm-6 col-md-1 c">' +
+								'<div style="width: 10%; display: inline-table">' +
 								'<a href="javascript:void(0)" onclick="filCat.addToCart(' + d.id + ', \'remove\')">' +
-								'<i class="glyphicon glyphicon-remove"></i>' +
+								'<i class="glyphicon glyphicon-remove">x</i>' +
 								'</a>' +
 								'</div>' +
 								'</div>' +
@@ -95,23 +93,25 @@ var
 							allPrice = allPrice + price;
 						}
 
-						if(type !== 'remove')
-							$('#basketCont').html(t);
+						$('#basketCont').html(t);
 
 						$('.basket_dropdown > .a').removeClass('hidden');
 						$('.btn-link-time').removeClass('hidden');
-						$('.basket_dropdown_btn > .b > span').html(allPrice);
+						$('.basket_dropdown_btn').removeClass('hidden');
+						$('.selReN > span').html(allPrice);
+						$('.basket_dropdown_btn > div > span').html(allPrice);
 						$('.moneyTop').html(allPrice);
 
-						if(!data.product.data.length) {
+						if(!data.products.data.length) {
 							$('.basket_dropdown > .a').addClass('hidden');
 							$('.shop-cart > .p').addClass('hidden');
 							$('.btn-link-time').addClass('hidden');
+							$('.basket_dropdown_btn').addClass('hidden');
 							$('.basketCont').html('<p>Корзина пуста</p><img src="/images/shop/logo.png" class="bgCategories">');
 							$('#basketCont').html('<p>Корзина пуста</p>');
 							$('.moneyTop').html(0);
 						} else
-							$('.shop-cart > .p').html(data.product.data.length).removeClass('hidden')
+							$('.shop-cart > .p').html(data.products.data.length).removeClass('hidden')
 					}
 				},
 
@@ -154,6 +154,9 @@ var
 				});
 
 				filCat.paginationCatalogs();
+
+				// // init cart min
+				filCat.addToCart(0, 'init');
 			}, 100)
 		},
 
@@ -275,6 +278,7 @@ var
 
 							$(filCat.num).html(data.products.count);
 							$(filCat.cont).html(t);
+
 							console.log('result: ', data)
 						}
 
@@ -306,7 +310,7 @@ var
 						t += '<div class="form-checks sub-categories-cont" style="margin-top: 15px">';
 
 						for(let i = 0; data.subCategories.length > i; i++) {
-							d = data.subCategories[i];
+							var d = data.subCategories[i];
 
 							t += '<div class="input-check">' +
 								'<input name="categories-sub[]" value="' + d.name + '" type="checkbox" id="check-sub' + d.name + '">' +

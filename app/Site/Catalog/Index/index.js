@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import models from 'app/Admin/models';
+import sequelize from 'sequelize';
 import {getCat, queryParse} from 'generic/helpers';
 
 const
@@ -8,51 +9,60 @@ const
 	 *
 	 * @param req
 	 * @param res
-	 * @param next
 	 */
-	addToCart = (req, res, next) => {
+	addToCart = (req, res) => {
+		// req.session.cart = {}
 		let
-			cart = [],
-			get_data = req.body.get_data,
+			cart = req.session.cart || {},
 			id = req.body.id,
 			idd = false,
 			quantity = req.body.quantity,
+			table = 'products',
 			type = req.body.type;
 
 		if(type === 'add') {
 			for(let i = 0; cart.length > i; i++)
-				if(cart[i].id === id) {
+				if(_.get(cart, `${i}.id`, 0) === id) {
 					idd = true;
 					break;
 				}
 
-			if(!idd)
-				_.merge(cart, {[id]: {id: id, quantity: quantity}})
+			if(!idd) {
+				_.merge(cart, {[id]: {id: id, quantity: quantity}});
+				_.setWith(req.session, 'cart', cart);
+			}
 		}
 
 		if(type === 'remove') {
-			for(let i = 0; cart.length > i; i++)
-				if(cart[i].id === id) {
-					_.unset(cart, i);
-					break;
-				}
-
-			//$this->requests->session()->put('cart', $cart);
+			_.unset(cart, _.find(cart, {id: id}).id);
+			_.setWith(req.session, 'cart', cart);
 		}
 
 		const
-			getProducts = callback => models.productsModel
-				.findAll({limit: show, offset: 50, order: 'id ASC', raw: true})
-				.then(dataObl => req.store.setState('site.products.data', dataObl, callback)),
-
-			toJson = res.json({
-			//	cart    : getsessions(),
+			toJson = () => res.json({
+				cart    : req.session.cart || {},
 				products: req.store.getState('site.products'),
 				result  : 'ok',
-			})
+			}),
 
-		return getProducts(toJson)
+			getProducts = () => {
+				let
+					cartId = _.map(req.session.cart || {}, c => c.id);
+
+				cartId = _.isEmpty(cartId) ? [0] : cartId;
+
+				return models.execute(`
+			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
+			ON "${table}"."id" = "files"."id_album" AND
+			"files"."name_table" = '${table}' AND "files"."main" = 1 WHERE "${table}"."id" IN (${cartId}) ORDER BY
+			"${table}"."id" ASC;
+			`)
+					.then(dataObl => req.store.setState('site.products.data', dataObl.rows || [], toJson))};
+
+		return getProducts()
 	},
+
+
 
 	/**
 	 * Functions forming index page a product
@@ -138,29 +148,49 @@ const
 	 * Functions forming index page a catalog
 	 * @param req
 	 * @param res
-	 * @param next
 	 */
-	indexCatalog = (req, res, next) => {
+	indexCatalog = (req, res) => {
 		let
 			query = queryParse(req);
+
+		let
+			paramsNames = {'stone_thickness': 'Толщина камня'};
 
 		const
 			renderPage = () => res.render('site/Catalog/indexCatalog', {
 				brand        : req.store.getState('site.brand'),
 				category     : req.params.id,
 				error        : req.flash('error').toString(),
+				filters      : req.store.getState('site.filters'),
 				menu         : req.store.getState('site.menu'),
 				menuTop      : req.store.getState('site.menuTop'),
 				meta         : {title: 'VSPN'},
 				page         : query.page || 1,
+
+				// TODO move to database
+				params_name  :  paramsNames[_.get(req.store.getState('site.filters'), 'params.name')],
 				parent_module: 'indexPage',
 				this_module  : 'indexPage',
 				user         : req.user,
 			}),
 
-			getMenuTop = () => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
-				req.store.setState('site.menuTop', tree, renderPage)),
+			// Gets min and max val
+			getNameParams = () => models.execute(`
+			SELECT params ->> 'name' AS name FROM products LIMIT 1`)
+				.then(dataObl => req.store.setState('site.filters.params.name', _.get(dataObl.rows, '0.name'), renderPage)),
 
+			// Gets min and max val
+			getValMinMax = () => models.execute(`
+			SELECT MAX(params ->> 'val') AS val_max, MIN(params ->> 'val') AS val_min FROM products
+			`)
+				.then(dataObl => req.store.setState('site.filters.params', dataObl.rows, getNameParams)),
+
+			// Gets min and max price
+			getPriceMinMax = () => models.execute('SELECT MAX(price) AS price_max, MIN(price) AS price_min FROM products')
+				.then(dataObl => req.store.setState('site.filters.price', dataObl.rows, getValMinMax)),
+
+			getMenuTop = () => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
+				req.store.setState('site.menuTop', tree, getPriceMinMax)),
 
 			getBrand = () => models.brandModel
 				.findAll({order: 'id ASC', raw: true})
@@ -183,10 +213,14 @@ const
 		let
 			category = req.body.category || 0,
 			currentPage = queryParse(req).page || 1,
-			show = 12;
+			show = 12,
+			table = 'products',
 
-		let
-			offset = (currentPage - 1) < 0 ? 0 : (currentPage - 1) * show;
+			where = {
+				sort: 'ASC',
+				limit: show,
+				offset: (currentPage - 1) < 0 ? 0 : (currentPage - 1) * show,
+			};
 
 		const
 			toJson = j => {
@@ -212,9 +246,17 @@ const
 			subCategories = () => models.menuModel.findAll({order: 'name ASC', raw: true, where: {'cat': category}})
 				.then(dataObl => req.store.setState('site.subCategories', dataObl, getCurrentCategory)),
 
-			getProducts = () => models.productsModel
-				.findAll({limit: show, offset: offset, order: 'id ASC', raw: true, where: {'cat': category}})
-				.then(dataObl => req.store.setState('site.products.data', dataObl, subCategories));
+			getProducts = () => models.execute(`
+			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
+			ON "${table}"."id" = "files"."id_album" AND
+			"files"."name_table" = '${table}' AND "files"."main" = 1 WHERE "${table}"."cat" = ${category} ORDER BY
+			 "${table}"."id" ${where.sort} limit ${where.limit} offset ${where.offset};
+		`)
+
+
+			// models.productsModel
+			// 	.findAll({limit: show, offset: offset, order: 'id ASC', raw: true, where: {'cat': category}})
+				.then(dataObl => req.store.setState('site.products.data', dataObl.rows, subCategories));
 
 		return getProducts();
 	};

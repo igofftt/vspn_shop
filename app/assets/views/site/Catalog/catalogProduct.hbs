@@ -27,7 +27,7 @@
                             <button class="next"><i class="icon-chevron-thin-right"></i></button>
                             <button class="prev"><i class="icon-chevron-thin-left"></i></button>
                             <figure
-                                    data-item="0"
+
                                     class="current"
                                     style="background-image: url('/images/files/small/{{ files.0.file }}')"
                             ></figure>
@@ -250,9 +250,9 @@
     <script>
         $(document).ready(function(){
             filCat.initialize({
-                cont      : '.selResult',
+                cont      : '.basketCont',
                 isLoadCat : false,
-                num       : '.selReN > .i',
+                num       : '.selReN',
                 pagination: true,
                 url_req   : '/',
             });
