@@ -28,13 +28,31 @@
                             })
                         </script>
                     {{/iff}}
+
+                    {{# iff v.plugins.name '==' 'characteristics' }}
+                        <script>
+                            $.ajax({
+                                type: "post",
+                                url: "/admin/components/show_loader_characteristics",
+                                data: {
+                                    name_table : '{{ ../../table }}',
+                                    id_album   : '{{ ../../id }}'
+                                },
+                                cache: false,
+                                dataType: "html",
+                                success: function (data) {
+                                    $('#characteristics').html(data);
+                                }
+                            })
+                        </script>
+                    {{/iff}}
                 {{/each}}
 
                 <div class="text-right bottom-panel">
                     <div class="loader"></div>
                     <button class="btn btn-success" type="submit">Сохранить</button>
-                    <button class="btn btn-primary" formaction="/admin/update/{{ table }}/{{{df id 0}}}/1" type="submit">Применить</button>
-                    <a class="btn btn-default" onclick="editM('hide')" type="button" href="javascript:void(0)">Отменить</a>
+                    <!--<button class="btn btn-primary" formaction="/admin/update/{{ table }}/{{{df id 0}}}/1" type="submit">Применить</button>-->
+                    <!--<a class="btn btn-danger" onclick="editM('hide')" type="button" href="javascript:void(0)">Закрыть</a>-->
                 </div>
             </form>
         </div>

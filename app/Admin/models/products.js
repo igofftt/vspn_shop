@@ -72,6 +72,7 @@ export default (sequelize, Datatypes) => {
 // 	to_main integer,
 // 	description varchar(512),
 // 	params json,
+// 	price integer,
 // 	created_at timestamp NULL DEFAULT NULL,
 // 	deleted_at timestamp NULL DEFAULT NULL,
 // 	updated_at timestamp NULL DEFAULT NULL

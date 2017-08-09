@@ -176,5 +176,36 @@
     "description": "Текстовое поле инпут \"Сортировка(имя сортируемой таблицы)\"",
     "idAttr": "inputSort",
     "sql_column": "sort"
+  },
+  {
+    "name": "price",
+    "typeField": "input",
+    "nameText": "Цена",
+    "nameAttr": "pl[price]",
+    "description": "Текстовое поле инпут \"Цена\"",
+    "idAttr": "inputPrice",
+    "sql_column": "price"
+  },
+  {
+    "name": "vendor_code",
+    "typeField": "input",
+    "nameText": "Артикул",
+    "nameAttr": "pl[vendor_code]",
+    "description": "Текстовое поле инпут \"Артикул\"",
+    "idAttr": "inputVendor_code",
+    "sql_column": "vendor_code"
+  },
+  {
+    "name": "characteristics",
+    "typeField": "object",
+    "nameText": "Характеристики",
+    "nameAttr": "pl[characteristics]",
+    "description": "Селекст объект \"Характеристики\"",
+    "idAttr": "inputCharacteristics",
+    "sql_column": "characteristics",
+    "body": {
+      "text": "<div id=\"characteristics\"></div>",
+      "type": "characteristics"
+    }
   }
 ]

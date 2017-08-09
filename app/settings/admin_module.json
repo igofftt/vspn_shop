@@ -73,9 +73,12 @@
       }
     ],
     "plugins": [
-      "name",
-      "text",
       "album",
+      "name",
+      "vendor_code",
+      "price",
+      "characteristics",
+      "text",
       "active",
       "tags",
       "cat",

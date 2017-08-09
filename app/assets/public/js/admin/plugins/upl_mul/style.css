@@ -1,17 +1,18 @@
-.im_sel
-{
+.form-file-upload {
+	display: inline-table;
+	float: right;
+}
+.im_sel {
 	display: none;
 	margin: 0 ;
 	height:29px;
 }
-.im_sel_a
-{
+.im_sel_a {
 	cursor: pointer;
 	/*color: #7d73a2;*/
 	font-size: 15px;
 }
-.im_sel_t
-{
+.im_sel_t {
 
 	background: #fafafa;
 	border: solid 1px #f6f6f6;
@@ -19,11 +20,11 @@
 	width: 100%;
 	/*   text-align: center;*/
 }
-.imag_bat
-{
+.imag_bat {
 	display: block;
-	margin: 10px auto;
-	padding: 10px 50px;
+	margin: 7px;
+	padding: 10px 10px;
+	cursor: pointer;
 }
 /*
 Uploadify

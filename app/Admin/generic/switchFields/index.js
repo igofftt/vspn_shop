@@ -110,6 +110,8 @@ const
 
 		let html;
 
+		console.log('c', c)
+
 		if(_.get(c, 'body.text'))
 			if(c.typeField === 'full-album')
 				html = _.get(c, 'body.text');

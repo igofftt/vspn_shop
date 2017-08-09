@@ -10,15 +10,20 @@ export default (req, res, next) => {
 	if(req.params.page) page = req.params.page;
 	let offset = (page - 1) < 0 ? 0 : (page - 1) * limit;
 	let where = {};
+	let table = 'products';
 	where = query.usertype && _.merge(where, {usertype: query.usertype});
 
 	// выборка нужного количества статей
 	const
-		findAll = count => models.productsModel
-			.findAll({limit: limit, offset: offset, order: 'id ASC', where: where})
+		findAll = count => models.execute(`
+			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
+			ON "${table}"."id" = "files"."id_album" AND
+			"files"."name_table" = '${table}' AND "files"."main" = 1  ORDER BY
+			 "${table}"."id" ASC limit ${limit} offset ${offset};
+		`)
 
 			.then(objData => getModule({name: 'products', req, res, userId: req.user.id},
-				module => { return {module, objData}; },
+				module => { return {module, objData: objData.rows}; },
 			))
 
 			.then(objResult => res.render('admin/Products/index', {

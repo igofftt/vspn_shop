@@ -8,6 +8,7 @@
     <meta name="author" content="{{ meta.author }}">
     <title>{{ meta.title }}</title>
 
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
     <script src="/js/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -110,8 +111,16 @@
 
             setTimeout(function() {
                 $('.container-editor .bottom-panel').animate({bottom: 0}, 800);
-                $('.container-editor .bottom-panel').width($('.container-editor .body').width() + 30);
+//                $('.container-editor .bottom-panel').width($('.container-editor .body').width() + 30);
             }, 400)
+
+            setTimeout(function() {
+                $('.container-editor .body').height($(window).height() - 95);
+            }, 1300)
+
+            $(window).resize(function() {
+                $('.container-editor .body').height($(window).height() - 95);
+            })
         }
 
         if(t === 'hide') {
@@ -121,6 +130,7 @@
                 opacity: 0,
             }, 500)
 
+            $('.container-editor .body').height($(window).height());
             $('#container-editor .body').html('');
         }
     }
