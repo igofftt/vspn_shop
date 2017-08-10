@@ -211,7 +211,7 @@
 				'</div>' +
 				'<div class="col col-8">' +
 				'<a href="javascript:void(0)" data-table="products">' +
-					+ d.name +
+					d.name +
 				'</a>' +
 				'<div>Цена: ' + d.price + '</div>' +
 				'<div>Артикул: #' + (d.vendor_code ? d.vendor_code : d.id) + '</div>' +
