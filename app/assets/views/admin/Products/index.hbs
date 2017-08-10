@@ -57,7 +57,7 @@
                                 {{ name }}
                             </a>
                             <div>Цена: {{ price }}</div>
-                            <div>Артикул: {{ vendor_name }}</div>
+                            <div>Артикул: {{# if vendor_name }}#{{ vendor_name }}{{ else }}#{{ id }}{{/if}}</div>
                         </div>
                     </div>
                 </div>
