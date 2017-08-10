@@ -45,6 +45,8 @@ export default (sequelize, Datatypes) => {
 				field: 'updated_at',
 				type : Sequelize.DATE,
 			},
+
+			vendor_code: Datatypes.STRING,
 		},
 
 		{
@@ -73,6 +75,7 @@ export default (sequelize, Datatypes) => {
 // 	description varchar(512),
 // 	params json,
 // 	price integer,
+// 	vendor_code varchar(64),
 // 	created_at timestamp NULL DEFAULT NULL,
 // 	deleted_at timestamp NULL DEFAULT NULL,
 // 	updated_at timestamp NULL DEFAULT NULL

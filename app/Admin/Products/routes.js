@@ -7,5 +7,5 @@ const
 
 router.route('/admin/index/products').get(Mainlist);
 router.route('/admin/load-update/products/:id?/:apply?').post(Details.index);
-router.route('/admin/update/products/:id?/:apply?').post(Details.update);
+router.route('/admin/update/products/:id?').post(Details.update);
 export default router

@@ -131,21 +131,21 @@ const
 				: pl[Object.keys(pl)[i]];
 
 		const
-			endRedir = () => {
-				if(_.get(req, 'params.apply'))
-					return res.redirect(`/admin/update/${table}/${id}`);
-				else
-					return res.redirect(`/admin/index/${table}`);
-			};
+			sendResult = objResult => res.json({data: objResult || [], result: 'ok'}),
 
-
-		console.log('	models[`${table}Model`]', id)
+			getProduct = () => models.execute(`
+			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
+			ON "${table}"."id" = "files"."id_album" AND
+			"files"."name_table" = '${table}' AND "files"."main" = 1 
+			 WHERE "${table}"."id" = '${id}';
+		`)
+				.then(objData => sendResult(objData.rows));
 
 		// create or update table row
 		if(id && id > 0)
-			models[`${table}Model`].update(obj, {where: {id: id}}).then(() => endRedir());
+			models[`${table}Model`].update(obj, {where: {id: id}}).then(() => getProduct());
 		else
-			models[`${table}Model`].create(obj).then(() => endRedir());
+			models[`${table}Model`].create(obj).then(() => sendResult());
 	};
 
 export default {index, update}

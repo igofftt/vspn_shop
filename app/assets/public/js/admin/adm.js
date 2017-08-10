@@ -188,6 +188,41 @@
 			document.getElementById('select1').options[0].selected = true;
 		},
 
+		renderRow: function(obj) {
+			let t = '';
+
+			for(let i = 0; obj.length > i; i++) {
+				let d = obj[i];
+
+				t += '<div class="list-dr grid edit-link" data-table="products" data-id="' + d.id + '">' +
+					'<div class="row">' +
+					'<div class="col col-4">' +
+					'<div class="thumbnail-old">';
+
+				if(d.file)
+					if(d.crop)
+						t +='<img src="/images/files/small/' + d.crop + '" />';
+					else
+						t +='<img src="/images/files/small/' + d.file + '" />';
+				else
+					t +='<img src="/images/no_img.png" />';
+
+				t += '</div>' +
+				'</div>' +
+				'<div class="col col-8">' +
+				'<a href="javascript:void(0)" data-table="products">' +
+					+ d.name +
+				'</a>' +
+				'<div>Цена: ' + d.price + '</div>' +
+				'<div>Артикул: #' + (d.vendor_code ? d.vendor_code : d.id) + '</div>' +
+				'</div>' +
+				'</div>' +
+				'</div>'
+			}
+
+			return t;
+		},
+
 		rowDelete: function rowDelete(id, t, n) {
 			$('#modalDel').modal('show');
 			$('.delbMod').attr('onclick','$.adm.rowDeleteOk('+ id +', '+ t +', \''+ n +'\')');
@@ -223,6 +258,30 @@
 
 				type: 'post',
 				url : '/admin/_tools/rowDelete',
+			});
+		},
+
+		saveProduct: function(searchParam, id) {
+			$.ajax({
+				cache   : false,
+				data    : $(searchParam).serializeArray(),
+				dataType: 'JSON',
+
+				success: function(data) {
+					if(data.result === 'ok')
+						$.adm.editM('hide');
+
+					console.log($.adm.renderRow(data.data))
+
+					if(!_.isEmpty(data.data))
+						$('[data-id="' + id + '"]').replaceWith($.adm.renderRow(data.data));
+					else {
+
+					}
+				},
+
+				type: 'post',
+				url : '/admin/update/products/' + id,
 			});
 		},
 

@@ -5,7 +5,7 @@
         </div>
 
         <div class="ibox-content">
-            <form method="post" class="form-modules form-horizontal form-label-left">
+            <form method="post" class="form-modules form-horizontal form-label-left" id="form-products">
                 {{#each plugins as |v| }}
                     {{{ v.html_top }}}
                     {{{ v.html }}}
@@ -50,9 +50,12 @@
 
                 <div class="text-right bottom-panel">
                     <div class="loader"></div>
-                    <button class="btn btn-success btn-sm" type="submit">Сохранить</button>
-                    <!--<button class="btn btn-primary" formaction="/admin/update/{{ table }}/{{{df id 0}}}/1" type="submit">Применить</button>-->
-                    <!--<a class="btn btn-danger" onclick="editM('hide')" type="button" href="javascript:void(0)">Закрыть</a>-->
+
+                    <button
+                            class="btn btn-success btn-sm"
+                            onclick="$.adm.saveProduct('#form-products', {{ id }})"
+                            type="button"
+                    >Сохранить</button>
                 </div>
             </form>
         </div>
