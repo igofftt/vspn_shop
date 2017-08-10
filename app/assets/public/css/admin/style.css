@@ -256,7 +256,7 @@ label {
 /* components */
 
 .bg-fon-edit-is {
-    bottom: calc(50% - 110px)!important;
+    bottom: calc(50% - 55px)!important;
     max-width: 500px;
     right: calc(50% - 250px);
     position: absolute;
