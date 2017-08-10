@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {hex, getModule} from 'generic/helpers';
 import models from 'app/Admin/models';
 import gm from 'gm';
+import fs from 'fs';
 import path from 'path';
 
 const
@@ -147,22 +148,13 @@ const
 					};
 
 					// Original
-					file.mv(pathOriginalApp, errBild => {
-						if(errBild)
-							return res.status(500).send(errBild);
-					});
+					fs.createReadStream(pathOriginal).pipe(fs.createWriteStream(pathOriginalApp));
 
 					// Small
-					file.mv(pathSmallApp, errBild => {
-						if(errBild)
-							return res.status(500).send(errBild);
-					});
+					fs.createReadStream(pathSmall).pipe(fs.createWriteStream(pathSmallApp));
 
 					// Big
-					file.mv(pathBigApp, errBild => {
-						if(errBild)
-							return res.status(500).send(errBild);
-					});
+					fs.createReadStream(pathBig).pipe(fs.createWriteStream(pathBigApp));
 
 					// TODO добавить проверку на to_main
 					return models.filesModel
