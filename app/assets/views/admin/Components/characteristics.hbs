@@ -52,13 +52,13 @@
                     let d = obj[i].value[ii];
 
                     if(d.type === 'input') {
-                        t += `<div class="col-${d.col}"><input class="form-control" name="${d.name}" type="text" placeholder="${d.name_p}"></div>
+                        t += `<div class="col-${d.col}"><input class="form-control" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
                             `;
                     }
 
                     if(d.type === 'color') {
                         t += `<div class="col-${d.col}">
-                            <input class="form-control"  type="color" id="example-color-input" name="${d.name}" type="text" placeholder="${d.name_p}"></div>
+                            <input class="form-control"  type="color" id="example-color-input" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
                             `;
                     }
                 }
