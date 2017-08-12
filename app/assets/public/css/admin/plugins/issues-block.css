@@ -7,17 +7,18 @@
     position: relative;
     width: 230px;
     max-width: 230px;
+    min-height: 100%;
 }
 
-.issues-block-1 > .bg {
-    width: 100%;
-    height: 250px;
+.issues-block-1 > .bg, .bg.tmp {
+    width: 230px;
+    height: 230px;
     background: #ebebeb;
     border: solid 1px #f75072;
     position: absolute;
     -webkit-transition: all .4s ease-in-out;
-    -o-transition: all .4s cubic-bezier(.3, .1, .3, -0.1);
-    transition: all .4s cubic-bezier(.3, .1, .3, -0.1);
+    -o-transition: all .4s cubic-bezier(1, 0, .3, 0);
+    transition: all .4s cubic-bezier(1, 0, .3, 0);
     cursor: pointer;
 }
 
@@ -40,26 +41,47 @@
     margin-bottom: 5px!important;
 }
 
-.issues-block-1:hover .bg[data-id="1"] {top: calc(250px * 0); z-index: 2;}
-.issues-block-1:hover .bg[data-id="2"] {top: calc(255px * 1); z-index: 2;}
-.issues-block-1:hover .bg[data-id="3"] {top: calc(255px * 2); z-index: 2;}
-.issues-block-1:hover .bg[data-id="4"] {top: calc(255px * 3); z-index: 2;}
-.issues-block-1:hover .bg[data-id="5"] {top: calc(255px * 4); z-index: 2;}
-.issues-block-1:hover .bg[data-id="6"] {top: calc(255px * 5); z-index: 2;}
-.issues-block-1:hover .bg[data-id="7"] {top: calc(255px * 6); z-index: 2;}
-.issues-block-1:hover .bg[data-id="8"] {top: calc(255px * 7); z-index: 2;}
-.issues-block-1:hover .bg[data-id="9"] {top: calc(255px * 8); z-index: 2;}
-.issues-block-1:hover .bg[data-id="10"] {top: calc(255px * 9); z-index: 2;}
-.issues-block-1:hover .bg[data-id="11"] {top: calc(255px * 10); z-index: 2;}
-.issues-block-1:hover .bg[data-id="12"] {top: calc(255px * 11); z-index: 2;}
-.issues-block-1:hover .bg[data-id="13"] {top: calc(255px * 12); z-index: 2;}
-.issues-block-1:hover .bg[data-id="14"] {top: calc(255px * 13); z-index: 2;}
-.issues-block-1:hover .bg[data-id="15"] {top: calc(255px * 14); z-index: 2;}
-.issues-block-1:hover .bg[data-id="16"] {top: calc(255px * 15); z-index: 2;}
-.issues-block-1:hover .bg[data-id="17"] {top: calc(255px * 16); z-index: 2;}
-.issues-block-1:hover .bg[data-id="18"] {top: calc(255px * 17); z-index: 2;}
-.issues-block-1:hover .bg[data-id="19"] {top: calc(255px * 18); z-index: 2;}
-.issues-block-1:hover .bg[data-id="20"] {top: calc(255px * 19); z-index: 2;}
+.issues-block-1:hover .bg[data-id="1"] {top: calc(250px * 0);}
+.issues-block-1:hover .bg[data-id="2"] {top: calc(255px * 1);}
+.issues-block-1:hover .bg[data-id="3"] {top: calc(255px * 2);}
+.issues-block-1:hover .bg[data-id="4"] {top: calc(255px * 3);}
+.issues-block-1:hover .bg[data-id="5"] {top: calc(255px * 4);}
+.issues-block-1:hover .bg[data-id="6"] {top: calc(255px * 5);}
+.issues-block-1:hover .bg[data-id="7"] {top: calc(255px * 6);}
+.issues-block-1:hover .bg[data-id="8"] {top: calc(255px * 7);}
+.issues-block-1:hover .bg[data-id="9"] {top: calc(255px * 8);}
+.issues-block-1:hover .bg[data-id="10"] {top: calc(255px * 9);}
+.issues-block-1:hover .bg[data-id="11"] {top: calc(255px * 10);}
+.issues-block-1:hover .bg[data-id="12"] {top: calc(255px * 11);}
+.issues-block-1:hover .bg[data-id="13"] {top: calc(255px * 12);}
+.issues-block-1:hover .bg[data-id="14"] {top: calc(255px * 13);}
+.issues-block-1:hover .bg[data-id="15"] {top: calc(255px * 14);}
+.issues-block-1:hover .bg[data-id="16"] {top: calc(255px * 15);}
+.issues-block-1:hover .bg[data-id="17"] {top: calc(255px * 16);}
+.issues-block-1:hover .bg[data-id="18"] {top: calc(255px * 17);}
+.issues-block-1:hover .bg[data-id="19"] {top: calc(255px * 18);}
+.issues-block-1:hover .bg[data-id="20"] {top: calc(255px * 19);}
+
+.bg[data-id="1"] {z-index: 1;}
+.bg[data-id="2"] {z-index: 2;}
+.bg[data-id="3"] {z-index: 3;}
+.bg[data-id="4"] {z-index: 4;}
+.bg[data-id="5"] {z-index: 5;}
+.bg[data-id="6"] {z-index: 6;}
+.bg[data-id="7"] {z-index: 7;}
+.bg[data-id="8"] {z-index: 8;}
+.bg[data-id="9"] {z-index: 9;}
+.bg[data-id="10"] {z-index: 10;}
+.bg[data-id="11"] {z-index: 11;}
+.bg[data-id="12"] {z-index: 12;}
+.bg[data-id="13"] {z-index: 13;}
+.bg[data-id="14"] {z-index: 14;}
+.bg[data-id="15"] {z-index: 15;}
+.bg[data-id="16"] {z-index: 16;}
+.bg[data-id="17"] {z-index: 17;}
+.bg[data-id="18"] {z-index: 18;}
+.bg[data-id="19"] {z-index: 19;}
+.bg[data-id="20"] {z-index: 20;}
 
 .table-issues-block {
     width: 100%;
@@ -93,5 +115,14 @@
     overflow: auto;
     height: 800px;
     margin-right: -20px;
+}
+
+.bg.tmp {
+    /*position: fixed;*/
+    /*z-index: 1056;*/
+    /*width: 250px;*/
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
 }
 /* issues-block */
