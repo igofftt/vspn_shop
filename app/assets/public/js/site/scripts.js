@@ -6,6 +6,10 @@ $(document).ready(function() {
 		});
 	}
 
+	setTimeout(function() {
+		$('.select2').css({maxWidth: $('.categories-main-fieldset').width()})
+	}, 500)
+
 	/* custom range */
 	function customRange() {
 		let
@@ -13,8 +17,8 @@ $(document).ready(function() {
 			$range_width = document.getElementById('width_range');
 
 		let
-			widthRangeMax = parseInt($('[name=width-range-max]').val()),
-			widthRangeMin = parseInt($('[name=width-range-min]').val());
+			widthRangeMax = parseInt($('[name=width_range_max]').val()),
+			widthRangeMin = parseInt($('[name=width_range_min]').val());
 
 		console.log(widthRangeMax)
 

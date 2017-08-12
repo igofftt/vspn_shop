@@ -46,7 +46,7 @@
             </header>
             <div class="catalog__content layout">
                 <aside>
-                    <form action="#">
+                    <form action="#" autocomplete="off" name="filter-form">
                         <p>Раздел</p>
                         <fieldset class="categories-main-fieldset">
                             <div class="form-selects">
@@ -68,8 +68,8 @@
                             <div class="form-range">
                                 <div id="width_range"></div>
                             </div>
-                            <input type="hidden" name="width-range-max" value="{{ filters.params.0.val_max }}">
-                            <input type="hidden" name="width-range-min" value="{{ filters.params.0.val_min }}">
+                            <input type="hidden" name="width_range_max" value="{{ filters.params.0.val_max }}">
+                            <input type="hidden" name="width_range_min" value="{{ filters.params.0.val_min }}">
                         </fieldset>
                         <p>Цена</p>
                         <fieldset>
@@ -86,7 +86,7 @@
                             <div class="form-checks">
                                 {{# each brand }}
                                     <div class="input-check">
-                                        <input value="{{ id }}" type="checkbox" id="check{{ id }}">
+                                        <input value="{{ id }}" name="brand[]" type="checkbox" id="check{{ id }}">
                                         <label for="check{{ id }}">{{ name }}</label>
                                     </div>
                                 {{/ each }}

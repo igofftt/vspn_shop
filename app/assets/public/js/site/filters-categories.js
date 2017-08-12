@@ -132,25 +132,23 @@ var
 			this.cont = this.conf.cont;
 			this.num  = this.conf.num;
 			this.isLoadCat = this.conf.isLoadCat == undefined ? true : this.conf.isLoadCat;
-			filCat.selectCategory($('[name=category]').val());
+			filCat.selectCategory();
 			filCat.loadOnclick();
 		},
 
 		// подгружаем обработчки событий
-		loadOnclick: function loadOnclick() {
+		loadOnclick: function() {
 			setTimeout(function() {
 				$('[name=categories-select]').on('change', function() {
-					filCat.selectCategory($(this).val())
+					filCat.selectCategory()
 				});
 
-				$('.filterGroup > div').click(function() {
-					$('.filterGroup > div').removeClass('active');
-					$(this).addClass('active');
-					filCat.selectCatalogs();
+				$('.input-check > label').click(function() {
+					filCat.selectCatalogs()
 				});
 
-				$('.iCheck-helper').click(function() {
-					filCat.selectCatalogs();
+				document.getElementById('price_range').noUiSlider.on('change', () => {
+					filCat.selectCatalogs()
 				});
 
 				filCat.paginationCatalogs();
@@ -210,9 +208,13 @@ var
 
 			if(1) {
 				request = {
-					category    : category,
-					filter_group: filterGroup,
-					input_search: inputSearch,
+					categories_sub: $('[name=categories_sub]').val(),
+					category      : category,
+					filter_group  : filterGroup,
+					form          : $('[name=filter-form]').serializeArray(),
+					input_search  : inputSearch,
+					price_max     : $('#width-price-max').val().replace('₽', '').toString().replace(' ', ''),
+					price_min     : $('#width-price-min').val().replace('₽', '').toString().replace(' ', ''),
 				};
 
 				$(this.cont).css({opacity: 0.3});
@@ -293,11 +295,11 @@ var
 			}
 		},
 
-		selectCategory: function(category) {
+		selectCategory: function() {
 			if(!this.isLoadCat)
 				return false;
 
-			let oldCat = $('[name=category]').val();
+			let category = $('[name=category]').val();
 
 			$.ajax({
 				cache   : false,
@@ -312,9 +314,9 @@ var
 						for(let i = 0; data.subCategories.length > i; i++) {
 							var d = data.subCategories[i];
 
-							t += '<div class="input-check">' +
-								'<input name="categories-sub[]" value="' + d.name + '" type="checkbox" id="check-sub' + d.name + '">' +
-								'<label for="check-sub' + d.name + '">' + d.name + '</label>' +
+							t += '<div class="input-check" onclick="filCat.selectCatalogs()">' +
+								'<input name="categories_sub[]" value="' + d.id + '" type="checkbox" id="check-sub' + d.id + '">' +
+								'<label for="check-sub' + d.id + '">' + d.name + '</label>' +
 							'</div>';
 						}
 
@@ -324,7 +326,7 @@ var
 						$('.name-current-cat').html(data.current_category.name);
 						$('[name=category]').val(data.current_category.id);
 						$('header .count > span').html(data.products.count);
-						curLoc = window.location.href.replace('catalog/' + oldCat, 'catalog/' + data.current_category.id);
+						curLoc = window.location.href.replace('catalog/' + category, 'catalog/' + data.current_category.id);
 
 						try {
 							window.history.pushState(null, data.current_category.name, curLoc);
