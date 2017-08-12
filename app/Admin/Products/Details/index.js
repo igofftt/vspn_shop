@@ -19,7 +19,7 @@ const
 				langShow      : !_.isEmpty(objResult.moduleThis.lang),
 				meta          : {title: `Админ панель - редактирование - ${_.get(objResult, 'dataObj.title')}`},
 				module        : objResult.moduleThis,
-				modulesPower  : modules,
+				modulesPower  : objResult.modules,
 				objData       : objResult.dataObj,
 				parent_module : table,
 				plugins       : objResult.pluginsThisHtml,
@@ -104,7 +104,7 @@ const
 						return _.assign(objResult, {columnSel, moduleThis, pluginsThisHtml, pluginsThisLangHtml})
 				})
 
-				.then(render)
+				.then(dataObj => render(_.merge(modules, dataObj)))
 				.catch(e => next(e));
 
 		getModule({req, res, userId: req.user.id}, queryData);
