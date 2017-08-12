@@ -204,7 +204,7 @@
         "print-color-adjust",
         "user-select",
         "pointer-events",
-        "contain",
+        "contain"
       ],
 
       {"unspecified": "top"}
@@ -225,7 +225,6 @@
     "selector-list-comma-space-before": "never",
     "selector-max-empty-lines": 0,
     "selector-no-vendor-prefix": true,
-    "selector-pseudo-class-blacklist": ["any", "/^first-/", "/^last-/"],
     "selector-pseudo-class-case": "lower",
     "selector-pseudo-class-no-unknown": [true, {"ignorePseudoClasses": ["global"]}],
     "selector-pseudo-class-parentheses-space-inside": "never",
@@ -243,6 +242,6 @@
     "value-list-comma-newline-after": "never-multi-line",
     "value-list-comma-newline-before": "never-multi-line",
     "value-list-comma-space-after": "always",
-    "value-list-comma-space-before": "never",
+    "value-list-comma-space-before": "never"
   }
 }

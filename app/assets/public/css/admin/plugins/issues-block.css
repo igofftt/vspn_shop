@@ -1,179 +1,139 @@
-/* issues-block */
 .issues-block {
     width: 100%;
     height: 100%;
 }
-
 .issues-block-1 {
     position: relative;
-    width: 230px;
-    max-width: 230px;
+    width: 100%;
     min-height: 100%;
     padding-bottom: 15px;
 }
-
-.issues-block-1 > .bg, .bg.tmp {
-    width: 230px;
-    height: 230px;
-    background: #ebebeb;
-    border: solid 1px #f75072;
+.issues-block-1 > .bg,
+.bg.tmp {
     position: absolute;
+    width: 100%;
+    height: 180px;
+    border: solid 1px #f75072;
+    background: #ebebeb;
     cursor: pointer;
 }
-
 .issues-block-1-1 > .bg {
     background: #d8caeb;
 }
-
 .issues-block-1-2 > .bg {
     background: #eb8176;
 }
-
 .issues-block-1-3 > .bg {
     background: #eb9b6b;
 }
-
 .issues-block-1-4 > .bg {
     background: #e7eb83;
 }
-
 .issues-block-1-5 > .bg {
     background: #aaebb2;
 }
-
 .issues-block-1-6 > .bg {
     background: #d7dad6;
 }
-
 .issues-block-1 > .bg {
     padding: 5px;
     color: #171717;
 }
-
 [data-hover="true"] .bg {
     position: inherit;
     margin-bottom: 5px !important;
 }
-
 .bg[data-id="1"] {
     z-index: 1;
 }
-
 .bg[data-id="2"] {
     z-index: 2;
 }
-
 .bg[data-id="3"] {
     z-index: 3;
 }
-
 .bg[data-id="4"] {
     z-index: 4;
 }
-
 .bg[data-id="5"] {
     z-index: 5;
 }
-
 .bg[data-id="6"] {
     z-index: 6;
 }
-
 .bg[data-id="7"] {
     z-index: 7;
 }
-
 .bg[data-id="8"] {
     z-index: 8;
 }
-
 .bg[data-id="9"] {
     z-index: 9;
 }
-
 .bg[data-id="10"] {
     z-index: 10;
 }
-
 .bg[data-id="11"] {
     z-index: 11;
 }
-
 .bg[data-id="12"] {
     z-index: 12;
 }
-
 .bg[data-id="13"] {
     z-index: 13;
 }
-
 .bg[data-id="14"] {
     z-index: 14;
 }
-
 .bg[data-id="15"] {
     z-index: 15;
 }
-
 .bg[data-id="16"] {
     z-index: 16;
 }
-
 .bg[data-id="17"] {
     z-index: 17;
 }
-
 .bg[data-id="18"] {
     z-index: 18;
 }
-
 .bg[data-id="19"] {
     z-index: 19;
 }
-
 .bg[data-id="20"] {
     z-index: 20;
 }
-
 .table-issues-block {
     width: 100%;
     height: 100%;
 }
-
 .table-issues-block .top {
+    border-bottom: solid 1px #e5e5e5;
     font-weight: 600;
     background: #f3f3f3;
-    border-bottom: solid 1px #e5e5e5;
 }
-
 .table-issues-block .body {
+    overflow: hidden;
     display: block;
     height: auto;
     background: #f3f3f3;
-    overflow: hidden;
 }
-
 .table-issues-block .tb {
-    width: 16.4%;
     display: inline-block;
+    width: 16.4%;
     border-left: solid 1px #e5e5e5;
     padding: 10px;
     cursor: pointer;
 }
-
 .table-issues-block .tb:first-child {
     border-left: none;
 }
-
 .table-issues-block > .body > .tb {
-    height: 800px;
     overflow: auto;
+    height: 100%;
     padding: 10px;
 }
-
 .table-issues-block > .body > .tb > div {
     overflow-x: hidden;
     height: 100%;
 }
-
-/* issues-block */
