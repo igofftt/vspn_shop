@@ -48,22 +48,12 @@
                     {{/iff}}
                 {{/each}}
 
-                <div class="text-right bottom-panel">
-                    <div class="loader"></div>
-
-                    <button
-                            class="btn btn-success btn-sm"
-                            onclick="$.adm.saveProduct('#form-products', {{ id }})"
-                            type="button"
-                    >Сохранить</button>
-                </div>
+                <input type="hidden" name="id" value="{{ id }}"/>
             </form>
         </div>
     </div>
 </div>
 
-
-<script type="text/javascript" src="/js/lodash.min.js"></script>
 <script>
     function loadProduct() {
         var plugins = {{{ pluginsStr }}};

@@ -99,6 +99,13 @@
 				'<div class="body"></div>' +
 				'<div class="bg-fon-edit"></div>' +
 				'</div>' +
+
+				'<div class="text-right bottom-panel">' +
+				'<div class="loader"></div>' +
+				' <button class="btn btn-success btn-sm" onclick="$.adm.saveProduct(\'#form-products\')"' +
+				' type="button">Сохранить</button> ' +
+				'</div>' +
+
 				'</div>' +
 
 				'<div class="modal fade" id="modalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"' +
@@ -261,7 +268,9 @@
 			});
 		},
 
-		saveProduct: function(searchParam, id) {
+		saveProduct: function(searchParam) {
+			let id = $('[name="id"]').val();
+
 			$.ajax({
 				cache   : false,
 				data    : $(searchParam).serializeArray(),
