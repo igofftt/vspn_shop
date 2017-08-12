@@ -24,13 +24,13 @@
                                 <div class="row">
                                     <select onchange="window.location.href = this.value" id="select1" class="select2" autocomplete="off">
                                         <option value="/admin/index/products" {{#iff usertype '==' '' }}selected{{/iff}}>
-                                            Все</option>
-                                        <option value="/admin/index/products?user=user" {{#iff usertype '==' 'manager' }}selected{{/iff}}>
-                                            Продавец1
+                                            Все
                                         </option>
-                                        <option value="/admin/index/products?user=admin" {{#iff usertype '==' 'admin' }}selected{{/iff}}>
-                                            Продавец2
-                                        </option>
+                                        {{# each sellers }}
+                                            <option value="/admin/index/products?user={{ id }}" {{#iff id '==' ../current_user }}selected{{/iff}}>
+                                                Продавец1
+                                            </option>
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -76,6 +76,8 @@
                         </div>
                     </div>
                 </div>
+            {{ else }}
+                <div class="alert alert-info text-center">У этого продовца пока ещё нет товара</d>
             {{/ each }}
         </div>
 

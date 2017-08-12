@@ -12,6 +12,24 @@ const
 			table = 'products';
 
 		const
+			render = objResult => res.render('admin/Products/details', {
+				data          : JSON.stringify(objResult.dataObj),
+				id            : id,
+				lang          : objResult.langObj,
+				langShow      : !_.isEmpty(objResult.moduleThis.lang),
+				meta          : {title: `Админ панель - редактирование - ${_.get(objResult, 'dataObj.title')}`},
+				module        : objResult.moduleThis,
+				modulesPower  : modules,
+				objData       : objResult.dataObj,
+				parent_module : table,
+				plugins       : objResult.pluginsThisHtml,
+				pluginsLang   : objResult.pluginsThisLangHtml,
+				pluginsLangStr: JSON.stringify(objResult.pluginsThisLangHtml),
+				pluginsStr    : JSON.stringify(objResult.pluginsThisHtml),
+				table         : table,
+				this_module   : 'update',
+			}),
+
 			queryData = modules => models[`${table}Model`]
 				.findById(id)
 				.then(dataObj => {
@@ -86,26 +104,7 @@ const
 						return _.assign(objResult, {columnSel, moduleThis, pluginsThisHtml, pluginsThisLangHtml})
 				})
 
-				.then(objResult => res.render('admin/Products/details', {
-					data          : JSON.stringify(objResult.dataObj),
-					id            : id,
-					lang          : objResult.langObj,
-					langShow      : !_.isEmpty(objResult.moduleThis.lang),
-					// left_menu     : req.store.getState('left_menu'),
-					meta          : {title: `Админ панель - редактирование - ${_.get(objResult, 'dataObj.title')}`},
-					module        : objResult.moduleThis,
-					modulesPower  : modules,
-					objData       : objResult.dataObj,
-					parent_module : table,
-					plugins       : objResult.pluginsThisHtml,
-					pluginsLang   : objResult.pluginsThisLangHtml,
-					pluginsLangStr: JSON.stringify(objResult.pluginsThisLangHtml),
-					pluginsStr    : JSON.stringify(objResult.pluginsThisHtml),
-					table         : table,
-					this_module   : 'update',
-					// user          : req.user,
-				}))
-
+				.then(render)
 				.catch(e => next(e));
 
 		getModule({req, res, userId: req.user.id}, queryData);

@@ -9,17 +9,17 @@ export default (req, res, next) => {
 	let page = 1;
 	if(req.params.page) page = req.params.page;
 	let offset = (page - 1) < 0 ? 0 : (page - 1) * limit;
-	let where = {};
 	let table = 'products';
-	where = query.usertype && _.merge(where, {usertype: query.usertype});
+	let currentUser = query.user;
+	let where = currentUser ? ` WHERE "${table}"."user_id"='${currentUser}' ` : '';
 
 	// выборка нужного количества статей
 	const
 		findAll = count => models.execute(`
 			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
 			ON "${table}"."id" = "files"."id_album" AND
-			"files"."name_table" = '${table}' AND "files"."main" = 1  ORDER BY
-			 "${table}"."id" ASC limit ${limit} offset ${offset};
+			"files"."name_table" = '${table}' AND "files"."main" = 1 
+			 ${where} ORDER BY "${table}"."id" ASC limit ${limit} offset ${offset};
 		`)
 
 			.then(objData => getModule({name: 'products', req, res, userId: req.user.id},
@@ -27,11 +27,12 @@ export default (req, res, next) => {
 			))
 
 			.then(objResult => res.render('admin/Products/index', {
-				count    : count, // общее кол-во статей
-				data     : objResult.objData, // статьи
-				left_menu: req.store.getState('left_menu'),
-				meta     : {title: 'Админ панель - весь товар'},
-				module   : objResult.module[0],
+				count       : count, // общее кол-во статей
+				current_user: currentUser,
+				data        : objResult.objData, // статьи
+				left_menu   : req.store.getState('left_menu'),
+				meta        : {title: 'Админ панель - весь товар'},
+				module      : objResult.module[0],
 
 				// номер текущей страницы в пейджинге
 				page: page,
@@ -45,6 +46,7 @@ export default (req, res, next) => {
 					.render(),
 
 				parent_module: 'products',
+				sellers      : req.store.getState('site.sellers'),
 				table        : 'products',
 				this_module  : 'products',
 				user         : req.user,
@@ -53,11 +55,16 @@ export default (req, res, next) => {
 
 			.catch(e => next(e));
 
-	// счетчик статей для педжинга
 	const
+
+		// счетчик статей для педжинга
 		getUsersCount = () => models.userModel.count()
 			.then(findAll)
-			.catch(e => next(e));
+			.catch(e => next(e)),
 
-	getUsersCount();
+		// users(sellers) for filter by user
+		getSellers = () => models.userModel.findAll({raw: true, where: {usertype: 'sellers'}})
+			.then(dataObl => req.store.setState('site.sellers', dataObl, getUsersCount()));
+
+	getSellers();
 };
