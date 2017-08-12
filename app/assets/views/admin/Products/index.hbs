@@ -14,12 +14,27 @@
             <div class="form-group" style="margin: 15px 0">
                 <div class="input-group">
                     <div class="col col-10">
-                        <span class="input-group-addon" style="display: inline-block">Отображения товара для: </span>
-                        <select onchange="window.location.href = this.value" id="select1" class="select2" autocomplete="off">
-                            <option value="/admin/index/products" {{#iff usertype '==' '' }}selected{{/iff}}>Все</option>
-                            <option value="/admin/index/products?user=user" {{#iff usertype '==' 'manager' }}selected{{/iff}}>Продавец1</option>
-                            <option value="/admin/index/products?user=admin" {{#iff usertype '==' 'admin' }}selected{{/iff}}>Продавец2</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <span class="input-group-addon" style="width: 100%">Отображения товара для: </span>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <select onchange="window.location.href = this.value" id="select1" class="select2" autocomplete="off">
+                                        <option value="/admin/index/products" {{#iff usertype '==' '' }}selected{{/iff}}>
+                                            Все</option>
+                                        <option value="/admin/index/products?user=user" {{#iff usertype '==' 'manager' }}selected{{/iff}}>
+                                            Продавец1
+                                        </option>
+                                        <option value="/admin/index/products?user=admin" {{#iff usertype '==' 'admin' }}selected{{/iff}}>
+                                            Продавец2
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col col-2 text-right">
                         {{# if module.x }}

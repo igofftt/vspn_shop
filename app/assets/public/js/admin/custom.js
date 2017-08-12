@@ -4,5 +4,5 @@ $(document).ready(function () {
 		radioClass   : 'iradio_square-green',
 	});
 
-	$(".select2").select2();
+	$(".select2").select2({width: '100%'});
 });

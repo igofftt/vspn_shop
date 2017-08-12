@@ -37,9 +37,13 @@
     <div id="page-wrapper" class="gray-bg">
         <div class="row">
             <div class="col col-md-2">
+                {{{ block "block_left_top" }}}
+
                 {{#if left_menu }}
                     {{> admin/block/left-menu }}
                 {{/if}}
+
+                {{{ block "block_left_bottom" }}}
             </div>
             <div class="col col-md-10">
                 {{{ block "content" }}}

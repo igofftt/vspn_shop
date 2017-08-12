@@ -46,6 +46,7 @@ export default (sequelize, Datatypes) => {
 				type : Sequelize.DATE,
 			},
 
+			user_id    : Datatypes.INTEGER,
 			vendor_code: Datatypes.STRING,
 		},
 

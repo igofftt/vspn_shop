@@ -61,7 +61,7 @@
 
 		setStyle: function() {
 			function init() {
-				$('.table-issues-block > .body > .tb, .table-issues-block > .body').height($(window).height() - 215);
+				$('.table-issues-block > .body > .tb, .table-issues-block > .body').height($(window).height() - 295);
 			}
 
 			$(window).resize(function() { init(); });
