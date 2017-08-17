@@ -56,6 +56,7 @@
     "gulp-module": "0.0.6",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "2.0.1",
+    "gulp-watch": "^4.3.11",
     "html": "^1.0.0",
     "mocha": "^3.5.0",
     "run-sequence": "1.2.2",

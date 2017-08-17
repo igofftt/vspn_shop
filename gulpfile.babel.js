@@ -9,7 +9,8 @@ let
 	htmlmin = require('gulp-htmlmin'),
 	outDir = env.production() ? './' : './dist/',
 	runSequence = require('run-sequence'),
-	sass = require('gulp-sass');
+	sass = require('gulp-sass'),
+	watch = require('gulp-watch');
 
 // очистка папки назначения
 gulp.task('rm', () => gulp.src(`${outDir}/*`).pipe(clean()));
@@ -113,13 +114,27 @@ gulp.task('srv', cb => {
 			.pipe(gulp.dest(`${outDir}/app/assets/public/css`));
 	});
 
+	// stat
+	watch([
+		'./app/assets/public/images/**',
+		'./app/assets/public/fonts/**',
+		'./app/assets/public/js/**',
+		'./app/assets/public/css/site/**',
+	], () => gulp.run('copy'));
+
 	// sass
-	gulp.watch('./app/assets/public/sass/**/*.scss', ['sass'])
-		.on('finish', () => {
-			srv.stop();
-			srv.start();
-			console.log('server restarted');
-		});
+	// TODO gulp.run() устарел но именно он сработал как надо(может отвалиться)
+	gulp.watch('./app/assets/public/sass/**/*.scss', () => {
+		return watch('./app/assets/public/sass/**/*.scss', () => gulp.run('sass'));
+	});
+
+	// gulp.watch('./app/assets/public/sass/**/*.scss', ['sass'])
+	// 	.pipe(gulp.dest(`${outDir}/app/assets/public/css`))
+	// 	.on('finish', () => {
+	// 		srv.stop();
+	// 		srv.start();
+	// 		console.log('server restarted');
+	// 	});
 
 	// js frontend
 	gulp.watch('./app/assets/public/js/**/*.js', e => {
