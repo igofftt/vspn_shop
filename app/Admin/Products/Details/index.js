@@ -3,6 +3,7 @@ import models from 'app/Admin/models';
 import settings from 'app/settings';
 import {getModule} from 'generic/helpers';
 import {_switch} from 'app/Admin/generic/switchFields';
+import _Tools from 'app/Admin/_Tools/QueryTools';
 
 const
 	index = (req, res, next) => {
@@ -118,7 +119,10 @@ const
 	update = (req, res) => {
 		let
 			id = _.get(req, 'params.id', 0),
-			table = 'products';
+			table = 'products',
+			tags,
+			tagsNew = [],
+			tagsObj = [];
 
 		// get object form data
 		let obj = {}, pl = _.get(req, 'body.pl', {});
@@ -129,6 +133,34 @@ const
 				? _.unescape(JSON.stringify(pl[Object.keys(pl)[i]]))
 				: pl[Object.keys(pl)[i]];
 
+		// added new tags
+		try {
+			tags = JSON.parse(obj.tags);
+		} catch(err) {
+			tags = obj.tags;
+		}
+
+		if(tags && _.isString(tags))
+			tags = [tags];
+
+		for(let i = 0; tags.length > i; i++) {
+			let tag = tags[i].split('new_')[1];
+
+			if(tag) {
+				tagsNew.push({id_user: req.user.id, name: tag.split('_')[1]});
+				tagsObj.push(tag.split('_')[1]);
+			} else {
+				tagsObj.push(tags[i]);
+			}
+		}
+
+		if(tagsNew.length)
+			_Tools.newTags(tagsNew);
+
+		// update tags, for remove tmp strings
+		obj.tags = JSON.stringify(tagsObj);
+
+		// return
 		const
 			sendResult = objResult => res.json({data: objResult || [], result: 'ok'}),
 

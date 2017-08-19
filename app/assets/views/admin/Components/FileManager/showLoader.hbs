@@ -45,48 +45,49 @@
                                             {{ else }}
                                                 <img src="/images/files/small/{{ v.file }}" style="width: 100%; display: block;"/>
                                             {{/ if }}
-                                        </div>
-                                        <div class="caption" style="padding-bottom: 0">
-                                            <div class="tools tools-bottom" style="text-align: center">
-                                                <a
-                                                        href="javascript:void(0)"
-                                                        class="btn btn-outline btn-info btn-sm"
-                                                        title="Редактировать"
-                                                        onclick="editImg{{ name_table }}({{ v.id }})"
-                                                >
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
 
-                                                <a
-                                                        href="javascript:void(0)"
-                                                        class="btn btn-outline btn-info btn-sm"
-                                                        title="Обрезать"
-                                                        onclick="cropImg{{ name_table }}({{ v.id }})"
-                                                >
-                                                    <i class="fa fa-crop"></i>
-                                                </a>
+                                            <div class="caption" style="padding-bottom: 0">
+                                                <div class="tools tools-bottom" style="text-align: center">
+                                                    <a
+                                                            href="javascript:void(0)"
+                                                            class="btn btn-outline btn-info btn-sm"
+                                                            title="Редактировать"
+                                                            onclick="editImg{{ name_table }}({{ v.id }})"
+                                                    >
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
 
-                                                <a
-                                                        href="javascript:void(0)"
-                                                        class="btn btn-outline btn-info btn-sm"
-                                                        title="Удалить"
-                                                        onclick="$.adm.rowDelete('{{ v.id }}', '\'files\'')"
-                                                >
-                                                    <i class="fa fa-times"></i>
-                                                </a>
+                                                    <a
+                                                            href="javascript:void(0)"
+                                                            class="btn btn-outline btn-warning btn-sm"
+                                                            title="Обрезать"
+                                                            onclick="cropImg{{ name_table }}({{ v.id }})"
+                                                    >
+                                                        <i class="fa fa-crop"></i>
+                                                    </a>
 
-                                                <a
-                                                        href="javascript:void(0)"
-                                                        class="btn btn-outline btn-info btn-sm"
-                                                        title="Сделать главной"
-                                                        onclick="toMain{{ name_table }}({{ v.id }})"
-                                                >
-                                                    <i class="toMain{{ ../name_table }} toMain{{ ../name_table }}{{ v.id }} glyphicon {{# iff v.main '==' '1' }} glyphicon-check {{ else }} glyphicon-unchecked {{/iff}}"></i>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <p id="img-name-{{ v.id }}">{{ v.name }}</p>
-                                                <p id="img-text-{{ v.id }}">{{ v.text }}</p>
+                                                    <a
+                                                            href="javascript:void(0)"
+                                                            class="btn btn-outline btn-primary btn-sm"
+                                                            title="Сделать главной"
+                                                            onclick="toMain{{ name_table }}({{ v.id }})"
+                                                    >
+                                                        <i class="toMain{{ ../name_table }} toMain{{ ../name_table }}{{ v.id }} glyphicon {{# iff v.main '==' '1' }} glyphicon-check {{ else }} glyphicon-unchecked {{/iff}}"></i>
+                                                    </a>
+
+                                                    <a
+                                                            href="javascript:void(0)"
+                                                            class="btn btn-outline btn-danger btn-sm"
+                                                            title="Удалить"
+                                                            onclick="$.adm.rowDelete('{{ v.id }}', '\'files\'')"
+                                                    >
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <p id="img-name-{{ v.id }}">{{ v.name }}</p>
+                                                    <p id="img-text-{{ v.id }}">{{ v.text }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -143,13 +144,12 @@
                                             '<div class="thumbnail">' +
                                             '<div class="image view view-first">' +
                                             '<img src="/images/files/small/' + ds['name'] + '" style="width: 100%; display: block;"/>' +
-                                            '</div>' +
                                             '<div class="caption" style="padding-bottom: 0">' +
                                             '<div class="tools tools-bottom" style="text-align: center">' +
                                             ' <a href="javascript:void(0)" onclick="editImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info btn-sm"><i class="fa fa-pencil"></i></a>' +
                                             ' <a href="javascript:void(0)" onclick="cropImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info btn-sm"><i class="fa fa-crop"></i></a>' +
-                                            ' <a href="javascript:void(0)" onclick="$.adm.rowDelete(' + ds.id + ', \'files\')" class="btn btn-outline btn-info btn-sm"><i class="fa fa-times"></i></a>' +
-                                            ' <a href="javascript:void(0)" class="btn btn-outline btn-info btn-sm" onclick="toMain{{ name_table }}(' + ds.id + ')">';
+                                            ' <a href="javascript:void(0)" class="btn btn-outline btn-info btn-sm" onclick="toMain{{ name_table }}(' + ds.id + ')">' +
+                                            ' <a href="javascript:void(0)" onclick="$.adm.rowDelete(' + ds.id + ', \'files\')" class="btn btn-outline btn-danger btn-sm"><i class="fa fa-times"></i></a>';
 
                                     if(ds.main) {
                                         img += '<i class="toMain{{ name_table }} toMain{{ name_table }}' + ds.id + ' glyphicon glyphicon-check"></i>';
@@ -158,6 +158,7 @@
                                     }
 
                                     img += '</a>' +
+                                            '</div>' +
                                             '</div>' +
                                             '</div>' +
                                             '</div>' +

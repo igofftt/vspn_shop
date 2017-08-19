@@ -101,6 +101,7 @@
   {
     "name": "active",
     "typeField": "select",
+    "classAttr": "select2",
     "nameText": "Статус отображения",
     "nameAttr": "pl[active]",
     "description": "Текстовое поле селект \"Active\" для назначения статуса отображения",
@@ -113,16 +114,23 @@
   },
   {
     "name": "tags",
-    "typeField": "input",
+    "typeField": "select",
+    "classAttr": "select2-tag",
     "nameText": "Теги",
     "nameAttr": "pl[tags]",
     "description": "Текстовое поле инпут \"tags (Теги)\"",
     "idAttr": "inputTags",
-    "sql_column": "tags"
+    "sql_column": "tags",
+    "body": {
+      "text": "",
+      "type": "insert",
+      "multiple": "multiple"
+    }
   },
   {
     "name": "cat",
     "typeField": "select",
+    "classAttr": "select2",
     "nameText": "Категория",
     "nameAttr": "pl[cat]",
     "description": "Текстовое поле селект \"Cat\" для выбора категории",
@@ -145,6 +153,7 @@
   {
     "name": "sys_cat",
     "typeField": "select",
+    "classAttr": "select2",
     "nameText": "Системная категория",
     "nameAttr": "pl[sys_cat]",
     "description": "Текстовое поле селект \"Sys_cat\" для назначения стилей элементу",

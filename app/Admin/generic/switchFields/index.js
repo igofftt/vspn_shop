@@ -17,6 +17,7 @@ const
 		let query = queryParse(req);
 
 		let
+			classAttr = inp.classAttr ? inp.classAttr : '',
 			langArr = l ? '--options--' : '',
 			langQuery = query.lang ? query.lang : 'ru';
 
@@ -24,7 +25,8 @@ const
 			let html = `<div class="form-group">
 			<label class="control-label">${inp.nameText}</label> 
 			<div class="">
-			<select name="${inp.nameAttr}${langArr}" id="${inp.idAttr}" class="form-control select2">
+			<select ${inp.body.multiple || ''} name="${inp.nameAttr}${langArr}" id="${inp.idAttr}" class="form-control 
+			${classAttr}">
 			${obj.sel}
 			</select>
 			</div>
@@ -34,7 +36,7 @@ const
 			return coll(html, inp.name);
 		};
 
-		if(inp['body']['type'] = 'insert')
+		if(inp['body']['type'] === 'replace')
 			return getCat({lang: langQuery, req, res, type: 'category'}, tree => resultR({
 				sel: inp['body']['text'].replace('{-option-}', tree),
 			}));
@@ -109,8 +111,6 @@ const
 			return _cat(c, n, l, req, res);
 
 		let html;
-
-		console.log('c', c)
 
 		if(_.get(c, 'body.text'))
 			if(c.typeField === 'full-album')

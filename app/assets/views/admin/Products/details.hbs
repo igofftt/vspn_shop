@@ -94,7 +94,88 @@
                     text = body[k];
 
                     if((v.plugins || {}).typeField === 'select' && text) {
-                        $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
+                        if((v.plugins || {}).name === 'tags') {
+                           let tags = [], t = '';
+
+                            try {
+                                tags = JSON.parse(text);
+                            } catch(err) {
+                                tags = text;
+                            }
+
+                            if(tags && _.isString(tags))
+                                tags = [tags];
+
+                           for(let i = 0; tags.length > i; i++)
+                               if(tags[i])
+                                   t += '<option value="' + tags[i] + '" selected>' + tags[i] + '</option>';
+
+                            $('.select2-tag').html(t);
+
+                            function resultRevertId(items) {
+                                for(let i = 0; items.length > i; i++)
+                                    items[i].id = items[i].name;
+
+                                return items
+                            }
+
+                            setTimeout(function() {
+                                $(".select2-tag").select2({
+                                    multiple: true,
+                                    language: "ru",
+                                    minimumInputLength: 2,
+                                    tags: [],
+
+                                    ajax: {
+                                        url: "/admin/_tools/getTags",
+                                        dataType: 'json',
+                                        delay: 250,
+                                        type: 'post',
+                                        data: function (params) {
+                                            return {
+                                                q: params.term, // search term
+                                                page: params.page
+                                            };
+                                        },
+
+                                        processResults: function (data, params) {
+                                            params.page = params.page || 1;
+
+                                            return {
+                                                results: resultRevertId(data.items),
+
+                                                pagination: {
+                                                    more: (params.page * 30) < data.total_count
+                                                }
+                                            };
+                                        },
+                                        cache: true
+                                    },
+                                    escapeMarkup: function (markup) { return markup; },
+
+                                    templateResult: function(repo) {
+                                        if (repo.loading) return repo.text;
+                                        let name = '';
+
+                                        if(repo.isNew)
+                                            name = repo.name + ' (Новый тег. Добавится после сохранения)';
+                                        else
+                                            name = repo.name;
+
+                                        return name;
+                                    },
+
+                                    templateSelection: function(repo) {
+                                        return repo.name || repo.text;
+                                    },
+
+                                    width          : '100%',
+                                });
+                            }, 1000)
+                        } else {
+                            $(".select2").select2({width: '100%'});
+                            $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
+                        }
                     } else {
                         $('[name="pl[' + k + ']"]').val(_.unescape(text));
                     }

@@ -201,8 +201,7 @@
 			for(let i = 0; obj.length > i; i++) {
 				let d = obj[i];
 
-				t += '<div class="list-dr grid edit-link" data-table="products" data-id="' + d.id + '">' +
-					'<div class="row">' +
+				t += '<div class="row">' +
 					'<div class="col col-4">' +
 					'<div class="thumbnail-old">';
 
@@ -223,8 +222,7 @@
 				'<div>Цена: ' + d.price + '</div>' +
 				'<div>Артикул: #' + (d.vendor_code ? d.vendor_code : d.id) + '</div>' +
 				'</div>' +
-				'</div>' +
-				'</div>'
+				'</div>';
 			}
 
 			return t;
@@ -283,7 +281,7 @@
 					console.log($.adm.renderRow(data.data))
 
 					if(!_.isEmpty(data.data))
-						$('[data-id="' + id + '"]').replaceWith($.adm.renderRow(data.data));
+						$('[data-id="' + id + '"]').html($.adm.renderRow(data.data));
 					else {
 
 					}

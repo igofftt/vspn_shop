@@ -3,7 +3,6 @@ import {hex, getModule} from 'generic/helpers';
 import models from 'app/Admin/models';
 import gm from 'gm';
 import fs from 'fs';
-import path from 'path';
 
 const
 
@@ -13,8 +12,8 @@ const
 	 * @param res
 	 */
 	getCrop = (req, res) => models.filesModel
-			.findById(req.body.id)
-			.then(objFile => res.render('modulesGeneric/FileManager/cropImage', {file: objFile})),
+		.findById(req.body.id)
+		.then(objFile => res.render('admin/Components/FileManager/cropImage', {file: objFile})),
 
 	/**
 	 * function init modal window to edit
@@ -31,17 +30,17 @@ const
 
 		try {
 			lang = JSON.parse(req.body.lang);
-		} catch (err) {
+		} catch(err) {
 			// обработка ошибки
 		}
 
 		return models.filesModel
-		.findById(req.body.id)
-		.then(objFile => res.render('modulesGeneric/FileManager/getEdit', {
-			file      : objFile,
-			lang      : lang,
-			name_table: nameTable,
-		}))},
+			.findById(req.body.id)
+			.then(objFile => res.render('admin/Components/FileManager/getEdit', {
+				file      : objFile,
+				lang      : lang,
+				name_table: nameTable,
+			}))},
 
 	/**
 	 * save edit info img
@@ -77,7 +76,7 @@ const
 		return models.filesModel
 			.findAll({raw: true, where: {active: 1, id_album: idAlbum, name_table: nameTable}})
 
-			.then(objFiles => res.render('modulesGeneric/FileManager/showLoader', {
+			.then(objFiles => res.render('admin/Components/FileManager/showLoader', {
 				files     : objFiles,
 				hex       : hex(Date.now().toString()),
 				id_album  : idAlbum,
@@ -99,10 +98,10 @@ const
 			return models.filesModel
 				.findById(fileId).then(objFile => {
 					return models.filesModel
-					.update({main: 0}, {where: {id_album: objFile.id_album, name_table: objFile.name_table}})
+						.update({main: 0}, {where: {id_album: objFile.id_album, name_table: objFile.name_table}})
 						.then(() => models.filesModel
-						.update({main: 1}, {where: {id: fileId}}).then(() => res.send({result: 'ok'}))
-					)}
+							.update({main: 1}, {where: {id: fileId}}).then(() => res.send({result: 'ok'})),
+						)},
 				);
 		else
 			return res.send('error data');
@@ -206,8 +205,6 @@ const
 							});
 					})
 				};
-
-console.log('pathOriginal', pathOriginal)
 
 			// save original
 			file.mv(pathOriginal, errBild => {
