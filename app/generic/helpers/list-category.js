@@ -25,7 +25,7 @@ export default (tree, lang) => {
 				//console.log(err)
 			}
 
-			echo += `<option value="${arr[cat][ii]['id']}">${list[ii]}${name}</option>`;
+			echo += `<option value="${arr[cat][ii]['id']}">${list[i]}${name}</option>`;
 
 			//рекурсия - проверяем нет ли дочерних категорий
 			view_cat(arr,arr[cat][ii]['id'], ii);
