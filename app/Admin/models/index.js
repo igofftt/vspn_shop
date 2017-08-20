@@ -43,6 +43,7 @@ db.menuModel = db.import('./menu');
 db.brandModel = db.import('./brand');
 db.issuesModel = db.import('./applications');
 db.tagsModel = db.import('./tags');
+db.statusesModel = db.import('./statuses');
 
 // for querying sql
 db.execute = (text, values) => pgPool.query(text, values);

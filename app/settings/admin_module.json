@@ -36,15 +36,17 @@
       }
     ],
     "plugins": [
-      "name",
-      "text",
+      "name_person",
+      "surname",
+      "cite",
+      "street",
+      "house",
+      "apartment",
+      "email",
+      "phone",
       "active",
-      "tags",
-      "cat",
-      "title",
-      "author",
-      "keywords",
-      "description"
+      "comment",
+      "status"
     ]
   },
   {

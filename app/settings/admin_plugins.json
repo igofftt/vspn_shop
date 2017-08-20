@@ -9,6 +9,110 @@
     "sql_column": "name"
   },
   {
+    "name": "name_person",
+    "typeField": "input",
+    "nameText": "Имя",
+    "nameAttr": "pl[name_person]",
+    "description": "Текстовое поле инпут для Имени",
+    "idAttr": "inputName_person",
+    "sql_column": "name_person"
+  },
+  {
+    "name": "surname",
+    "typeField": "input",
+    "nameText": "Фамилия",
+    "nameAttr": "pl[surname]",
+    "description": "Текстовое поле инпут для Фамилии",
+    "idAttr": "inputSurname",
+    "sql_column": "surname"
+  },
+  {
+    "name": "cite",
+    "typeField": "input",
+    "nameText": "Город",
+    "nameAttr": "pl[cite]",
+    "description": "Текстовое поле инпут для города",
+    "idAttr": "inputCite",
+    "sql_column": "cite"
+  },
+  {
+    "name": "street",
+    "typeField": "input",
+    "nameText": "Улица",
+    "nameAttr": "pl[street]",
+    "description": "Текстовое поле инпут для улицы",
+    "idAttr": "inputStreet",
+    "sql_column": "street"
+  },
+  {
+    "name": "house",
+    "typeField": "input",
+    "nameText": "Дом",
+    "nameAttr": "pl[house]",
+    "description": "Текстовое поле инпут для дома",
+    "idAttr": "inputHouse",
+    "sql_column": "house"
+  },
+  {
+    "name": "apartment",
+    "typeField": "input",
+    "nameText": "Квартира",
+    "nameAttr": "pl[apartment]",
+    "description": "Текстовое поле инпут для квартиры",
+    "idAttr": "inputApartment",
+    "sql_column": "apartment"
+  },
+  {
+    "name": "email",
+    "typeField": "input",
+    "nameText": "Email",
+    "nameAttr": "pl[email]",
+    "description": "Текстовое поле инпут для Email",
+    "idAttr": "inputEmail",
+    "sql_column": "email"
+  },
+  {
+    "name": "email",
+    "typeField": "input",
+    "nameText": "Email",
+    "nameAttr": "pl[email]",
+    "description": "Текстовое поле инпут для Email",
+    "idAttr": "inputEmail",
+    "sql_column": "email"
+  },
+  {
+    "name": "phone",
+    "typeField": "input",
+    "nameText": "Телефон",
+    "nameAttr": "pl[phone]",
+    "description": "Текстовое поле инпут для телефона",
+    "idAttr": "inputPhone",
+    "sql_column": "phone"
+  },
+  {
+    "name": "comment",
+    "typeField": "textarea",
+    "nameText": "Комментарий",
+    "nameAttr": "pl[comment]",
+    "description": "Текстовое поле для комментария",
+    "idAttr": "textareaComment",
+    "sql_column": "comment"
+  },
+  {
+    "name": "status",
+    "typeField": "select",
+    "classAttr": "select2-status",
+    "nameText": "Статус",
+    "nameAttr": "pl[status]",
+    "description": "Текстовое поле для статуса",
+    "idAttr": "selectStatus",
+    "sql_column": "status",
+    "body": {
+      "text": "<option value=\"0\">Новая заявка</option><option value=\"1\">Нет в наличии</option><option value=\"2\">В наличии</option><option value=\"3\">В отправке</option><option value=\"4\">Заказ отправлен</option><option value=\"5\">Доставлено</option>",
+      "type": "insert"
+    }
+  },
+  {
     "name": "text",
     "classAttr": "area",
     "typeField": "textarea",

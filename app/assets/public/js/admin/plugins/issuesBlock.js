@@ -46,7 +46,14 @@
 					scroll           : false,
 				});
 
-			$('[data-id]').click(this.loadIssues)
+			$('[data-id]').click(this.loadIssues);
+
+			$('[data-show-slide-menu]').click(function() {
+				if(document.getElementsByClassName('top-slide-menu')[0].hasAttribute('data-hidden'))
+					$('.top-slide-menu').removeAttr('data-hidden');
+				else
+					$('.top-slide-menu').attr('data-hidden', '');
+			})
 		},
 
 		rebaseBg: function() {

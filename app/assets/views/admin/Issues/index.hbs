@@ -5,6 +5,30 @@
     <link rel="stylesheet" href="/css/admin/plugins/jqueru-ui/jquery-ui.structure.min.css">
     <link rel="stylesheet" href="/css/admin/plugins/jqueru-ui/jquery-ui.theme.min.css">
 {{/contentFor}}
+
+<div class="top-slide-menu" data-hidden>
+    <div class="body">
+        <div class="form-group">
+            <label for="email" class="col-md-12 control-label">Отобрать заявки для:</label>
+
+            <div class="ml-md-3 col-md-3">
+                <select onchange="window.location.href = this.value" id="select1" class="select2" autocomplete="off">
+                    <option value="/admin/index/issues" {{#iff usertype '==' '' }}selected{{/iff}}>
+                        Все
+                    </option>
+                    {{# each sellers }}
+                        <option value="/admin/index/issues?user={{ id }}" {{#iff id '==' ../current_user }}selected{{/iff}}>
+                            Продавец1
+                        </option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" data-show-slide-menu><i class="fa fa-cog"></i></button>
+</div>
+
 <div class="full-container">
     <div class="ibox-title">
         <h2>Заявки</h2>

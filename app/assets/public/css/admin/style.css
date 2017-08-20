@@ -360,3 +360,37 @@ label {
 .bg-fon-free-0 {
     z-index: 1033;
 }
+
+/* issues */
+.top-slide-menu {
+    margin-top: 56px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 300px;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 0 2px 1px hsl(0, 0%, 85.9%);
+    z-index: 100;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.top-slide-menu[data-hidden] {
+    top: -300px;
+}
+
+.top-slide-menu .body {
+    padding: 15px;
+}
+
+.top-slide-menu > button {
+    position: absolute;
+    bottom: -35px;
+    right: 30px;
+    left: 85%;
+    width: 150px;
+}
+/* issues */
