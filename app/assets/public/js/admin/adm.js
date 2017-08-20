@@ -52,6 +52,7 @@
 
 				$('.container-editor .body').height($(window).height());
 				$('#container-editor .body').html('');
+				$('.modal-tmp').html('');
 				$.adm.hideFonEdit();
 			}
 		},
@@ -108,19 +109,19 @@
 
 				'</div>' +
 
+				'<div class="modal-tmp"></div>' +
+
 				'<div class="modal fade" id="modalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"' +
 				' aria-hidden="true">' +
 				'<div class="modal-dialog">' +
 				'<div class="modal-content">' +
 				'<div class="modal-header">' +
+				'<h4 class="modal-title modal-title-mess" id="myModalLabel">Удалить</h4>' +
 				'<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
 				'<span aria-hidden="true">&times;</span>' +
 				'</button>' +
-				'<h4 class="modal-title modal-title-mess" id="myModalLabel">Удалить</h4>' +
 				'</div>' +
-				'<div class="modal-body modal-body-mess">' +
-				'Вы уверены?' +
-				'</div>' +
+				'<div class="modal-body modal-body-mess">Вы уверены?</div>' +
 				'<div class="modal-footer">' +
 				'<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>' +
 				'<button type="button" class="btn btn-danger delbMod">Удалить</button>' +
@@ -202,7 +203,7 @@
 				let d = obj[i];
 
 				t += '<div class="row">' +
-					'<div class="col col-4">' +
+					'<div class="col col-4 left">' +
 					'<div class="thumbnail-old">';
 
 				if(d.file)
@@ -215,7 +216,7 @@
 
 				t += '</div>' +
 				'</div>' +
-				'<div class="col col-8">' +
+				'<div class="col col-8 right">' +
 				'<a href="javascript:void(0)" data-table="products">' +
 					d.name +
 				'</a>' +

@@ -118,7 +118,7 @@ gulp.task('srv', cb => {
 	watch([
 		'./app/assets/public/images/**',
 		'./app/assets/public/fonts/**',
-		'./app/assets/public/js/**',
+		// './app/assets/public/js/**',
 		'./app/assets/public/css/site/**',
 	], () => gulp.run('copy'));
 

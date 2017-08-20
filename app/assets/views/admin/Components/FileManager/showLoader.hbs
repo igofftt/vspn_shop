@@ -47,6 +47,11 @@
                                             {{/ if }}
 
                                             <div class="caption" style="padding-bottom: 0">
+                                                <div class="b">
+                                                    <p id="img-name-{{ v.id }}">{{ v.name }}</p>
+                                                    <p id="img-text-{{ v.id }}">{{ v.text }}</p>
+                                                </div>
+
                                                 <div class="tools tools-bottom" style="text-align: center">
                                                     <a
                                                             href="javascript:void(0)"
@@ -83,10 +88,6 @@
                                                     >
                                                         <i class="fa fa-times"></i>
                                                     </a>
-                                                </div>
-                                                <div>
-                                                    <p id="img-name-{{ v.id }}">{{ v.name }}</p>
-                                                    <p id="img-text-{{ v.id }}">{{ v.text }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,6 +146,10 @@
                                             '<div class="image view view-first">' +
                                             '<img src="/images/files/small/' + ds['name'] + '" style="width: 100%; display: block;"/>' +
                                             '<div class="caption" style="padding-bottom: 0">' +
+                                            '<div class="b">' +
+                                            '<p id="img-name-' + ds.id + '"></p>' +
+                                            '<p id="img-text-' + ds.id + '"></p>' +
+                                            '</div>' +
                                             '<div class="tools tools-bottom" style="text-align: center">' +
                                             ' <a href="javascript:void(0)" onclick="editImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info btn-sm"><i class="fa fa-pencil"></i></a>' +
                                             ' <a href="javascript:void(0)" onclick="cropImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info btn-sm"><i class="fa fa-crop"></i></a>' +
@@ -183,7 +188,13 @@
                                 success: function (html)
                                 {
                                     $('.alb-modal{{ name_table }} > div > div > div > .modal-title').html('Редактирование изображение');
-                                    $('.modal-lgAl{{ name_table }}').css({width: '100%'});
+
+                                    $('.modal-lgAl{{ name_table }}').css({
+                                        height  : '100%',
+                                        maxWidth: '100%',
+                                        width   : '100%',
+                                    });
+
                                     $('#alb-modal{{ name_table }}').modal('show');
                                     $('.bodyModal{{ name_table }}').html(html);
 
@@ -209,7 +220,13 @@
                                 success: function (html)
                                 {
                                     $('.alb-modal{{ name_table }} > div > div > div > .modal-title').html('Редактировать описание');
-                                    $('.modal-lgAl{{ name_table }}').css({width: '600px'});
+
+                                    $('.modal-lgAl{{ name_table }}').css({
+                                        height  : 'auto',
+                                        maxWidth: 'auto',
+                                        width   : 'auto',
+                                    });
+
                                     $('#alb-modal{{ name_table }}').modal('show');
                                     $('.bodyModal{{ name_table }}').html(html);
 
@@ -309,17 +326,21 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade alb-modal{{ name_table }}" tabindex="-1" id="alb-modal{{ name_table }}" role="dialog">
-    <div class="modal-dialog modal-lg modal-lgAl{{ name_table }}">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="bodyModal{{ name_table }}"> </div>
-        </div>
-    </div>
-</div>
+<script>
+    $('.modal-tmp')
+            .append(
+                    '<div class="modal fade alb-modal{{ name_table }}" tabindex="-1" id="alb-modal{{ name_table }}" role="dialog">' +
+                    '<div class="modal-dialog modal-lg modal-lgAl{{ name_table }}" role="document">' +
+                    '<div class="modal-content">' +
+                    '<div class="modal-header">' +
+                    '<h4 class="modal-title"></h4>' +
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button>' +
+                    '</div>' +
+                    '<div class="bodyModal{{ name_table }}"> </div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
+            )
+</script>

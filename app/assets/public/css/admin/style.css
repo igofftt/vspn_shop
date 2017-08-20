@@ -1,3 +1,6 @@
+button, a {
+    cursor: pointer;
+}
 /* login */
 .form-login {
     max-width: 330px;
@@ -104,6 +107,7 @@
     box-shadow: 3px 2px 1px 3px hsl(0, 0%, 83.1%);
     overflow: hidden;
     width: 100%;
+    pointer-events: all;
 }
 
 .container-editor .body {
@@ -211,11 +215,24 @@
     width: 100%;
 }
 
+.caption .b {
+    margin-left: -5px;
+    margin-right: -5px;
+    margin-bottom: 5px;
+    background: rgba(0, 0, 0, 0.28);
+    padding: 5px;
+}
+
+.caption .b p {
+    margin: 0;
+    color: #fff;
+}
+
 .view-first {
     overflow: hidden;
 }
 .view-first .caption {
-    bottom: -50px;
+    bottom: -35px;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -223,7 +240,7 @@
 }
 
 .view-first:hover .caption {
-    bottom: -10px;
+    bottom: 5px;
 }
 
 #imag_main_form {
