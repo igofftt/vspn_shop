@@ -47,6 +47,7 @@ svg {@extend %fullBlock;}
     &-content {
       display: flex;
       align-items: center;
+      position: relative;
       justify-content: space-between;
       .logo {
         display: inline-block;
@@ -187,6 +188,98 @@ svg {@extend %fullBlock;}
   .basket {
     font-size: 0.85rem;
     color: inherit;
+    &-box {
+      position: relative;
+      &:hover {
+        @include media(hover,1025){
+          .checkout-preview {
+            display: block;
+          }
+        }
+      }
+      .checkout-preview {
+        position: absolute;
+        padding-top: 22px;
+        top: 100%;
+        right: 0;
+        display: none;
+        z-index: 5;
+
+        .catalog__main {
+          background-color: #fff;
+          position: relative;
+          @include boxShadow(0,1px,1px,0,rgba(0,0,0,0.15));
+          &:before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            right: 17px;
+            width: 0;
+            height: 0;
+            border-style: none solid solid;
+            border-color: #ecf0f4 transparent;
+            border-width: 9px 13px;
+          }
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            right: 18px;
+            width: 0;
+            height: 0;
+            border-style: none solid solid;
+            border-color: #fff transparent;
+            border-width: 8px 12px;
+          }
+        }
+        table {
+          font-size: 0.9rem;
+          border-collapse: collapse;
+          tr {
+            border-bottom: 1px solid #ecf0f4;
+          }
+          td:not(:first-child) {
+            border-left: 1px solid #ecf0f4;
+            white-space: nowrap;
+          }
+          td {
+            vertical-align: middle;
+            text-align: center;
+            line-height: 50px;
+            padding: 0 15px;
+          }
+          h5 {
+            font-weight: 600;
+            font-size: inherit;
+            line-height: 1.4;
+            min-width: 115px;
+          }
+          .item__remove {
+            display: block;
+            width: 21px;
+            height: 21px;
+            @extend %boxSize;
+            padding: 3px;
+            margin: 0 auto;
+            color: #d1d7de;
+            &:hover {
+              @include media(hover,1025){
+                color: $button;
+              }
+            }
+          }
+        }
+        .total {
+          font-size: 0.9rem;
+          padding: 0 15px;
+          line-height: 50px;
+          span {
+            color: $button;
+          }
+
+        }
+      }
+    }
     i {
       @extend %valign;
       width: 31px;

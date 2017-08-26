@@ -104,14 +104,22 @@
   }
   &__main {
     padding-left: 210px;
+
+    .modal__main &,
+    .checkout-preview &,
+    .basket_view &,
     .preview & {
       padding-left: 0;
     }
     ul {
       font-size: 0;
       margin: 0 -15px;
+      .basket_view &,
       .list_view & {
         margin-bottom: 20px;
+      }
+      .modal__main & {
+        margin: 0;
       }
       li {
         font-size: 1rem;
@@ -123,26 +131,135 @@
           width: 20%;
         }
         @extend %boxSize;
-        .list_view & {
+        .list_view &,
+        .basket_view & {
           width: 100%;
           display: block;
           padding-bottom: 10px;
         }
+        .modal__main & {
+          width: 100%;
+          display: block;
+          padding: 0;
+          border-bottom: 1px solid #ecf0f4;
+        }
+      }
+    }
+
+  }
+}
+.table_preview {
+  border-collapse: collapse;
+  width: 100%;
+  tr {
+    border-bottom: 1px solid #ecf0f4;
+  }
+  td:not(:first-child) {
+    border-left: 1px solid #ecf0f4;
+    white-space: nowrap;
+    text-align: center;
+  }
+  td {
+    vertical-align: top;
+
+    padding: 5px 15px;
+  }
+  h5 {
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    min-width: 115px;
+    margin-bottom: 10px;
+  }
+  h6 {
+    color: #d1d7de;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 17px;
+    margin-top: 13px;
+  }
+  .price {
+    font-size: 1.1rem;
+    padding: 5px 0;
+  }
+  .item__remove {
+    display: block;
+    width: 27px;
+    height: 27px;
+    @extend %boxSize;
+    padding: 3px;
+    margin: 0 auto;
+    color: #d1d7de;
+    &:hover {
+      @include media(hover,1025){
+        color: $button;
       }
     }
   }
 }
-
 .item {
   width: 100%;
   position: relative;
   background-color: #fff;
   padding-bottom: 42px;
   border-radius: 3px;
+  will-change: transform;
   @include boxShadow(0,1px,1px,0,rgba(0,0,0,0.15));
   @include transit(all 0.3s);
+  .basket_view &,
+  .modal__main &,
   .list_view & {
     padding-bottom: 0;
+  }
+  &__checkout {
+    display: flex;
+    justify-content: space-between;
+    &_data {
+      width: 16.6666%;
+      @extend %boxSize;
+      border-left: 1px solid #ecf0f4;
+      text-align: center;
+      padding: 17px 5px;
+      h6 {
+        color: #d1d7de;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 17px;
+      }
+      .item__remove {
+        display: block;
+        width: 30px;
+        height: 30px;
+        @extend %boxSize;
+        padding: 3px;
+        margin: 0 auto;
+        color: #d1d7de;
+        &:hover {
+          @include media(hover,1025){
+            color: $button;
+          }
+        }
+      }
+    }
+    .item & {
+      h5 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      p {
+        font-size: 0.85rem;
+      }
+      .price {
+        margin-top: 0;
+        font-weight: 400;
+        font-size: 1.1rem;
+        padding: 2px 0;
+        &:before {
+          display: none;
+        }
+      }
+    }
   }
   &__description {
     display: block;
@@ -151,9 +268,20 @@
     color: inherit;
     .list_view & {
       display: flex;
-
       align-items: center;
       justify-content: space-between;
+    }
+    .item__checkout & {
+      width: 50%;
+      display: flex;
+      @extend %boxSize;
+      padding: 5px;
+    }
+    .table_preview & {
+      width: auto;
+      display: flex;
+      @extend %boxSize;
+      padding: 5px;
     }
   }
   &__head {
@@ -185,6 +313,19 @@
       text-align: left;
       padding: 0 15px;
     }
+    .table_preview & {
+      font-size: 0.88rem;
+      text-align: left;
+      flex-shrink: 500;
+      width: 100%;
+      padding: 6px 18px;
+    }
+    .item__checkout & {
+      flex-shrink: 500;
+      width: 100%;
+      text-align: left;
+      padding: 11px 15px;
+    }
   }
   &__text {
     .list_view & {
@@ -210,6 +351,18 @@
       padding-top: 78px;
       border: 5px solid transparent;
       margin: 0;
+    }
+    .item__checkout & {
+      width: 175px;
+      padding-top: 125px;
+      border-radius: 0;
+      margin-bottom: 0;
+    }
+    .table_preview & {
+      width: 130px;
+      padding-top: 112px;
+      border-radius: 0;
+      margin-bottom: 0;
     }
     div {
       background-position: center center;
@@ -302,6 +455,10 @@
       }
       .item__img div._hv {
         bottom: 0;
+      }
+      .basket_view &,
+      .modal__main & {
+        @include translate(0,0);
       }
     }
   }

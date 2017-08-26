@@ -11,12 +11,14 @@ export default (req, res, next) => {
 	let offset = (page - 1) < 0 ? 0 : (page - 1) * limit;
 
 	let where = {};
-	where = query.usertype && _.merge(where, {usertype: query.usertype});
+	where = query.usertype && _.merge(where, {usertype: query.usertype}) || where;
+
+	console.log('where', offset)
 
 	// выборка нужного количества статей
 	const
 		findAll = count => models.userModel
-			.findAll({limit: limit, offset: offset, order: 'id ASC', where: where})
+			.findAll({limit: limit, offset: offset, order: [['id', 'ASC']], where: where})
 			.then(objData => getModule({name: 'users', req, res, userId: req.user.id}, module => { return {module, objData}}))
 
 			.then(objResult => {

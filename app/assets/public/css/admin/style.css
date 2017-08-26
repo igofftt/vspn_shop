@@ -394,3 +394,7 @@ label {
     width: 150px;
 }
 /* issues */
+
+.form-c {
+    border: solid 2px rgba(249, 166, 110, 0.56);
+}

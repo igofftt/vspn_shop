@@ -109,11 +109,11 @@ const
 				.then(dataObl => req.store.setState('site.files.product', dataObl, getProduct)),
 
 			getBrand = () => models.brandModel
-				.findAll({order: 'id ASC', raw: true})
+				.findAll({order: [['id', 'ASC']], raw: true})
 				.then(dataObl => req.store.setState('site.brand', dataObl, getFiles)),
 
 			getMenu = () => models.menuModel
-				.findAll({order: 'id ASC', raw: true})
+				.findAll({order: [['id', 'ASC']], raw: true})
 				.then(dataObl => req.store.setState('site.menu', dataObl, getBrand));
 
 		return getMenu();
@@ -193,11 +193,11 @@ const
 				req.store.setState('site.menuTop', tree, getPriceMinMax)),
 
 			getBrand = () => models.brandModel
-				.findAll({order: 'id ASC', raw: true})
+				.findAll({order: [['id', 'ASC']], raw: true})
 				.then(dataObl => req.store.setState('site.brand', dataObl, getMenuTop)),
 
 			getMenu = callback => models.menuModel
-				.findAll({order: 'id ASC', raw: true})
+				.findAll({order: [['id', 'ASC']], raw: true})
 				.then(dataObl => req.store.setState('site.menu', dataObl, callback));
 
 		return getMenu(getBrand);
@@ -243,7 +243,7 @@ const
 			getCurrentCategory = () => models.menuModel.findById(category)
 				.then(dataObl => req.store.setState('site.currentCategory', dataObl, getProductsCount)),
 
-			subCategories = () => models.menuModel.findAll({order: 'name ASC', raw: true, where: {'cat': category}})
+			subCategories = () => models.menuModel.findAll({order: [['name', 'ASC']], raw: true, where: {'cat': category}})
 				.then(dataObl => req.store.setState('site.subCategories', dataObl, getCurrentCategory)),
 
 			getProducts = () => models.execute(`

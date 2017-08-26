@@ -9,7 +9,7 @@ export default (options, callback) => {
 		sort = options.sort || 'ASC',
 		table = options.table || 'menu',
 		type = options.type || 'tree',
-		where = _.merge(settings.where || {}, {order: `${order} ${sort}`, raw: true});
+		where = _.merge(settings.where || {}, {order: [[order, sort]], raw: true});
 
 	const
 		resEnd = m => {
@@ -29,7 +29,6 @@ export default (options, callback) => {
 			let arrCat = {};
 
 			if(!_.isEmpty(data)) {
-
 				//В цикле формируем массив
 				for(let i = 0; data.length > i; i++) {
 					let row = data[i];

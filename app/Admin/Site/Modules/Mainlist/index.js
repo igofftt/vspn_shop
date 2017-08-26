@@ -181,7 +181,7 @@ const
 		// выборка нужного количества статей
 		const
 			findAll = count => models[`${table}Model`]
-				.findAll({limit: limit, offset: offset, order: 'id ASC'})
+				.findAll({limit: limit, offset: offset, order: [['id', 'ASC']]})
 				.then(dataObl => getCat({lang: langQuery, req, res}, tree => _.assign({dataObl, tree})))
 
 				.then(objResult => {

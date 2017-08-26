@@ -35,7 +35,11 @@
         width: 40%;
       }
       &_small {
-        width: 20%;
+        width: 30%;
+        //width: 20%;
+        > div {
+          padding-top: 66.666666667% !important;
+        }
       }
     }
 
@@ -67,7 +71,7 @@
         font: inherit;
       }
       .valign-top & {
-        padding-bottom: 50%;
+        padding-bottom: 0%;
       }
       .halign-center & {
         justify-content: center;

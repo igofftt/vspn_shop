@@ -51,8 +51,8 @@ export default hbs => {
 
 	// Register function each mod
 	hbs.registerHelper('get', (context, options, getOptions) => {
-		if(getOptions)
-			options = _.get(options, getOptions);
+		if(options)
+			options = _.get(context, options);
 
 		return options;
 	});
@@ -61,11 +61,11 @@ export default hbs => {
 		let ret = '';
 
 		if(getOptions)
-			context = _.get(context, getOptions, context);
+			context = _.get(context, getOptions, {});
 
 		context = _.isObject(context) ? _.toArray(context) : context;
 
-		for(let i = 0, j = context.length; i < j; i++)
+		for(let i = 0; i < (context || {}).length; i++)
 			ret = ret + options.fn(context[i]);
 
 		return ret;

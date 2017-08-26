@@ -75,6 +75,20 @@ $(document).ready(function() {
 		});
 	}
 
+	/* checkout modal */
+	$('.get_order').click(function(e) {
+		e.preventDefault();
+		$('#modal').addClass('active');
+	});
+
+	$('#modal').find('.close').click(function() {
+		$('#modal').removeClass('active');
+	});
+
+	$('#modal_thanks').find('.close').click(function() {
+		$('#modal_thanks').removeClass('active');
+	});
+
 	/* spinner counts */
 	function spinners() {
 		let $spinnerBox = $('.spinner__counts');

@@ -7,13 +7,18 @@
             </header>
             <div class="grid__content">
                 <div class="layout">
-                    <div class="grid__item fig_square fig_big valign-top">
-                        <div class="grid__link">
-                            <a href="/catalog/1?subcategory=20" style="background-image: url('/images/site/grid/pic01.png')">
-                                <h3>Плитка тротуарная</h3>
-                            </a>
+                    {{# each main_page as |v k| }}
+                        <div class="grid__item fig_squarek fig_bigk {{get ../main_page_key k }}  valign-top">
+                            <div class="grid__link">
+                                <a href="{{ v.link }}" style="background-image: url('{{ v.img }}')">
+                                    <h3>{{ v.text }}</h3>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    {{/each}}
+                </div>
+
+     <!--           <div class="layout">
                     <div class="grid__item fig_rect fig_big color-white">
                         <div class="grid__link">
                             <a href="/catalog/1?subcategory=20" style="background-image: url('/images/site/grid/pic02.png')">
@@ -78,7 +83,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div>-->
             </div>
         </section>
     </div>

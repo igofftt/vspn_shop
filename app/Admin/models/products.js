@@ -54,13 +54,13 @@ export default (sequelize, Datatypes) => {
 			freezeTableName: true,
 			paranoid       : true,
 			tableName      : 'products',
-			timestamps     : true,
+			timestamps     : false,
 			underscored    : true,
 		});
 };
 
 // CREATE TABLE products (
-// id serial PRIMARY KEY,
+//  id serial PRIMARY KEY,
 // 	author varchar(64),
 // 	name varchar(512) NOT NULL,
 // 	html_bottom text,

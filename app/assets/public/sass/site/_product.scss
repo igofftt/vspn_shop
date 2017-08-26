@@ -16,6 +16,13 @@
     font-size: 0;
     background-color: #fff;
     border-radius: 3px;
+    .table_preview & {
+      border: 1px solid $border;
+      width: 85px;
+    }
+    .item__checkout_data & {
+      border: 1px solid $border;
+    }
     button,span {
       @extend %valign;
       width: 33.3333%;
@@ -32,11 +39,21 @@
       border: none;
       font-size: 0.9rem;
       line-height: 36px;
+      .table_preview &,
+      .item__checkout_data & {
+        line-height: 30px;
+      }
       &.minus {
         font-size: 0.7rem;
       }
       &:hover {
        color: $barkbutton;
+        .table_preview &,
+        .item__checkout_data & {
+          color: inherit;
+          position: relative;
+          @include boxShadow(0,0,0,1px,$button)
+        }
       }
     }
   }
