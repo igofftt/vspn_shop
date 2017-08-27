@@ -24,6 +24,9 @@
     margin-bottom: 15px;
     max-width: 100%;
   }
+  .invalid {
+    border: solid 2px #fe4432;
+  }
   textarea {
     min-height: 150px;
   }
@@ -37,9 +40,6 @@
     padding: 10px 15px;
     border: solid 2px #fed44f;
     margin-bottom: 15px;
-    &__error {
-      border: solid 2px #fe4432;
-    }
     &__button {
       background-color: #ffd54f;
       border-radius: 3px;

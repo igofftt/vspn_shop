@@ -74,7 +74,8 @@ var
 								'<td>1 шт.</td>' +
 								'<td>' + price + ' &#8381;' + '</td>' +
 								'<td>' +
-								'<a href="javascript:void(0)" class="item__remove" onclick="filCat.addToCart(' + d.id + ', \'remove\')">' +
+								'<a href="javascript:void(0)" class="item__remove" ' +
+								'onclick="filCat.addToCart(' + d.id + ', \'remove\')">' +
 								'<svg> <use xlink:href="/images/site/svg/sprite.svg#icon_waste"/> </svg>' +
 								'</a>' +
 								'</td>' +
@@ -109,8 +110,8 @@ var
 								'<div class="price">' ;
 
 							if(d.discount > 0)
-								tt += '<p><span class="old">' + ((d.price - d.price / 100 * d.discount) * quantity) + '</span> &#8381;</p>';
-
+								tt += '<p><span class="old">' + ((d.price - d.price / 100 * d.discount) * quantity) +
+									'</span> &#8381;</p>';
 
 							tt += '<s><span class="new">' + (d.price * quantity) + '</span> &#8381;</s>' +
 								'</div>' +
@@ -129,11 +130,10 @@ var
 
 						$('#basketCont').html(t);
 						$('.product-cont-big').html(tt);
-						$('.selReN > span').html(allPrice);
+						$('.selReN > span').html(filCat.pS(allPrice));
 						var dn = ' ' + filCat.dN(i,['товар','товара','товаров']);
-
 						$('.result-calc').html('<span>Итог:</span> ' + i + dn + ' на сумму ' + filCat.pS(allPrice) + ' &#8381;');
-						$('.moneyTop').html(allPrice);
+						$('.moneyTop').html(filCat.pS(allPrice));
 
 						if(!data.products.data.length) {
 							$('#basket').addClass('hidden');
@@ -141,7 +141,9 @@ var
 							$('.moneyTop').html(0);
 							$('.product-cont-big').html('<tr><td style="height: 150px"><h3>Корзина пуста</h3></td></tr>');
 							$('[name=form_ordering]').addClass('hidden');
-							$('[name=form_ordering]').parent().append('<div class="form_ordering_empty"><h3>Корзина пуста</h3></div>');
+
+							$('[name=form_ordering]').parent().append('<div class="form_ordering_empty"><h3>' +
+								'Корзина пуста</h3></div>');
 						} else {
 							$('.shop-cart > .p').html(data.products.data.length).removeClass('hidden')
 							$('#cart-panel-ordering').removeClass('hidden');
@@ -176,6 +178,9 @@ var
 			this.isLoadCat = this.conf.isLoadCat == undefined ? true : this.conf.isLoadCat;
 			filCat.selectCategory();
 			filCat.loadOnclick();
+
+			// send ordering init
+			filCat.sendOrdering();
 		},
 
 		// подгружаем обработчки событий
@@ -202,17 +207,12 @@ var
 			}, 100)
 		},
 
-		pS: function(x) {
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-		},
-
 		// select catalogs
 		paginationCatalogs: function() {
 			$('.paginator > .next, .paginator > .next-only').click(function() {
 				let
-					currentPage = parseInt($('[name=current-page]').val()),
 					lastPage = $('[name=last-page]').val(),
-					nexP = currentPage + 1;
+					nexP = parseInt($('[name=current-page]').val()) + 1;
 
 				if(lastPage >= nexP) {
 					$('[name=current-page]').val(_.isNaN(nexP) ? 1 : nexP);
@@ -222,14 +222,17 @@ var
 
 			$('.paginator > .prev').click(function() {
 				let
-					currentPage = parseInt($('[name=current-page]').val()),
-					nexP = currentPage - 1;
+					nexP = parseInt($('[name=current-page]').val()) - 1;
 
 				if(nexP >= 1) {
 					$('[name=current-page]').val(nexP > 1 ? nexP : 1);
 					filCat.selectCatalogs();
 				}
 			});
+		},
+
+		pS: function(x) {
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 		},
 
 		searchGo: function searchGo(e) {
@@ -297,10 +300,10 @@ var
 									'<h5>' + d.name + '</h5>' +
 									'</div>' +
 									'<div class="price">' +
-									'<span class="new">' + d.price + ' &#8381;</span>';
+									'<span class="new">' + d.price + ' </span>&#8381;';
 
 								if(d.discount > 0)
-									t += '<span class="old">' + (d.price - d.price / 100 * d.discount) + ' &#8381;</span>';
+									t += '<span><span class="old">' + (d.price - d.price / 100 * d.discount) + '</span> &#8381;</span>';
 
 								t += '</div>' +
 									'</a>' +
@@ -360,7 +363,7 @@ var
 						t += '<div class="form-checks sub-categories-cont" style="margin-top: 15px">';
 
 						for(let i = 0; data.subCategories.length > i; i++) {
-							var d = data.subCategories[i];
+							let d = data.subCategories[i];
 
 							t += '<div class="input-check" onclick="filCat.selectCatalogs()">' +
 								'<input name="categories_sub[]" value="' + d.id + '" type="checkbox" id="check-sub' + d.id + '">' +
@@ -370,10 +373,12 @@ var
 
 						t += '</div>';
 						$('.sub-categories-cont').html(t);
-
 						$('.name-current-cat').html(data.current_category.name);
 						$('[name=category]').val(data.current_category.id);
-						$('header .count > span').html(data.products.count);
+
+						$('header .count-t').html('<span class="count">' + data.products.count +
+							' ' + filCat.dN(data.products.count,['товар','товара','товаров']) + '</span>');
+
 						curLoc = window.location.href.replace('catalog/' + category, 'catalog/' + data.current_category.id);
 
 						try {
@@ -391,6 +396,143 @@ var
 			});
 		},
 
+		sendOrdering: function() {
+			let
+				vApartment,
+				vCite,
+				vEmail,
+				vHome,
+				vName,
+				vPhone,
+				vStreet,
+				vSurname;
+
+			function init() {
+				vApartment = new Validators.Field({
+					check_validate: 'required|min_1',
+					element       : document.getElementById('apartment'),
+					nameField     : 'Квартира',
+					only_error    : true,
+				});
+
+				vCite = new Validators.Field({
+					check_validate: 'required|min_3',
+					element       : document.getElementById('cite'),
+					nameField     : 'Город',
+					only_error    : true,
+				});
+
+				vEmail = new Validators.Field({
+					check_validate: 'required|email',
+					element       : document.getElementById('email'),
+					nameField     : 'Электронная почта',
+					only_error    : true,
+				});
+
+				vStreet = new Validators.Field({
+					check_validate: 'required|min_3',
+					element       : document.getElementById('street'),
+					nameField     : 'Улица',
+					only_error    : true,
+				});
+
+				vHome = new Validators.Field({
+					check_validate: 'required|min_1',
+					element       : document.getElementById('home'),
+					nameField     : 'Дом',
+					only_error    : true,
+				});
+
+				vName = new Validators.Field({
+					check_validate: 'required|min_3',
+					element       : document.getElementById('name'),
+					nameField     : 'Имя',
+					only_error    : true,
+				});
+
+				vSurname = new Validators.Field({
+					check_validate: 'required|min_3',
+					element       : document.getElementById('surname'),
+					nameField     : 'Фамилия',
+					only_error    : true,
+				});
+
+				vPhone = new Validators.Field({
+					check_validate: 'required|phoneMobile',
+					element       : document.getElementById('phone'),
+					nameField     : 'Телефон',
+					only_error    : true,
+				});
+			}
+
+			filCat.send_app = function() {
+				let
+					valid = true;
+
+				vApartment.validate();
+				vCite.validate();
+				vEmail.validate();
+				vStreet.validate();
+				vHome.validate();
+				vName.validate();
+				vSurname.validate();
+				vPhone.validate();
+
+				setTimeout(function() {
+					valid = valid ? vApartment.valid() : valid;
+					valid = valid ? vCite.valid() : valid;
+					valid = valid ? vEmail.valid() : valid;
+					valid = valid ? vStreet.valid() : valid;
+					valid = valid ? vHome.valid() : valid;
+					valid = valid ? vName.valid() : valid;
+					valid = valid ? vSurname.valid() : valid;
+					valid = valid ? vPhone.valid() : valid;
+
+					if(valid) {
+						$.ajax({
+							cache: false,
+
+							data: {
+								apartment: $('[name="apartment"]').val(),
+								cite     : $('[name="cite"]').val(),
+								email    : $('[name="email"]').val(),
+								home     : $('[name="home"]').val(),
+								name     : $('[name="name"]').val(),
+								phone    : $('[name="little_description"]').val(),
+								street   : $('[name="street"]').val(),
+								surname  : $('[name="surname"]').val(),
+							},
+
+							dataType: 'JSON',
+
+							success: function(data) {
+								if(data.result === 'ok') {
+									$('#modal_thanks').addClass('active');
+									$('.product-cont-big').html('<tr><td style="height: 150px"><h3>Корзина пуста</h3></td></tr>');
+									vApartment.cssReset(true);
+									vCite.cssReset(true);
+									vEmail.cssReset(true);
+									vStreet.cssReset(true);
+									vHome.cssReset(true);
+									vName.cssReset(true);
+									vSurname.cssReset(true);
+									vPhone.cssReset(true);
+
+									// update cart
+									filCat.addToCart(0, 'init');
+								}
+							},
+
+							type: 'post',
+							url : '/send_ordering',
+						});
+					}
+				}, 300);
+			};
+
+			return init();
+		},
+
 		/**
 		 * plus or minus weight meat
 		 * @param id
@@ -401,8 +543,10 @@ var
 				currentPriceNew = $('.product-' + id + ' .new'),
 				currentPriceOld = $('.product-' + id + ' .old'),
 				currentQuantityCont = $('.product-' + id + ' .quantity'),
-				currentQuantity = parseFloat(currentQuantityCont.html().replace(' ', '')),
 				quant = 0;
+
+			let
+				currentQuantity = parseFloat(currentQuantityCont.html().replace(' ', ''));
 
 			if(type === 'plus') {
 				quant = (parseFloat(currentQuantityCont.html().replace(' ', '')) + 1).toFixed(0);
@@ -414,7 +558,9 @@ var
 					currentQuantityCont.html(quant);
 			}
 
-			currentPriceNew.html((parseFloat(currentPriceNew.html()) / currentQuantity * quant).toFixed(0));
-			currentPriceOld.html((parseFloat(currentPriceOld.html()) / currentQuantity * quant).toFixed(0));
+			if(quant > 1) {
+				currentPriceNew.html((parseFloat(currentPriceNew.html()) / currentQuantity * quant).toFixed(0));
+				currentPriceOld.html((parseFloat(currentPriceOld.html()) / currentQuantity * quant).toFixed(0));
+			}
 		},
 	};

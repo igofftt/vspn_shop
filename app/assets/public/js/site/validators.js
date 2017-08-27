@@ -201,7 +201,7 @@ var Validators;
            this.element.value = '';
         }
 
-        if(!this.simple) {
+        if(!this.simple && spValMsg) {
           spValMsg.innerHTML = '';
         }
       }.bind(this), 0);

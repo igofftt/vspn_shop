@@ -44,6 +44,20 @@ const
 				req.store.setState('site.menuTop', tree, callback));
 
 		return getMenuTop(renderPage);
+	},
+
+	/**
+	 * send & save ordering
+	 * @param req
+	 * @param res
+	 */
+	sendOrdering = (req, res) => {
+		const
+			toJson = () => res.json({
+				result: 'ok',
+			});
+
+		return toJson();
 	};
 
-export default {index, ordering}
+export default {index, ordering, sendOrdering}

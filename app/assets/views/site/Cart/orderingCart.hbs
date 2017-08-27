@@ -23,42 +23,42 @@
                         <div class="form_ordering_left">
                             <div class="form__group">
                                 <label class="form__label">Город</label>
-                                <input name="cite" class="form__control" placeholder="Город"/>
+                                <input id="cite" name="cite" class="form__control" placeholder="Город"/>
                             </div>
 
                             <div class="form__group">
                                 <label class="form__label">Улица</label>
-                                <input name="street" class="form__control" placeholder="Улица"/>
+                                <input id="street" name="street" class="form__control" placeholder="Улица"/>
                             </div>
 
                             <div class="form__group">
                                 <label class="form__label">Дом</label>
-                                <input name="home" class="form__control" placeholder="Дом"/>
+                                <input id="home" name="home" class="form__control" placeholder="Дом"/>
                             </div>
 
                             <div class="form__group">
                                 <label class="form__label">Квартира</label>
-                                <input name="apartment" class="form__control" placeholder="Квартира"/>
+                                <input id="apartment" name="apartment" class="form__control" placeholder="Квартира"/>
                             </div>
 
                             <div class="form__group">
                                 <label class="form__label">Имя</label>
-                                <input name="name" class="form__control" placeholder="Имя"/>
+                                <input id="name" name="name" class="form__control" placeholder="Имя"/>
                             </div>
 
                             <div class="form__group">
                                 <label class="form__label">Фамилия</label>
-                                <input name="surname" class="form__control" placeholder="Фамилия"/>
+                                <input id="surname" name="surname" class="form__control" placeholder="Фамилия"/>
                             </div>
 
                             <div class="form__group">
                                 <label class="form__label">Телефон</label>
-                                <input name="phone" class="form__control" placeholder="Телефон"/>
+                                <input id="phone" name="phone" class="form__control" placeholder="Телефон" value="+7"/>
                             </div>
 
                             <div class="form__group">
                                 <label class="form__label">Электронная почта</label>
-                                <input name="email" class="form__control" placeholder="Электронная почта"/>
+                                <input id="email" name="email" class="form__control" placeholder="Электронная почта"/>
                             </div>
 
                             <br class="clear" />
@@ -66,7 +66,7 @@
 
                         <div class="form_ordering_right">
                             <label class="form__label">Комментарий</label>
-                            <textarea name="little_description" class="form__control" placeholder="Комментарий для курьера,чтобы он быстро Вас нашел. Особенности подъезда, домофон,кодовый замок... Все что может помочь курьеру в поиске Вашего дома и квартиры."></textarea>
+                            <textarea id="little_description" name="little_description" class="form__control" placeholder="Комментарий для курьера,чтобы он быстро Вас нашел. Особенности подъезда, домофон,кодовый замок... Все что может помочь курьеру в поиске Вашего дома и квартиры."></textarea>
                             <br class="clear" />
                         </div>
 
@@ -78,7 +78,7 @@
                                 <div>Сумма заказа: <b class="selReN"><span>0</span> &#8381;</b></div>
                             </div>
 
-                            <button type="button" class="form__order__button">Оформить заказ</button>
+                            <button type="button" class="form__order__button" onclick="filCat.send_app()">Оформить заказ</button>
                         </div>
                     </form>
                 </div>
@@ -88,6 +88,8 @@
 </div>
 
 {{#contentFor "footer"}}
+    <script type="text/javascript" src="/js/site/constants.js"></script>
+    <script type="text/javascript" src="/js/site/validators.js"></script>
     <!-- filters-categories -->
     <script src="/js/site/filters-categories.js"></script>
     <script>
@@ -103,5 +105,4 @@
             setTimeout(filCat.selectCatalogs(), 0);
         });
     </script>
-    <script type="text/javascript" src="/js/site/gallery.js"></script>
 {{/contentFor}}
