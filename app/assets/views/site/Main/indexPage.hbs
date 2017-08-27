@@ -5,15 +5,35 @@
             <header>
                 <h1>Сеты товаров</h1>
             </header>
+            <style>
+                .layout__block {
+                    float: left;
+                }
+                .layout__block__small {
+                    width: 30%;
+                }
+                .layout__block__small .grid__link {
+                    padding-top: 66.666666667% !important;
+                }
+                .layout__block__big {
+                    width: 40%;
+                }
+            </style>
             <div class="grid__content">
                 <div class="layout">
                     {{# each main_page as |v k| }}
-                        <div class="grid__item fig_squarek fig_bigk {{get ../main_page_key k }}  valign-top">
-                            <div class="grid__link">
-                                <a href="{{ v.link }}" style="background-image: url('{{ v.img }}')">
-                                    <h3>{{ v.text }}</h3>
-                                </a>
-                            </div>
+                    <div class="layout__block {{# iff v.length '==' 2}} layout__block__small {{ else }}layout__block__big {{/iff}}">
+                            {{# each v as |vv kk| }}
+                                {{# each vv as |vvv kkk| }}
+                                    <div class="grid__item fig_bigk {{get ../../../main_page_key kkk }} valign-top">
+                                        <div class="grid__link">
+                                            <a href="{{ vvv.link }}" style="background-image: url('{{ vvv.img }}')">
+                                                <h3>{{ vvv.text }}</h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            {{/each}}
                         </div>
                     {{/each}}
                 </div>

@@ -1,19 +1,19 @@
 {{!< ../layout}}
 <div class="full-container">
-    <select class="select2" onchange="$.mainp.changeType(this.value)">
-        <option value="1">Центр по середине</option>
-        <option value="2">Центр слева</option>
-        <option value="3">Центр справа</option>
-    </select>
-
-    <style>
-        .table-page {
-            margin-top: 20px;
-            min-height: 500px;
-        }
-    </style>
-
     <form method="post" action="/admin/site/update/params/" name="formMainPage">
+        <select name="type" class="select2" onchange="$.mainp.changeType(this.value)">
+            <option value="1">Центр по середине</option>
+            <option value="2">Центр слева</option>
+            <option value="3">Центр справа</option>
+        </select>
+
+        <style>
+            .table-page {
+                margin-top: 20px;
+                min-height: 500px;
+            }
+        </style>
+
         <table class="table-page table table-bordered table-primary">
             <tr class="tr1">
                 <td class="block_1_1">
