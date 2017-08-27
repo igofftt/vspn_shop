@@ -18,67 +18,17 @@
                 <!--</div>-->
 
                 <div class="basket-box">
-   <!--                 <a href="javascript:void(0)" data-dropdown="dropdown-shop-cart" class="basket shop-cart dropbtn">
+                    <a href="/cart" class="basket shop-cart">
                         <i>
                             <svg> <use xlink:href="/images/site/svg/sprite.svg#icon_cart"></use> </svg>
-                            <span class="selReN"><span></span> руб.</span>
-                        </i>
-
-                        <p>Корзина</p>
-                    </a>
-
-                    <div id="dropdown-shop-cart" class="dropdown__content">
-                        <div class="angle"></div>
-                        <p class="title">Корзина</p>
-                        <div class="basketCont" id="basketCont"><p>Корзина пуста</p></div>
-
-                        <div class="">
-                            <div class="basket_dropdown_btn hidden">
-                                <div style="width: 49%; display: inline-table;">
-                                    <p>Итог:</p>
-                                    <span></span>
-                                </div>
-                                <div style="width: 50%; display: inline-table;">
-                                    <button type="button" class="btn btn-danger" onclick="href('/shop/basket')">
-                                        Перейти в корзину
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-
-                    <a href="/cart" class="basket">
-                        <i>
-                            <svg> <use xlink:href="/images/site/svg/sprite.svg#icon_cart"></use> </svg>
-                            <span class="selReN"><span></span> руб.</span>
+                            <span class="selReN"><span></span> &#8381;</span>
                         </i>
                         <p>Корзина</p>
                     </a>
-                    <div class="checkout-preview">
+                    <div class="checkout-preview" id="basket">
                         <div class="catalog__main">
-                            <table>
-                                <tr>
-                                    <td><h5>Старый кирпич</h5></td>
-                                    <td>1 шт.</td>
-                                    <td>30 000 руб.</td>
-                                    <td>
-                                        <a href="#" class="item__remove">
-                                            <svg> <use xlink:href="/images/site/svg/sprite.svg#icon_waste"/> </svg>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><h5>Старый кирпич</h5></td>
-                                    <td>1 шт.</td>
-                                    <td>14 000 руб.</td>
-                                    <td>
-                                        <a href="#" class="item__remove">
-                                            <svg> <use xlink:href="/images/site/svg/sprite.svg#icon_waste"/> </svg>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                            <p class="total"><span>Итог:</span> 2 товара на сумму 34 000 руб </p>
+                            <table id="basketCont"></table>
+                            <p class="total result-calc"></p>
                         </div>
                     </div>
                 </div>

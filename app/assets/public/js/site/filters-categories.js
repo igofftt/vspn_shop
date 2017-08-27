@@ -1,8 +1,7 @@
 var
 	filCat = {
 		addToCart: function(id, type) {
-			$.ajax
-			({
+			$.ajax({
 				cache: false,
 
 				data: {
@@ -52,72 +51,115 @@ var
 								div.animate({opacity: 1}, 150);
 							}
 
-							setTimeout(function() { parentTmp.remove(); animateAddCart(); }, 1150);
+							setTimeout(function() {
+								parentTmp.remove();
+								animateAddCart();
+								$('#modal').addClass('active');
+							}, 1150);
 						}
 
-						let allPrice = 0, d, t = '';
+						let
+							allPrice = 0,
+							d,
+							t = '',
+							tt = '';
 
-						for(let i = 0; data.products.data.length > i; i++) {
+						for(var i = 0; data.products.data.length > i; i++) {
 							d = data.products.data[i];
 							let quantity = data.cart[d.id].quantity || 0;
 							let price = (d.price - (d.price / 100 * d.discount || 0)) * quantity;
 
-							t += '<li class="product-cart-shop-' + d.id + '">' +
-								'<div class="shopping-basket">' +
-								'<div style="width: 25%; display: inline-table">';
-
-							if(_.isEmpty(d.file))
-								t += '<img src="/images/files/small/no_img.png"/>';
-							else
-							if(d.crop)
-								t += '<img src="/images/files/small/' + d.crop +'"/>';
-							else
-								t += '<img src="/images/files/small/' + d.file +'"/>';
-
-							t +='</div>' +
-								'<div style="width: 40%; display: inline-table">' +
-								'<span>' + d.name + '</span>' +
-								'</div>' +
-
-								'<div style="width: 25%; display: inline-table">' +
-								'<span>' + price + 'руб.' +
-								'</div>' +
-								'<div style="width: 10%; display: inline-table">' +
-								'<a href="javascript:void(0)" onclick="filCat.addToCart(' + d.id + ', \'remove\')">' +
-								'<i class="glyphicon glyphicon-remove">x</i>' +
+							t += '<tr>' +
+								'<td><h5>' + d.name + '</h5></td>' +
+								'<td>1 шт.</td>' +
+								'<td>' + price + ' &#8381;' + '</td>' +
+								'<td>' +
+								'<a href="javascript:void(0)" class="item__remove" onclick="filCat.addToCart(' + d.id + ', \'remove\')">' +
+								'<svg> <use xlink:href="/images/site/svg/sprite.svg#icon_waste"/> </svg>' +
 								'</a>' +
+								'</td>' +
+								'</tr>';
+
+							tt += '<tr class="product-' + d.id + '">' +
+								'<td>' +
+								'<div class="item__description">' +
+								'<div class="item__img">' +
+								'<div class="_mn" style="background-image: url(\'/images/site/items/item01.png\')"></div>' +
+								'<div class="_hv" style="background-image: url(\'/images/site/items/item02.png\')"></div>' +
+								'</div>' +
+								'<div class="item__head">' +
+								'<h5>' + d.name + '</h5>' +
+								'<p>' + d.text + '</p>' +
 								'</div>' +
 								'</div>' +
-								'</li>';
+								'</td>' +
+								'<td>' +
+								'<h6>Количество</h6>' +
+								'<div class="spinner__counts">' +
+								'<button class="minus" onclick="filCat.sumQuantity(' + d.id + ', \'minus\')">' +
+								'<i class="icon-minus"></i>' +
+								'</button>' +
+								'<span class="quantity">' + quantity + '</span>' +
+								'<button class="plus" onclick="filCat.sumQuantity(' + d.id + ', \'plus\')">' +
+								'<i class="icon-plus"></i>' +
+								'</button>' +
+								'</td>' +
+								'<td>' +
+								'<h6>Цена</h6>' +
+								'<div class="price">' ;
+
+							if(d.discount > 0)
+								tt += '<p><span class="old">' + ((d.price - d.price / 100 * d.discount) * quantity) + '</span> &#8381;</p>';
+
+
+							tt += '<s><span class="new">' + (d.price * quantity) + '</span> &#8381;</s>' +
+								'</div>' +
+								'</td>' +
+								'<td>' +
+								'<h6>Удалить</h6>' +
+								'<a href="#" class="item__remove" onclick="filCat.addToCart(' + d.id + ', \'remove\')">' +
+								'<svg> <use xmlns:xlink="http://www.w3.org/1999/xlink"' +
+								' xlink:href="/images/site/svg/sprite.svg#icon_waste"></use> </svg>' +
+								'</a>' +
+								'</td>' +
+								'</tr>';
 
 							allPrice = allPrice + price;
 						}
 
 						$('#basketCont').html(t);
-
-						$('.basket_dropdown > .a').removeClass('hidden');
-						$('.btn-link-time').removeClass('hidden');
-						$('.basket_dropdown_btn').removeClass('hidden');
+						$('.product-cont-big').html(tt);
 						$('.selReN > span').html(allPrice);
-						$('.basket_dropdown_btn > div > span').html(allPrice);
+						var dn = ' ' + filCat.dN(i,['товар','товара','товаров']);
+
+						$('.result-calc').html('<span>Итог:</span> ' + i + dn + ' на сумму ' + filCat.pS(allPrice) + ' &#8381;');
 						$('.moneyTop').html(allPrice);
 
 						if(!data.products.data.length) {
-							$('.basket_dropdown > .a').addClass('hidden');
-							$('.shop-cart > .p').addClass('hidden');
-							$('.btn-link-time').addClass('hidden');
-							$('.basket_dropdown_btn').addClass('hidden');
-							$('.basketCont').html('<p>Корзина пуста</p><img src="/images/shop/logo.png" class="bgCategories">');
-							$('#basketCont').html('<p>Корзина пуста</p>');
+							$('#basket').addClass('hidden');
+							$('#cart-panel-ordering').addClass('hidden');
 							$('.moneyTop').html(0);
-						} else
+							$('.product-cont-big').html('<tr><td style="height: 150px"><h3>Корзина пуста</h3></td></tr>');
+							$('[name=form_ordering]').addClass('hidden');
+							$('[name=form_ordering]').parent().append('<div class="form_ordering_empty"><h3>Корзина пуста</h3></div>');
+						} else {
 							$('.shop-cart > .p').html(data.products.data.length).removeClass('hidden')
+							$('#cart-panel-ordering').removeClass('hidden');
+							$('#basket').removeClass('hidden');
+							$('[name=form_ordering]').removeClass('hidden');
+							$('.form_ordering_empty').remove();
+						}
 					}
 				},
 
 				type: 'post',
 				url : '/catalog/add_to_cart',
 			})
+		},
+
+		dN: function declOfNum(number, titles) {
+			let cases = [2, 0, 1, 1, 1, 2];
+			return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];
 		},
 
 		// helper formatting price
@@ -139,23 +181,29 @@ var
 		// подгружаем обработчки событий
 		loadOnclick: function() {
 			setTimeout(function() {
-				$('[name=categories-select]').on('change', function() {
-					filCat.selectCategory()
-				});
+				if(this.isLoadCat) {
+					$('[name=categories-select]').on('change', function() {
+						filCat.selectCategory()
+					});
 
-				$('.input-check > label').click(function() {
-					filCat.selectCatalogs()
-				});
+					$('.input-check > label').click(function() {
+						filCat.selectCatalogs()
+					});
 
-				document.getElementById('price_range').noUiSlider.on('change', () => {
-					filCat.selectCatalogs()
-				});
+					document.getElementById('price_range').noUiSlider.on('change', () => {
+						filCat.selectCatalogs()
+					});
 
-				filCat.paginationCatalogs();
+					filCat.paginationCatalogs();
+				}
 
 				// // init cart min
 				filCat.addToCart(0, 'init');
 			}, 100)
+		},
+
+		pS: function(x) {
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 		},
 
 		// select catalogs
@@ -350,17 +398,23 @@ var
 		 */
 		sumQuantity: function(id, type) {
 			let
+				currentPriceNew = $('.product-' + id + ' .new'),
+				currentPriceOld = $('.product-' + id + ' .old'),
 				currentQuantityCont = $('.product-' + id + ' .quantity'),
-				quant;
+				currentQuantity = parseFloat(currentQuantityCont.html().replace(' ', '')),
+				quant = 0;
 
 			if(type === 'plus') {
-				quant = (parseFloat(currentQuantityCont.html()) + 1).toFixed(0);
+				quant = (parseFloat(currentQuantityCont.html().replace(' ', '')) + 1).toFixed(0);
 				currentQuantityCont.html(quant);
 			} else {
-				quant = (parseFloat(currentQuantityCont.html()) - 1).toFixed(0);
+				quant = (parseFloat(currentQuantityCont.html().replace(' ', '')) - 1).toFixed(0);
 
-				if(parseFloat(currentQuantityCont.html()) > 1)
+				if(parseFloat(currentQuantityCont.html().replace(' ', '')) > 1)
 					currentQuantityCont.html(quant);
 			}
+
+			currentPriceNew.html((parseFloat(currentPriceNew.html()) / currentQuantity * quant).toFixed(0));
+			currentPriceOld.html((parseFloat(currentPriceOld.html()) / currentQuantity * quant).toFixed(0));
 		},
 	};

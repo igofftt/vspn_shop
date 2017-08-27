@@ -12,87 +12,26 @@
             <div class="catalog__content basket_view layout">
 
                 <div class="catalog__main">
-                    <ul>
-                        <li>
-                            <div class="item">
-                                <div class="item__checkout">
-                                    <a href="#" class="item__description">
-                                        <div class="item__img">
-                                            <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
-                                            <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
-                                        </div>
-                                        <div class="item__head">
-                                            <h5>Старый кирпич</h5>
-                                            <p>Сайт рыбатекст поможет  дизайнеру, верстальщику,  вебмастеру сгенериров... </p>
-                                        </div>
-                                    </a>
-                                    <div class="item__checkout_data">
-                                        <h6>Количество</h6>
-                                        <div class="spinner__counts">
-                                            <button class="minus"><i class="icon-minus"></i></button>
-                                            <span>10</span>
-                                            <button class="plus"><i class="icon-plus"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="item__checkout_data">
-                                        <h6>Цена</h6>
-                                        <div class="price">
-                                            <span class="new">30 000 руб</span>
-                                        </div>
-                                    </div>
-                                    <div class="item__checkout_data">
-                                        <h6>Удалить</h6>
-                                        <a href="#" class="item__remove">
-                                            <svg><use xlink:href="/images/site/svg/sprite.svg#icon_waste"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
+                    <style>
+                        .table_preview tr {
+                            background: #fff;
+                        }
+                        .table_preview td {
+                            padding: 5px
+                        }
+                        .table_preview td:first-child {
+                            max-width: 450px;
+                        }
+                        .table_preview .item__description {
+                            padding: 0;
+                        }
+                    </style>
+                    <table class="table_preview product-cont-big"></table>
 
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <div class="item__checkout">
-                                    <a href="#" class="item__description">
-                                        <div class="item__img">
-                                            <div class="_mn" style="background-image: url('/images/site/items/item01.png')"></div>
-                                            <div class="_hv" style="background-image: url('/images/site/items/item02.png')"></div>
-                                        </div>
-                                        <div class="item__head">
-                                            <h5>Старый кирпич</h5>
-                                            <p>Сайт рыбатекст поможет  дизайнеру, верстальщику,  вебмастеру сгенериров... </p>
-                                        </div>
-                                    </a>
-                                    <div class="item__checkout_data">
-                                        <h6>Количество</h6>
-                                        <div class="spinner__counts">
-                                            <button class="minus"><i class="icon-minus"></i></button>
-                                            <span>4</span>
-                                            <button class="plus"><i class="icon-plus"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="item__checkout_data">
-                                        <h6>Цена</h6>
-                                        <div class="price">
-                                            <span class="new">14 000 руб</span>
-                                        </div>
-                                    </div>
-                                    <div class="item__checkout_data">
-                                        <h6>Удалить</h6>
-                                        <a href="#" class="item__remove">
-                                            <svg><use xlink:href="/images/site/svg/sprite.svg#icon_waste"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-
-                    </ul>
-                    <div class="checkout__total">
+                    <div class="checkout__total" id="cart-panel-ordering">
                         <div class="checkout__total_field">
-                            <p>Итого: 2 товара на сумму 34 000 руб</p>
-                            <button class="get_order">Оформить заказ</button>
+                            <p class="total result-calc"></p>
+                            <a class="get_order" href="/ordering">Оформить заказ</a>
                         </div>
                     </div>
                 </div>
@@ -106,3 +45,22 @@
         </section>
     </div>
 </div>
+
+{{#contentFor "footer"}}
+    <!-- filters-categories -->
+    <script src="/js/site/filters-categories.js"></script>
+    <script>
+        $(document).ready(function(){
+            filCat.initialize({
+                cont      : '.selResult',
+                isLoadCat : false,
+                num       : '.selReN > .i',
+                pagination: true,
+                url_req   : '/',
+            });
+
+            setTimeout(filCat.selectCatalogs(), 0);
+        });
+    </script>
+    <script type="text/javascript" src="/js/site/gallery.js"></script>
+{{/contentFor}}

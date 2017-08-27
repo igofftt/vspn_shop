@@ -76,17 +76,17 @@ $(document).ready(function() {
 	}
 
 	/* checkout modal */
-	$('.get_order').click(function(e) {
-		e.preventDefault();
-		$('#modal').addClass('active');
-	});
-
-	$('#modal').find('.close').click(function() {
+	$('#modal .close').click(function() {
 		$('#modal').removeClass('active');
 	});
 
-	$('#modal_thanks').find('.close').click(function() {
+	$('#modal_thanks .close').click(function() {
 		$('#modal_thanks').removeClass('active');
+	});
+
+	$('.close-cl').click(function() {
+		$('#modal_thanks').removeClass('active');
+		$('#modal').removeClass('active');
 	});
 
 	/* spinner counts */
