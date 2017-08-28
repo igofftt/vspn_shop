@@ -13,5 +13,5 @@ psql -p5433 -U postgres duzzer_1 < duzzer_1.sql  <br />
 
 
 ## Start server dev
-cd /var/www/develop/duzzer/
+cd /var/www/develop/duzzer/ <br />
 forever start node_modules/gulp/bin/gulp.js
