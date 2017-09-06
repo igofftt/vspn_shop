@@ -120,7 +120,7 @@ const
 		let
 			id = _.get(req, 'params.id', 0),
 			table = 'products',
-			tags,
+			tags = {},
 			tagsNew = [],
 			tagsObj = [];
 
@@ -143,7 +143,7 @@ const
 		if(tags && _.isString(tags))
 			tags = [tags];
 
-		for(let i = 0; tags.length > i; i++) {
+		for(let i = 0; (tags || {}).length > i; i++) {
 			let tag = tags[i].split('new_')[1];
 
 			if(tag) {
@@ -153,6 +153,14 @@ const
 				tagsObj.push(tags[i]);
 			}
 		}
+
+		// required field
+		if(!obj.name)
+			_.setWith(obj, 'name', 'nameTmp');
+
+		// required field
+		if(!obj.price)
+			_.setWith(obj, 'price', 0);
 
 		if(tagsNew.length)
 			_Tools.newTags(tagsNew);
@@ -174,9 +182,9 @@ const
 
 		// create or update table row
 		if(id && id > 0)
-			models[`${table}Model`].update(obj, {where: {id: id}}).then(() => getProduct());
+			models[`${table}Model`].update(obj, {where: {id: id}}).then(result => getProduct(result));
 		else
-			models[`${table}Model`].create(obj).then(() => sendResult());
+			models[`${table}Model`].create(obj).then(result => sendResult(result));
 	};
 
 export default {index, update}

@@ -398,3 +398,13 @@ label {
 .form-c {
     border: solid 2px rgba(249, 166, 110, 0.56);
 }
+
+.pagination-block {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.pagination-block > div {
+    margin: auto 0;
+    display: inline-block;
+}

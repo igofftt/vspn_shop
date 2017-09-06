@@ -5,13 +5,14 @@ import {getModule, queryParse} from 'generic/helpers';
 
 export default (req, res, next) => {
 	let query = queryParse(req);
-	let limit = 50;
+	let limit = 20;
 	let page = 1;
 	if(req.params.page) page = req.params.page;
 	let offset = (page - 1) < 0 ? 0 : (page - 1) * limit;
 	let table = 'products';
 	let currentUser = query.user;
 	let where = currentUser ? ` WHERE "${table}"."user_id"='${currentUser}' ` : '';
+	let whereCount = currentUser ? {where: {user_id: currentUser}} : {};
 
 	// выборка нужного количества статей
 	const
@@ -36,11 +37,17 @@ export default (req, res, next) => {
 
 				// номер текущей страницы в пейджинге
 				page: page,
+				page: console.log(boostrapPaginator({
+					current    : page,
+					prelink    : '/admin/index/products',
+					rowsPerPage: limit,
+					totalResult: 500,
+				}).render()),
 
 				paginate: boostrapPaginator({
 					current    : page,
 					prelink    : '/admin/index/products',
-					rowsPerPage: offset,
+					rowsPerPage: limit,
 					totalResult: count,
 				})
 					.render(),
@@ -58,7 +65,7 @@ export default (req, res, next) => {
 	const
 
 		// счетчик статей для педжинга
-		getUsersCount = () => models.userModel.count()
+		getUsersCount = () => models[`${table}Model`].count(whereCount)
 			.then(findAll)
 			.catch(e => next(e)),
 

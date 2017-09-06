@@ -144,30 +144,36 @@
 			$('.id_mt').val(val);
 		},
 
+		loadEdit: function(id, table) {
+			if(!parseInt(id)) {
+				id = $(this).data('id');
+				table = $(this).data('table');
+			}
+
+			$.ajax({
+				cache   : false,
+				data    : {id: id, table: table},
+				dataType: 'html',
+
+				success: function(data) {
+					setTimeout(function() { $.adm.editM('show'); }, 0);
+
+					$('#container-editor .body').html('<div onclick="$.adm.editM(\'hide\')" class="close">' +
+						'<i class="fa fa-close"></i>' +
+						'</div>' + data);
+				},
+
+				type: 'post',
+				url : '/admin/load-update/' + table + '/' + id,
+			});
+		},
+
 		loadOnclick: function loadOnclick() {
 			this.conf.get('elementsLoad') && this.elementsLoad();
+			$('.edit-link').click($.adm.loadEdit);
 
-			$('.edit-link').click(function() {
-				let
-					id = $(this).data('id'),
-					table = $(this).data('table');
-
-				$.ajax({
-					cache   : false,
-					data    : {id: id, table: table},
-					dataType: 'html',
-
-					success: function(data) {
-						setTimeout(function() { $.adm.editM('show'); }, 0);
-
-						$('#container-editor .body').html('<div onclick="$.adm.editM(\'hide\')" class="close">' +
-							'<i class="fa fa-close"></i>' +
-							'</div>' + data);
-					},
-
-					type: 'post',
-					url : '/admin/load-update/' + table + '/' + id,
-				});
+			$(window).on('popstate', function() {
+				$.adm.loadEdit(parseInt(window.location.href.split('product=')[1]), 'products')
 			});
 		},
 
@@ -267,7 +273,7 @@
 			});
 		},
 
-		saveProduct: function(searchParam) {
+		saveProduct: function(searchParam, saveAndReopen) {
 			let id = $('[name="id"]').val();
 
 			$.ajax({
@@ -276,8 +282,12 @@
 				dataType: 'JSON',
 
 				success: function(data) {
-					if(data.result === 'ok')
+					if(data.result === 'ok') {
 						$.adm.editM('hide');
+
+						if(saveAndReopen)
+							window.location.href = `${window.location.href.split('#')[0]}#product=${data.data.id}`;
+					}
 
 					console.log($.adm.renderRow(data.data))
 

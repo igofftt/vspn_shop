@@ -23,20 +23,20 @@ export default params => {
 			}
 
 			prelink = this.preparePreLink(result.prelink);
-			if(result.previous) html += '<li><a href="' + prelink + result.previous + '">Назад</a></li>';
+			if(result.previous) html += '<li class="page-item"><a href="' + prelink + result.previous + '" class="page-link">Назад</a></li>';
 
 			if(result.range.length) {
 				for(i = 0, len = result.range.length; i < len; i++) {
 					if(result.range[i] === result.current) {
-						html += '<li class="active"><a href="' + prelink + result.range[i] + '">' + result.range[i] + '</a></li>';
+						html += '<li class="page-item active"><a class="page-link" href="' + prelink + result.range[i] + '">' + result.range[i] + '</a></li>';
 					} else {
-						html += '<li><a href="' + prelink + result.range[i] + '">' + result.range[i] + '</a></li>';
+						html += '<li class="page-item"><a class="page-link" href="' + prelink + result.range[i] + '">' + result.range[i] + '</a></li>';
 					}
 				}
 			}
 
 			if (result.next)
-				html += '<li><a href="' + prelink + result.next + '" class="paginator-next">Вперёд</a></li>';
+				html += '<li class="page-item"><a href="' + prelink + result.next + '" class="page-link">Вперёд</a></li>';
 
 			html += '</ul></div>';
 
