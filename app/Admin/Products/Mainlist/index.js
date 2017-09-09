@@ -37,12 +37,6 @@ export default (req, res, next) => {
 
 				// номер текущей страницы в пейджинге
 				page: page,
-				page: console.log(boostrapPaginator({
-					current    : page,
-					prelink    : '/admin/index/products',
-					rowsPerPage: limit,
-					totalResult: 500,
-				}).render()),
 
 				paginate: boostrapPaginator({
 					current    : page,

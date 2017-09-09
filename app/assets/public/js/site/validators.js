@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * author igofftt https://vk.com/igorian__ru
@@ -7,7 +7,8 @@
 /* global Constants, grecaptcha */
 /* eslint no-undef: "error" */
 
-var Validators;
+var
+	Validators;
 
 (function() {
 	/**
@@ -19,27 +20,27 @@ var Validators;
 			var _params;
 
 			this._params_dafault = {
-				_iValid: -1,
-				_oldValue: null,
-				blurOn: true,
-				cInvalid: Constants.cls.INVALID, // класс НЕ правильного заполненного поля
-				cValid: Constants.cls.VALID, // класс правильного заполненного поля
+				_iValid       : -1,
+				_oldValue     : null,
+				blurOn        : true,
 				check_validate: 'required', // переменная для выбора проверок валидатора
-				element: null, // элемент input
-				isValid: false,  // переменная для валидности
-				key_13: null, // enter callback
-				keyupOn: true, // валдировать по набору текста
-				keyup_timeout: Constants.numeric.KEYUP_SET_TIMEOUT,
-				message: '', // переменная для ошибки
-				nameField: '', // имя поля
-				only_error: false, // показывать только ошибки
-				simple: false, // показывать сообщения о ошибках
-				timer_keyup_id: null,  // id для setTimeout
-				timer_valid_id: null,  // id для setTimeout
-				type_validate: 'input', // тип валидатора(пока только один тип, параметр не используется)
-				valHint: Constants.pds.FORM_HINT, // окно hint
-				valMsg: Constants.pds.ERR_FORM_REG, // постфикс для спанов с пояснением ошибки
-				xhr: new XMLHttpRequest()
+				cInvalid      : Constants.cls.INVALID, // класс НЕ правильного заполненного поля
+				cValid        : Constants.cls.VALID, // класс правильного заполненного поля
+				element       : null, // элемент input
+				isValid       : false, // переменная для валидности
+				key_13        : null, // enter callback
+				keyup_timeout : Constants.numeric.KEYUP_SET_TIMEOUT,
+				keyupOn       : true, // валдировать по набору текста
+				message       : '', // переменная для ошибки
+				nameField     : '', // имя поля
+				only_error    : false, // показывать только ошибки
+				simple        : false, // показывать сообщения о ошибках
+				timer_keyup_id: null, // id для setTimeout
+				timer_valid_id: null, // id для setTimeout
+				type_validate : 'input', // тип валидатора(пока только один тип, параметр не используется)
+				valHint       : Constants.pds.FORM_HINT, // окно hint
+				valMsg        : Constants.pds.ERR_FORM_REG, // постфикс для спанов с пояснением ошибки
+				xhr           : new XMLHttpRequest(),
 			};
 
 			// мержим параметры
@@ -55,12 +56,12 @@ var Validators;
 				this.valueSave = this.element.value;
 
 			// обработчики событий
-			if(this.blurOn) {
+			if(this.blurOn && this.element) {
 				this.blur = this.cbBlur.bind(this);
 				this.element.addEventListener('blur', this.blur);
 			}
 
-			if(this.keyupOn) {
+			if(this.keyupOn && this.element) {
 				this.keyup = this.keyUpTimeout(function() {
 					this.cbBlur();
 				}.bind(this));
@@ -87,7 +88,6 @@ var Validators;
 			// если пользователь попытается сохранить изменения до того как проверка валидации закончилась,
 			// то ему вернётся false, но если валидация в момент нажатия неавтивна то вернётся реальный флаг
 			if(this._iValid === -1) {
-
 				return !this.isValid;
 			}
 			else {
@@ -148,6 +148,7 @@ var Validators;
 		 */
 		Field.prototype.validate = function() {
 			clearTimeout(this.timer_valid_id);
+
 			// убиваем лишнюю проверку, когда значение не меняется
 			if(this._oldValue !== this.element.value) {
 				// обновляем старое значение текущим
@@ -316,6 +317,7 @@ var Validators;
 
 			formData = JSON.stringify({email: this.element.value});
 			xhr.send(formData);
+
 			// this.prototype.xhr = xhr.abort;
 			xhr.onreadystatechange = function() {
 				var r, resConst;
@@ -398,7 +400,7 @@ var Validators;
 
 		// проверка текущего пароля
 		Field.prototype.passwordCurrent = function() {
-			var formData, xhr;
+			let formData, xhr;
 			this.isValid = false;
 			this.message = '';
 
@@ -406,12 +408,12 @@ var Validators;
 			xhr = this.xhr;
 			xhr.open('POST', '/account/passwordcheck', true);
 			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
 			formData = JSON.stringify({password: this.element.value});
 			xhr.send(formData);
+
 			// this.prototype.xhr = xhr.abort;
 			xhr.onreadystatechange = function() {
-				var r, resConst;
+				let r, resConst;
 
 				// данные еще не получены, выходим
 				if(xhr.readyState !== 4) {
@@ -445,6 +447,7 @@ var Validators;
 
 			if(this.element.value !== this.compare_element.value) {
 				this.isValid = true;
+
 				// TODO заменить на replace тип ошибок
 				this.message = Constants.captions.INCORRECT_FIELD_REPASSWORD;
 			}
@@ -468,7 +471,6 @@ var Validators;
 			this.hintShow();
 			this._validate();
 		};
-		/* end метода проверок end */
 
 		return Field;
 	}());

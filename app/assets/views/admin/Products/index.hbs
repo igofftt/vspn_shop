@@ -52,28 +52,34 @@
             </div>
 
             {{# each data }}
-                <div class="list-dr grid edit-link" data-table="products" data-id="{{ id }}">
-                    <div class="row">
-                        <div class="col col-4 left">
-                            <div class="thumbnail-old">
-                                {{# if file }}
-                                    {{# if crop }}
-                                        <img src="/images/files/small/{{ crop }}" />
+                <div class="list-dr grid">
+                    <div class="edit-link" data-table="products" data-id="{{ id }}">
+                        <div class="row">
+                            <div class="col col-4 left">
+                                <div class="thumbnail-old">
+                                    {{# if file }}
+                                        {{# if crop }}
+                                            <img src="/images/files/small/{{ crop }}" />
+                                        {{ else }}
+                                            <img src="/images/files/small/{{ file }}" />
+                                        {{/if}}
                                     {{ else }}
-                                        <img src="/images/files/small/{{ file }}" />
+                                        <img src="/images/no_img.png" />
                                     {{/if}}
-                                {{ else }}
-                                    <img src="/images/no_img.png" />
-                                {{/if}}
+                                </div>
+                            </div>
+                            <div class="col col-8 right">
+                                <a href="javascript:void(0)" data-table="products">
+                                    {{ name }}
+                                </a>
+                                <div>Цена: {{ price }}</div>
+                                <div>Артикул: {{# if vendor_name }}#{{ vendor_name }}{{ else }}#{{ id }}{{/if}}</div>
                             </div>
                         </div>
-                        <div class="col col-8 right">
-                            <a href="javascript:void(0)" data-table="products">
-                                {{ name }}
-                            </a>
-                            <div>Цена: {{ price }}</div>
-                            <div>Артикул: {{# if vendor_name }}#{{ vendor_name }}{{ else }}#{{ id }}{{/if}}</div>
-                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <a target="_blank" href="/product/{{ id }}"><i class="glyphicon glyphicon-share"></i></a>
                     </div>
                 </div>
             {{ else }}

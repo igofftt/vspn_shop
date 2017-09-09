@@ -3,6 +3,7 @@
         <div class="col col-md-12">
             <h4>{{# if id}}Редактирование товара{{ else }}Добавление товара{{/if}}</h4>
         </div>
+        <script>window.callModules = [];</script>
 
         <div class="ibox-content">
             <form method="post" class="form-modules form-horizontal form-label-left" id="form-products">
@@ -31,19 +32,22 @@
 
                     {{# iff v.plugins.name '==' 'characteristics' }}
                         <script>
-                            $.ajax({
-                                type: "post",
-                                url: "/admin/components/show_loader_characteristics",
-                                data: {
-                                    name_table : '{{ ../../table }}',
-                                    id_album   : '{{ ../../id }}'
-                                },
-                                cache: false,
-                                dataType: "html",
-                                success: function (data) {
-                                    $('#characteristics').html(data);
-                                }
-                            })
+                            callModules[callModules.length] = function(body) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/admin/components/show_loader_characteristics",
+                                    data: {
+                                        body       : body,
+                                        name_table : '{{ ../../table }}',
+                                        id_album   : '{{ ../../id }}',
+                                    },
+                                    cache: false,
+                                    dataType: "html",
+                                    success: function (data) {
+                                        $('#characteristics').html(data);
+                                    }
+                                })
+                            }
                         </script>
                     {{/iff}}
                 {{/each}}
@@ -72,6 +76,9 @@
             dataType: 'JSON',
             success: function(data) {
                 var text, body = data.data || {};
+
+                // init mode\ules
+                _.map(callModules, v => v(body));
 
                 if(_.isEmpty(body))
                     return false;

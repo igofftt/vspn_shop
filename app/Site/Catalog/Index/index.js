@@ -207,23 +207,23 @@ const
 	 * Functions forming json objects procucts
 	 * @param req
 	 * @param res
-	 * @param next
 	 */
-	postCatalog = (req, res, next) => {
+	postCatalog = (req, res) => {
 		let
+			categoriesSub = _.compact(_.map(req.body.form, o => o.name === 'categories_sub[]' ? `'${o.value}'` : '')),
 			category = req.body.category || 0,
 			currentPage = queryParse(req).page || 1,
 			show = 12,
 			table = 'products',
 
 			where = {
-				sort: 'ASC',
-				limit: show,
+				limit : show,
 				offset: (currentPage - 1) < 0 ? 0 : (currentPage - 1) * show,
+				sort  : 'ASC',
 			};
 
 		const
-			toJson = j => {
+			toJson = () => {
 				let count = req.store.getState('site.products.count');
 
 				return res.json({
@@ -231,34 +231,39 @@ const
 					current_page    : currentPage,
 					last_page       : count/show > 0 ? (count/show).toFixed(0) : 1,
 					products        : req.store.getState('site.products'),
-					subCategories   : req.store.getState('site.subCategories'),
 					result          : 'ok',
-					total           : j.length,
+					subCategories   : req.store.getState('site.subCategories'),
+					total           : count,
 				})
 			},
 
-			getProductsCount = () => models.productsModel.count({where: {cat: category}})
-				.then(dataObl => req.store.setState('site.products.count', dataObl, toJson)),
-
 			getCurrentCategory = () => models.menuModel.findById(category)
-				.then(dataObl => req.store.setState('site.currentCategory', dataObl, getProductsCount)),
+				.then(dataObl => req.store.setState('site.currentCategory', dataObl, () => toJson())),
+
+			getProducts = () => {
+				// если подкатегорий нету, то отображаем сожержимое все подкатегорий данной категории
+				if(_.isEmpty(categoriesSub))
+					categoriesSub = _.map(req.store.getState('site.subCategories'), o => `'${o.id}'`).join(',');
+
+				return models.execute(`
+					 SELECT "${table}".*, "files"."file", "files"."crop"
+					 FROM "${table}"
+					 LEFT OUTER JOIN "files" ON "${table}"."id" = "files"."id_album"
+						 AND "files"."name_table" = '${table}' AND "files"."main" = 1
+					 WHERE "${table}"."cat" IN (${categoriesSub})
+					 ORDER BY "${table}"."id" ${where.sort} limit ${where.limit} offset ${where.offset};
+					 `)
+
+					.then(dataObl => {
+						req.store.setState('site.products.count', dataObl.rowCount, () => {});
+						req.store.setState('site.products.data', dataObl.rows, getCurrentCategory)
+					});
+			},
 
 			subCategories = () => models.menuModel.findAll({order: [['name', 'ASC']], raw: true, where: {'cat': category}})
-				.then(dataObl => req.store.setState('site.subCategories', dataObl, getCurrentCategory)),
+				.then(dataObl => req.store.setState('site.subCategories', dataObl, getProducts));
 
-			getProducts = () => models.execute(`
-			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
-			ON "${table}"."id" = "files"."id_album" AND
-			"files"."name_table" = '${table}' AND "files"."main" = 1 WHERE "${table}"."cat" = ${category} ORDER BY
-			 "${table}"."id" ${where.sort} limit ${where.limit} offset ${where.offset};
-		`)
-
-
-			// models.productsModel
-			// 	.findAll({limit: show, offset: offset, order: 'id ASC', raw: true, where: {'cat': category}})
-				.then(dataObl => req.store.setState('site.products.data', dataObl.rows, subCategories));
-
-		return getProducts();
+		return subCategories();
 	};
 
 export default {addToCart, catalogProduct, getCategoryAndSub, indexCatalog, postCatalog}

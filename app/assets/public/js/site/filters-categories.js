@@ -84,10 +84,17 @@ var
 							tt += '<tr class="product-' + d.id + '">' +
 								'<td>' +
 								'<div class="item__description">' +
-								'<div class="item__img">' +
-								'<div class="_mn" style="background-image: url(\'/images/site/items/item01.png\')"></div>' +
-								'<div class="_hv" style="background-image: url(\'/images/site/items/item02.png\')"></div>' +
-								'</div>' +
+								'<div class="item__img">';
+
+							if(_.isEmpty(d.file))
+								tt += '<div style="background-image: url(\'/images/no_img.png\')"></div>';
+							else
+							if(d.crop)
+								tt += '<div style="background-image: url(\'/images/files/small/' + d.crop +'\')"></div>';
+							else
+								tt += '<div style="background-image: url(\'/images/files/small/' + d.file +'\')"></div>';
+
+							tt +=	'</div>' +
 								'<div class="item__head">' +
 								'<h5>' + d.name + '</h5>' +
 								'<p>' + d.text + '</p>' +
@@ -188,7 +195,7 @@ var
 			setTimeout(function() {
 				if(this.isLoadCat) {
 					$('[name=categories-select]').on('change', function() {
-						filCat.selectCategory()
+						// filCat.selectCategory()
 					});
 
 					$('.input-check > label').click(function() {
@@ -269,8 +276,11 @@ var
 				};
 
 				$(this.cont).css({opacity: 0.3});
+				
+				if(filCat.ajax)
+					filCat.ajax.abort();
 
-				$.ajax({
+				filCat.ajax = $.ajax({
 					cache   : false,
 					data    : request,
 					dataType: 'JSON',
@@ -280,6 +290,9 @@ var
 							let d = [], t = '';
 							$('.paginator .current-page').html(page);
 							$('.paginator .total > span').html(data.last_page > 0 ? data.last_page : 1);
+
+							$('header .count-t').html('<span class="count">' + data.products.count +
+								' ' + filCat.dN(data.products.count, ['товар','товара','товаров']) + '</span>');
 
 							if(page >= data.last_page)
 								$('.paginator .next-only').css('display', 'none');
@@ -292,10 +305,17 @@ var
 								t += '<li class="product-' + d.id + '">' +
 									'<div class="item">' +
 									'<a href="/product/' + d.id + '" class="item__description">' +
-									'<div class="item__img">' +
-									'<div class="_mn" style="background-image: url(\'/images/site/items/item01.png\')"></div>' +
-									'<div class="_hv" style="background-image: url(\'/images/site/items/item02.png\')"></div>' +
-									'</div>' +
+									'<div class="item__img">';
+
+								if(_.isEmpty(d.file))
+									t += '<div style="background-image: url(\'/images/no_img.png\')"></div>';
+								else
+								if(d.crop)
+									t += '<div style="background-image: url(\'/images/files/small/' + d.crop +'\')"></div>';
+								else
+									t += '<div style="background-image: url(\'/images/files/small/' + d.file +'\')"></div>';
+
+									t += '</div>' +
 									'<div class="item__head">' +
 									'<h5>' + d.name + '</h5>' +
 									'</div>' +
@@ -359,7 +379,11 @@ var
 
 				success: function(data) {
 					if(data['result'] === 'ok') {
-						let curLoc, t = '';
+						let
+							cat = window.location.href.split('cat=').length > 1 ? window.location.href.split('cat=')[1] : 0,
+							curLoc,
+							t = '';
+
 						t += '<div class="form-checks sub-categories-cont" style="margin-top: 15px">';
 
 						for(let i = 0; data.subCategories.length > i; i++) {
@@ -371,14 +395,15 @@ var
 							'</div>';
 						}
 
+						setTimeout(function() {
+							filCat.ajax.abort();
+							$('[for="check-sub' + cat + '"]').click();
+						}, 0);
+
 						t += '</div>';
 						$('.sub-categories-cont').html(t);
 						$('.name-current-cat').html(data.current_category.name);
 						$('[name=category]').val(data.current_category.id);
-
-						$('header .count-t').html('<span class="count">' + data.products.count +
-							' ' + filCat.dN(data.products.count,['товар','товара','товаров']) + '</span>');
-
 						curLoc = window.location.href.replace('catalog/' + category, 'catalog/' + data.current_category.id);
 
 						try {

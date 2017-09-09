@@ -1,7 +1,15 @@
+<div class="cha-s">
+    <div class="text-right">
+        <select class="select2-cha" multiple="multiple"></select>
+    </div>
+
+    <div class="cont"></div>
+</div>
+
 <script>
     let eventSelect = $('.select2-cha');
     let objCh = [
-    	{
+        {
             name: 'weight',
             name_p: 'Вес',
 
@@ -21,9 +29,9 @@
             name_d: 'длина/ширина',
 
             value: [
-            	{col: 6, type: 'input', name: 'length', name_p: 'Длина'},
+                {col: 6, type: 'input', name: 'length', name_p: 'Длина'},
                 {col: 6, type: 'input', name: 'width', name_p: 'Ширина'}
-                ]
+            ]
         },
 
         {
@@ -35,62 +43,74 @@
         }
     ];
 
-    function renderChas(obj, isFirst, nonRender) {
-        let t = '', n = '';
-        for(let i = 0; obj.length > i; i++) {
-            let d0 =obj[i];
+    /**
+     * init
+     */
+    function initChas() {
+        eventSelect.val(_.map({{{ body.params }}},
+                function(v, k) { _render(_.find(objCh, {name: k}), v); return k; })).trigger("change");
+    }
 
-            if(!_.find(nonRender, {name: d0.name})) {
-                n += `<option value="${d0.name}" selected>${d0.name_p}</option>`;
+    /**
+     * render characteristics
+     * @param d0
+     * @param val
+     * @private
+     */
+    function _render(d0, val) {
+        let t = '';
+        val = _.isObject(val) ? val : {};
 
-                t += `<div class="form-group row form-obj" id="${d0.name}-d">
+        t += `<div class="form-group row form-obj" id="${d0.name}-d">
                     <label for="example-text-input" class="col-2 col-form-label">${d0.name_p}</label>
                     <!--<button class="closes btn btn-danger btn-sm"><i class="fa fa-close"></i></button>-->
                     <div class="col-10"><div class="row">`;
 
-                for(let ii = 0; obj[i].value.length > ii; ii++) {
-                    let d = obj[i].value[ii];
+        for(let ii = 0; d0.value.length > ii; ii++) {
+            let d = d0.value[ii];
 
-                    if(d.type === 'input') {
-                        t += `<div class="col-${d.col}"><input class="form-control" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
+            if(d.type === 'input') {
+                t += `<div class="col-${d.col}"><input value="${val[d.name] || ''}" class="form-control" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
                             `;
-                    }
+            }
 
-                    if(d.type === 'color') {
-                        t += `<div class="col-${d.col}">
-                            <input class="form-control"  type="color" id="example-color-input" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
+            if(d.type === 'color') {
+                t += `<div class="col-${d.col}">
+                            <input class="form-control" value="${val[d.name] || ''}" type="color" id="example-color-input" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
                             `;
-                    }
-                }
-            } else
-                n += `<option value="${d0.name}">${d0.name_p}</option>`;
+            }
+        }
 
-            t += `</div>
+        t += `</div>
             </div>
             </div>`;
-
-            isFirst && eventSelect.html(n).select2({width: '100%'});
-        }
 
         $('.cha-s .cont').append(t);
     }
 
-    renderChas(objCh, true, [{name: 'color'}]);
+    /**
+     * render select
+     * @param obj
+     */
+    function renderOptions(obj) {
+        let n = '';
+
+        for(let i = 0; obj.length > i; i++) {
+            let d0 =obj[i];
+            n += `<option value="${d0.name}">${d0.name_p}</option>`;
+        }
+
+        eventSelect.html(n).select2({width: '100%'});
+    }
 
     eventSelect.on("select2:unselect", function (e) {
-    	$('#' + e.params.data.id + '-d').remove()
+        $('#' + e.params.data.id + '-d').remove()
     });
 
     eventSelect.on("select2:select", function (e) {
-        renderChas([_.find(objCh, {name: e.params.data.id})])
+        _render(_.find(objCh, {name: e.params.data.id}))
     });
+
+    renderOptions(objCh);
+    initChas(objCh);
 </script>
-
-
-<div class="cha-s">
-    <div class="text-right">
-        <select class="select2-cha" multiple="multiple"></select>
-    </div>
-
-    <div class="cont"></div>
-</div>

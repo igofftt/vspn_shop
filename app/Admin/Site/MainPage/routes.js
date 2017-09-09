@@ -5,5 +5,5 @@ const
 	router = express.Router();
 
 router.route('/admin/site/index/main').get(Page.index);
-router.route('/admin/site/update/:table').post(Page.indexSave);
+router.route('/admin/site/update/main_page').post(Page.indexSave);
 export default router

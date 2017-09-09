@@ -39,7 +39,7 @@ const
 		let
 			obj = req.body,
 			system_name = obj.system_name,
-			table = req.params.table;
+			table = 'params';
 
 		models[`${table}Model`].findOne({raw: true, where: {system_name: system_name}}).then(objResult => {
 			// create or update table row
