@@ -169,12 +169,17 @@
 		},
 
 		loadOnclick: function loadOnclick() {
+			let href = window.location.href;
 			this.conf.get('elementsLoad') && this.elementsLoad();
 			$('.edit-link').click($.adm.loadEdit);
 
 			$(window).on('popstate', function() {
 				$.adm.loadEdit(parseInt(window.location.href.split('product=')[1]), 'products')
 			});
+
+			if(href.split('/').length === 7 && _.toInteger(href.split('/')[6]))
+				window.location.href = `${window.location.href.split('#')[0]}#product=
+				${parseInt(href.split('/')[6])}`;
 		},
 
 		makeD: function makeD(v) {
@@ -273,7 +278,7 @@
 			});
 		},
 
-		saveProduct: function(searchParam, saveAndReopen) {
+		saveProduct: function(searchParam) {
 			let id = $('[name="id"]').val();
 
 			$.ajax({
@@ -285,11 +290,9 @@
 					if(data.result === 'ok') {
 						$.adm.editM('hide');
 
-						if(saveAndReopen)
-							window.location.href = `${window.location.href.split('#')[0]}#product=${data.data.id}`;
+						if(!parseInt(id))
+							window.location.href = `/admin/index/products/${data.data.id}`;
 					}
-
-					console.log($.adm.renderRow(data.data))
 
 					if(!_.isEmpty(data.data))
 						$('[data-id="' + id + '"]').html($.adm.renderRow(data.data));

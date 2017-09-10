@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import boostrapPaginator from 'generic/boostrapPaginator'
 import models from 'app/Admin/models';
 import {getModule, queryParse} from 'generic/helpers';
@@ -20,7 +19,7 @@ export default (req, res, next) => {
 			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
 			ON "${table}"."id" = "files"."id_album" AND
 			"files"."name_table" = '${table}' AND "files"."main" = 1 
-			 ${where} ORDER BY "${table}"."id" ASC limit ${limit} offset ${offset};
+			 ${where} ORDER BY "${table}"."id" DESC  limit ${limit} offset ${offset};
 		`)
 
 			.then(objData => getModule({name: 'products', req, res, userId: req.user.id},

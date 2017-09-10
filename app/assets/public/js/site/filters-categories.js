@@ -16,47 +16,10 @@ var
 				success: function(data) {
 					if(data.result === 'ok') {
 						let
-							p = $('.shop-cart').offset(),
-							parent = $('.product-' + id),
-							parentTmp;
+							parent = $('.product-' + id);
 
-						if(type === 'add' && parent.data('animations') !== false) {
-							parent
-								.clone()
-								.addClass('product-' + id + '-tmp product-tmp ')
-								.removeClass('col-md-4')
-
-								.css({
-									height: parent.height(),
-									left  : parent.offset().left + 15,
-									top   : parent.offset().top - $('html').scrollTop(),
-									width : parent.width(),
-								})
-
-								.appendTo('.product-' + id);
-
-							parentTmp = $('.product-' + id + '-tmp');
-
-							parentTmp.animate({
-								left   : p.left - parentTmp.width() / 2.5,
-								opacity: .8,
-								top    : p.top - parentTmp.height() / 2.5,
-							}, 500);
-
-							parentTmp.addClass('animate');
-
-							function animateAddCart() {
-								let div = $('.shop-cart');
-								div.animate({opacity: .5}, 300);
-								div.animate({opacity: 1}, 150);
-							}
-
-							setTimeout(function() {
-								parentTmp.remove();
-								animateAddCart();
-								$('#modal').addClass('active');
-							}, 1150);
-						}
+						if(type === 'add' && parent.data('animations') !== false)
+							$('#modal').addClass('active');
 
 						let
 							allPrice = 0,

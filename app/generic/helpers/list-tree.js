@@ -34,7 +34,7 @@ export default (tree, lang) => {
 			echo += `<li class="rowID-${arr[cat][ii]['id']}" id="rowID${arr[cat][ii]['id']}">
             <div class="inp_edit_u inp_edit_${arr[cat][ii]['id']}">
                 <input type="radio" name="id_m" autocomplete="off" class="inp_edit flat" 
-                title="${name}" value="${arr[cat][ii]['id']}" id="${arr[cat][ii]['id']}"/>
+                title="${name}" value="${arr[cat][ii]['id']}" id="${arr[cat][i]['id']}"/>
             </div>
             <a href="${l}" >&nbsp;&nbsp;${name}</a>`;
 

@@ -47,7 +47,7 @@
      * init
      */
     function initChas() {
-        eventSelect.val(_.map({{{ body.params }}},
+        eventSelect.val(_.map({{# if body.params }}{{{ body.params }}}{{ else }}[]{{/if}},
                 function(v, k) { _render(_.find(objCh, {name: k}), v); return k; })).trigger("change");
     }
 
