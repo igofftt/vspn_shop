@@ -26,13 +26,14 @@ $(document).ready(function() {
 
 		console.log(widthRangeMax)
 
-		noUiSlider.create($range_width, {
-			connect : [true, false],
-			range   : {max: [widthRangeMax], min: [widthRangeMin]},
-			start   : [widthRangeMax/2],
-			step    : 1,
-			tooltips: [wNumb({decimals: 0, postfix: ' mm', thousand: '&nbsp;'})],
-		});
+		if(widthRangeMax)
+			noUiSlider.create($range_width, {
+				connect : [true, false],
+				range   : {max: [widthRangeMax], min: [widthRangeMin]},
+				start   : [widthRangeMax/2],
+				step    : 1,
+				tooltips: [wNumb({decimals: 0, postfix: ' mm', thousand: '&nbsp;'})],
+			});
 
 		let
 			inputMin = document.getElementById('width-price-min'),
