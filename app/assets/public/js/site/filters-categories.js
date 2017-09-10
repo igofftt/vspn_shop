@@ -195,7 +195,7 @@ var
 			setTimeout(function() {
 				if(this.isLoadCat) {
 					$('[name=categories-select]').on('change', function() {
-						// filCat.selectCategory()
+						filCat.selectCategory()
 					});
 
 					$('.input-check > label').click(function() {
@@ -276,9 +276,6 @@ var
 				};
 
 				$(this.cont).css({opacity: 0.3});
-				
-				if(filCat.ajax)
-					filCat.ajax.abort();
 
 				filCat.ajax = $.ajax({
 					cache   : false,

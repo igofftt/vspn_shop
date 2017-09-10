@@ -243,7 +243,9 @@ const
 			getProducts = () => {
 				// если подкатегорий нету, то отображаем сожержимое все подкатегорий данной категории
 				if(_.isEmpty(categoriesSub))
-					categoriesSub = _.map(req.store.getState('site.subCategories'), o => `'${o.id}'`).join(',');
+					categoriesSub = _.map(req.store.getState('site.subCategories'), o => `'${o.id}'`)
+						.concat(`'${category}'`)
+						.join(',');
 
 				return models.execute(`
 					 SELECT "${table}".*, "files"."file", "files"."crop"

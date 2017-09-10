@@ -4,6 +4,10 @@ $(document).ready(function() {
 		$('.custom-select').select2({
 			width: '100%',
 		});
+
+		setTimeout(function() {
+			$('aside .select2-container').css({maxWidth: $('aside fieldset').width() - 55})
+		}, 0)
 	}
 
 	setTimeout(function() {
