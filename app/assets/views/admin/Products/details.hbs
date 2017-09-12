@@ -65,6 +65,10 @@
      * @returns {*}
      */
     function resultRevertId(items) {
+        for(let i = 0; items.length > i; i++)
+            if(_.isNumber(items[i].id))
+                items[i].id = items[i].name;
+
         return items
     }
 
