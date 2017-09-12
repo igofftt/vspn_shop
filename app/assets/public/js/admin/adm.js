@@ -20,21 +20,19 @@
 			setTimeout('$(".sass").html("").show(0)', 300);
 		},
 
-		editM: function(t) {
+		editM: function(t, animate) {
 			if(t === 'show') {
 				$('body').css({overflow: 'hidden'});
-				$('#container-editor').animate({opacity: 1, right: 0}, 500);
+				$('#container-editor').animate({opacity: 1, right: 0}, animate === false ? 0 : 500);
 				$('body').append('<div class="bg-fon-free-0" onclick="$.adm.showFreeClose()"></div>');
 
 				setTimeout(function() {
-					$('.container-editor .bottom-panel').animate({bottom: 0}, 800);
-
-					//                $('.container-editor .bottom-panel').width($('.container-editor .body').width() + 30);
-				}, 400)
+					$('.container-editor .bottom-panel').animate({bottom: 0}, animate === false ? 0 : 800);
+				}, animate === false ? 0 : 400)
 
 				setTimeout(function() {
 					$('.container-editor .body').height($(window).height() - 85);
-				}, 1300)
+				}, animate === false ? 0 : 1300)
 
 				$(window).resize(function() {
 					$('.container-editor .body').height($(window).height() - 85);
@@ -48,7 +46,7 @@
 				$('#container-editor').animate({
 					opacity: 0,
 					right  : '-100%',
-				}, 500);
+				}, animate === false ? 0 : 500);
 
 				$('.container-editor .body').height($(window).height());
 				$('#container-editor .body').html('');
@@ -144,7 +142,7 @@
 			$('.id_mt').val(val);
 		},
 
-		loadEdit: function(id, table) {
+		loadEdit: function(id, table, animate) {
 			if(!parseInt(id)) {
 				id = $(this).data('id');
 				table = $(this).data('table');
@@ -156,7 +154,7 @@
 				dataType: 'html',
 
 				success: function(data) {
-					setTimeout(function() { $.adm.editM('show'); }, 0);
+					setTimeout(function() { $.adm.editM('show', animate); }, 0);
 
 					$('#container-editor .body').html('<div onclick="$.adm.editM(\'hide\')" class="close">' +
 						'<i class="fa fa-close"></i>' +
@@ -174,7 +172,7 @@
 			$('.edit-link').click($.adm.loadEdit);
 
 			$(window).on('popstate', function() {
-				$.adm.loadEdit(parseInt(window.location.href.split('product=')[1]), 'products')
+				$.adm.loadEdit(parseInt(window.location.href.split('product=')[1]), 'products', false)
 			});
 
 			if(href.split('/').length === 7 && _.toInteger(href.split('/')[6]))
@@ -278,7 +276,7 @@
 			});
 		},
 
-		saveProduct: function(searchParam) {
+		saveProduct: function(searchParam, animate, revertWin) {
 			let id = $('[name="id"]').val();
 
 			$.ajax({
@@ -288,10 +286,13 @@
 
 				success: function(data) {
 					if(data.result === 'ok') {
-						$.adm.editM('hide');
+						$.adm.editM('hide', animate);
 
-						if(!parseInt(id))
+						if(revertWin)
 							window.location.href = `/admin/index/products/${data.data.id}`;
+						else
+							if(!parseInt(id))
+								window.location.href = '/admin/index/products/'
 					}
 
 					if(!_.isEmpty(data.data))
