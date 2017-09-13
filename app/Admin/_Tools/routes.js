@@ -9,6 +9,7 @@ const
 
 router.route('/admin/_tools/getDataSingle').post(QueryTools.getDataSingle);
 router.route('/admin/_tools/getTags').post(QueryTools.getTags);
+router.route('/admin/_tools/rowDelete').post(QueryTools.rowDelete);
 router.route('/admin/components/show_loader_characteristics').post(Components.showLoaderCharacteristics);
 
 export default combineRoute(

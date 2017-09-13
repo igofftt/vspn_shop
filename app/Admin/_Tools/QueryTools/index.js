@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import models from 'app/Admin/models';
+import fs from 'fs';
 
 /**
  * function for query by id and table name
@@ -58,14 +59,42 @@ const
 		const
 			result = e => e;
 
-		for(let i = 0; obj.length > i; i++) {
-			console.log(obj[i])
-
+		for(let i = 0; obj.length > i; i++)
 			models.tagsModel.create(obj[i]);
-		}
-
 
 		return result(true);
+	},
+
+	/**
+	 * Function delete
+	 * @param req
+	 * @param res
+	 */
+	rowDelete = (req, res) => {
+		let
+			id = req.body.id,
+			table = req.body.table;
+
+		const
+			remove = () => models[`${table}Model`]
+				.destroy({where: {id: id}})
+				.then(objData => res.send({data: objData, mess: '', result: 'ok'})),
+
+			getCurrent = () => models[`${table}Model`]
+				.findById(id)
+				.then(objData => {
+					if(objData) {
+						if(table === 'files') {
+							fs.unlink(`${process.env.PWD}/app/assets/public/images/files/big/${objData.file}`, () => {});
+							fs.unlink(`${process.env.PWD}/app/assets/public/images/files/small/${objData.file}`, () => {});
+							fs.unlink(`${process.env.PWD}/app/assets/public/images/files/origin/${objData.file}`, () => {});
+						}
+					}
+
+					return remove()
+				});
+
+		return getCurrent()
 	};
 
-export default {getDataSingle, getTags, newTags};
+export default {getDataSingle, getTags, newTags, rowDelete};

@@ -164,6 +164,7 @@ button, a {
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+    position: relative;
 }
 
 .list-dr:hover {
@@ -206,6 +207,27 @@ button, a {
 
 .list-dr.grid  img {
    max-height: 100px;
+}
+
+.list-dr .top-fixed {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    z-index: 1;
+}
+
+.list-dr .top-fixed a {
+    color: #e13e2b;
+    font-size: 12px;
+}
+
+.list-dr:hover .top-fixed {
+    opacity: 1;
 }
 
 .caption {

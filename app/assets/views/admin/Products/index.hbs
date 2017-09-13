@@ -52,7 +52,13 @@
             </div>
 
             {{# each data }}
-                <div class="list-dr grid">
+                <div class="list-dr grid" id="products-{{ id }}">
+                    <div class="top-fixed">
+                        <a href="javascript:void(0)" onclick="$.adm.rowDelete({{ id }}, '\'products\'')">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                    </div>
+
                     <div class="edit-link" data-table="products" data-id="{{ id }}">
                         <div class="row">
                             <div class="col col-4 left">

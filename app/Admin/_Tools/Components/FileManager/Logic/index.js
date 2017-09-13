@@ -117,7 +117,7 @@ const
 			idAlbum = req.body.id_album,
 			nameTable = req.body.name_table;
 
-		const resultSend = () => res.send({id: idAlbum, main: 0, name: nameHexExt});
+		const resultSend = obj => res.send(obj);
 		let file = _.get(req, 'files.Filedata');
 		let nameHex = hex(Date.now().toString());
 		let ext = file.name.split('.');
@@ -155,9 +155,10 @@ const
 					// Big
 					fs.createReadStream(pathBig).pipe(fs.createWriteStream(pathBigApp));
 
-					// TODO добавить проверку на to_main
-					return models.filesModel
-						.create(obj, {where: {id: idAlbum}}).then(() => resultSend())
+					// save info image end check on to main
+					models.filesModel.findOne({raw: true, where: {id_album: idAlbum, main: 1}})
+						.then(objRes =>	models.filesModel
+							.create(_.merge(obj, {main: objRes ? 0 : 1}), {where: {id: idAlbum}}).then(obj => resultSend(obj)));
 				});
 
 			const

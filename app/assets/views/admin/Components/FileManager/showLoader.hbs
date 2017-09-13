@@ -37,7 +37,7 @@
 
 
                             {{# each files as |v| }}
-                                <div class="col-md-4 rowID-{{ v.id }}">
+                                <div class="col-md-4 rowID-{{ v.id }}" id="files-{{ v.id }}">
                                     <div class="thumbnail">
                                         <div class="image view view-first">
                                             {{# if v.crop }}
@@ -145,13 +145,14 @@
 
                                 'onUploadComplete' : function(file, data)
                                 {
+                                	console.log(file, data)
                                     $('span.not-img').remove();
                                     var ds = JSON.parse(data);
 
-                                    var img = '<div class="col-md-4 rowID-' + ds.id + '">' +
+                                    var img = '<div class="col-md-4 rowID-' + ds.id + '" id="files-' + ds.id + '">' +
                                             '<div class="thumbnail">' +
                                             '<div class="image view view-first">' +
-                                            '<img src="/images/files/small/' + ds['name'] + '" style="width: 100%; display: block;"/>' +
+                                            '<img src="/images/files/small/' + ds.file + '" style="width: 100%; display: block;"/>' +
                                             '<div class="caption" style="padding-bottom: 0">' +
                                             '<div class="b">' +
                                             '<p id="img-name-' + ds.id + '"></p>' +
@@ -159,9 +160,8 @@
                                             '</div>' +
                                             '<div class="tools tools-bottom" style="text-align: center">' +
                                             ' <a href="javascript:void(0)" onclick="editImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info btn-sm"><i class="fa fa-pencil"></i></a>' +
-                                            ' <a href="javascript:void(0)" onclick="cropImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-info btn-sm"><i class="fa fa-crop"></i></a>' +
-                                            ' <a href="javascript:void(0)" class="btn btn-outline btn-info btn-sm" onclick="toMain{{ name_table }}(' + ds.id + ')">' +
-                                            ' <a href="javascript:void(0)" onclick="$.adm.rowDelete(' + ds.id + ', \'files\')" class="btn btn-outline btn-danger btn-sm"><i class="fa fa-times"></i></a>';
+                                            ' <a href="javascript:void(0)" onclick="cropImg{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-warning btn-sm"><i class="fa fa-crop"></i></a>' +
+                                            ' <a href="javascript:void(0)" onclick="toMain{{ name_table }}(' + ds.id + ')" class="btn btn-outline btn-primary btn-sm">';
 
                                     if(ds.main) {
                                         img += '<i class="toMain{{ name_table }} toMain{{ name_table }}' + ds.id + ' glyphicon glyphicon-check"></i>';
@@ -169,7 +169,10 @@
                                         img += '<i class="toMain{{ name_table }} toMain{{ name_table }}' + ds.id + ' glyphicon glyphicon-unchecked"></i>';
                                     }
 
+                                    var tmpRiles = "'\\'files\\''";
+
                                     img += '</a>' +
+                                            ' <a href="javascript:void(0)" onclick="$.adm.rowDelete(' + ds.id + ', ' + tmpRiles + ')" class="btn btn-outline btn-danger btn-sm"><i class="fa fa-times"></i></a>' +
                                             '</div>' +
                                             '</div>' +
                                             '</div>' +

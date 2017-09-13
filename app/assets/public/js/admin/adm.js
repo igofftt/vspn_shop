@@ -255,9 +255,10 @@
 
 				success: function(data) {
 					if(data['result'] === 'ok') {
-						if(data['mess'] === '' || data['mess'] === 'ok') {
+						if(data['mess'] === '' || data.result === 'ok') {
 							$('#modalDel').modal('hide');
 							$('.flt-'+id).parent('div').parent('td').parent('tr').remove();
+							$('#' + t + '-'+id).remove();
 							$.adm.close_mt();
 						}
 					}
