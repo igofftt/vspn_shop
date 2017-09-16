@@ -40,7 +40,7 @@
                                             <figure
                                                     class="{{# iff k '==' '0' }}current{{/iff}}"
                                                     data-item="{{ k }}"
-                                                    style="background-image: url('/images/files/small/{{ v.file }}')"
+                                                    style="background-image: url('/images/files/big/{{ v.file }}')"
                                             ></figure>
                                         </div>
                                     </li>
@@ -51,36 +51,22 @@
                 </div>
                 <div class="product__characters">
                     <h1>{{ product.name }}</h1>
-                    <dl>
-                        <dt>Размер формы:</dt>
-                        <dd>54x52x2,5 см</dd>
-                    </dl>
-                    <dl>
-                        <dt>Выход камня:</dt>
-                        <dd>0,2 м2</dd>
-                    </dl>
-                    <dl>
-                        <dt>Размер камня:</dt>
-                        <dd>23б5ч6 см - 14 шт</dd>
-                    </dl>
-                    <dl>
-                        <dt>Тощина камня:</dt>
-                        <dd>1-1,5 см</dd>
-                    </dl>
-                    <dl>
-                        <dt>Вес формы</dt>
-                        <dd>5 кг</dd>
-                    </dl>
+
+                    <div class="cha-s">
+                        <div class="cont"></div>
+                    </div>
+
                     <div class="price">
                         <strong>{{ product.price_current }} &#8381;</strong>
                         {{# if product.discount }}<span class="discount">Со скидкой {{ product.discount }}%</span>{{/if}}
                     </div>
+
                     <div class="spinner">
                         <div class="spinner__counts">
                             <button class="minus" onclick="filCat.sumQuantity('{{ product.id }}', 'minus')">
                                 <i class="icon-minus"></i>
                             </button>
-                            <span class="quantity">10</span>
+                            <span class="quantity">1</span>
                             <button class="plus" onclick="filCat.sumQuantity('{{ product.id }}', 'plus')">
                                 <i class="icon-plus"></i>
                             </button>
@@ -98,13 +84,18 @@
                 </nav>
 
                 <div class="product__tabs_main current" data-tab="tab-1">
-                    <div class="text-box">{{ product.text }}</div>
+                    <div class="text-box">{{{ product.text }}}</div>
                 </div>
-                <div class="product__tabs_main" data-tab="tab-2"><div class="text-box">Характеристика</div></div>
+
+                <div class="product__tabs_main" data-tab="tab-2">
+                    <div class="text-box"><div class="cha-s"><div class="cont"></div></div></div>
+                </div>
+
                 <div class="product__tabs_main" data-tab="tab-3"><div class="text-box">Отзывы</div></div>
-                <div class="product__tabs_main" data-tab="tab-4"><div class="text-box">Обзоры</div></div>
+                <div class="product__tabs_main" data-tab="tab-4"><div class="text-box">{{{ product.reviews }}}</div></div>
             </div>
         </section>
+
         <section class="catalog preview">
             <header>
                 <h3>С этим товаром покупают</h3>
@@ -131,4 +122,100 @@
         });
     </script>
     <script type="text/javascript" src="/js/site/gallery.js"></script>
+
+    <script>
+        let eventSelect = $('.select2-cha');
+        let objCh = [
+            {
+                name: 'weight',
+                name_p: 'Вес',
+                measure: 'г',
+
+                value: [{col: 12, type: 'input', name: 'weight', name_p: 'Вес, г'}]
+            },
+
+            {
+                name: 'thickness',
+                name_p: 'Толщина',
+                measure: 'мм',
+
+                value: [{col: 12, type: 'input', name: 'thickness', name_p: 'Толщина'}]
+            },
+
+            {
+                name: 'dimensions_length_width',
+                name_p: 'Размеры',
+                name_d: 'длина/ширина)',
+                measure: 'мм',
+
+                value: [
+                    {col: 6, type: 'input', name: 'length', name_p: 'Длина'},
+                    {col: 6, type: 'input', name: 'width', name_p: 'Ширина'}
+                ]
+            },
+
+            {
+                name: 'color',
+                name_p: 'Цвет',
+                name_d: '',
+
+                value: [{col: 12, type: 'color', name: 'color', name_p: 'Цвет'}]
+            },
+
+            {
+                name: 'concentrate_density_m3',
+                name_p: 'Плотность концентрата',
+                measure: 'г/см³',
+                value: [{col: 12, type: 'input', name: 'concentrate_density_m3', name_p: 'Плотность концентрата'}]
+            },
+
+            {
+                name: 'consumption_m2',
+                name_p: 'Расход',
+                measure: 'л на м²',
+                value: [{col: 12, type: 'input', name: 'consumption_m2', name_p: 'Расход'}]
+            }
+        ];
+
+        /**
+         * init
+         */
+        function initChas() {
+            eventSelect.val(_.map({{# if product.params }}{{{ product.params }}}{{ else }}[]{{/if}},
+                    function(v, k) { _render(_.find(objCh, {name: k}), v); return k; })).trigger("change");
+        }
+
+        /**
+         * render characteristics
+         * @param d0
+         * @param val
+         * @private
+         */
+        function _render(d0, val) {
+            let t = '';
+            val = _.isObject(val) ? val : {};
+
+            t += `<dl><dt style="display: inline-table;">${d0.name_p}:&nbsp;</dt>`;
+            t += `<dd style="display: inline-table;">`;
+
+            for(let ii = 0; d0.value.length > ii; ii++) {
+                let d = d0.value[ii];
+
+                if(d.type === 'input') {
+                    t += ` ${d.name_p} ${val[d.name] || ''}, ${d0.measure}`;
+                }
+
+                if(d.type === 'color') {
+                    t += ` ${val[d.name] || ''}`;
+                }
+            }
+
+            t += `</dd>`;
+            t += `</dl>`;
+
+            $('.cha-s .cont').append(t);
+        }
+
+        initChas(objCh);
+    </script>
 {{/contentFor}}

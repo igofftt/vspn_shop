@@ -161,10 +161,6 @@ var
 						filCat.selectCategory()
 					});
 
-					$('.input-check > label').click(function() {
-						filCat.selectCatalogs()
-					});
-
 					document.getElementById('price_range').noUiSlider.on('change', () => {
 						filCat.selectCatalogs()
 					});
@@ -292,7 +288,7 @@ var
 									'<button class="minus" onclick="filCat.sumQuantity(' + d.id + ', \'minus\')">' +
 									'<i class="icon-minus"></i>' +
 									'</button>' +
-									'<span class="quantity">10</span>' +
+									'<span class="quantity">1</span>' +
 									'<button class="plus" onclick="filCat.sumQuantity(' + d.id + ', \'plus\')">' +
 									'<i class="icon-plus"></i>' +
 									'</button>' +
@@ -543,7 +539,7 @@ var
 					currentQuantityCont.html(quant);
 			}
 
-			if(quant > 1) {
+			if(quant >= 1) {
 				currentPriceNew.html((parseFloat(currentPriceNew.html()) / currentQuantity * quant).toFixed(0));
 				currentPriceOld.html((parseFloat(currentPriceOld.html()) / currentQuantity * quant).toFixed(0));
 			}

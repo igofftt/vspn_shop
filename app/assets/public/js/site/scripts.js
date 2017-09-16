@@ -50,8 +50,12 @@ $(document).ready(function() {
 			}),
 
 			range: {max: [parseFloat(inputMax.value)], min: [parseFloat(inputMin.value)]},
-			start: [0, (inputMax.value/2)],
+			start: [0, (inputMax.value)],
 			step : 10,
+		});
+
+		$range_price.noUiSlider.on('change', () => {
+			filCat.selectCatalogs()
 		});
 
 		$range_price.noUiSlider.on('update', (values, handle) => {

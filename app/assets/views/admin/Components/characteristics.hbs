@@ -15,26 +15,29 @@
     let objCh = [
         {
             name: 'weight',
-            name_p: 'Вес (г)',
+            name_p: 'Вес',
+            measure: 'г',
 
             value: [{col: 12, type: 'input', name: 'weight', name_p: 'Вес, г'}]
         },
 
         {
             name: 'thickness',
-            name_p: 'Толщина (мм)',
+            name_p: 'Толщина',
+            measure: 'мм',
 
-            value: [{col: 12, type: 'input', name: 'thickness', name_p: 'Толщина, мм'}]
+            value: [{col: 12, type: 'input', name: 'thickness', name_p: 'Толщина'}]
         },
 
         {
             name: 'dimensions_length_width',
-            name_p: 'Размеры (мм)',
-            name_d: 'длина/ширина (мм)',
+            name_p: 'Размеры',
+            name_d: 'длина/ширина)',
+            measure: 'мм',
 
             value: [
-                {col: 6, type: 'input', name: 'length', name_p: 'Длина, мм'},
-                {col: 6, type: 'input', name: 'width', name_p: 'Ширина, мм'}
+                {col: 6, type: 'input', name: 'length', name_p: 'Длина'},
+                {col: 6, type: 'input', name: 'width', name_p: 'Ширина'}
             ]
         },
 
@@ -48,14 +51,16 @@
 
         {
             name: 'concentrate_density_m3',
-            name_p: 'Плотность концентрата (г/см³)',
-            value: [{col: 12, type: 'input', name: 'concentrate_density_m3', name_p: 'Плотность концентрата (г/см³)'}]
+            name_p: 'Плотность концентрата',
+            measure: 'г/см³',
+            value: [{col: 12, type: 'input', name: 'concentrate_density_m3', name_p: 'Плотность концентрата'}]
         },
 
         {
             name: 'consumption_m2',
-            name_p: 'Расход (л на м²)',
-            value: [{col: 12, type: 'input', name: 'consumption_m2', name_p: 'Расход (л на м²)'}]
+            name_p: 'Расход',
+            measure: 'л на м²',
+            value: [{col: 12, type: 'input', name: 'consumption_m2', name_p: 'Расход'}]
         }
     ];
 
@@ -78,7 +83,7 @@
         val = _.isObject(val) ? val : {};
 
         t += `<div class="form-group row form-obj" id="${d0.name}-d">
-                    <label for="example-text-input" class="col-2 col-form-label">${d0.name_p}</label>
+                    <label for="example-text-input" class="col-2 col-form-label">${d0.name_p}, ${d0.measure}</label>
                     <!--<button class="closes btn btn-danger btn-sm"><i class="fa fa-close"></i></button>-->
                     <div class="col-10"><div class="row">`;
 

@@ -287,11 +287,24 @@
 		},
 
 		saveProduct: function(searchParam, animate, revertWin) {
-			let id = $('[name="id"]').val();
+			let
+				arr,
+				form = $(searchParam).serializeArray(),
+				id = $('[name="id"]').val()	;
+
+			for(let i = 0; form.length > i; i++) {
+				arr = form[i];
+
+				if(arr.name === 'pl[text]')
+					form[i].value = tinymce.get('textareaText').getContent();
+
+				if(arr.name === 'pl[reviews]')
+					form[i].value = tinymce.get('textareaReviews').getContent();
+			}
 
 			$.ajax({
 				cache   : false,
-				data    : $(searchParam).serializeArray(),
+				data    : form,
 				dataType: 'JSON',
 
 				success: function(data) {
