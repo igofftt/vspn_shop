@@ -14,9 +14,8 @@ export default (req, res, next) => {
 	let currentCategory = parseInt(query.cat) || 0;
 	let where = ` WHERE "${table}"."active"='1' `;
 	let whereCount = currentUser ? {where: {user_id: currentUser}} : {};
-
-	// where += currentUser ? ` AND "${table}"."user_id"='${currentUser}' ` : '';
-	where += currentCategory ? ` AND "${table}"."cat"='${currentCategory}' ` : ''
+	where += currentUser ? ` AND "${table}"."user_id"='${currentUser}' ` : '';
+	where += currentCategory ? ` AND "${table}"."cat"='${currentCategory}' ` : '';
 
 	// выборка нужного количества статей
 	const
