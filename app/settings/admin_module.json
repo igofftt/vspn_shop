@@ -75,15 +75,17 @@
       }
     ],
     "plugins": [
+      "cat",
       "album",
       "name",
       "vendor_code",
       "price",
       "characteristics",
+      "brand",
       "text",
+      "reviews",
       "active",
       "tags",
-      "cat",
       "title",
       "keywords",
       "description"

@@ -50,6 +50,27 @@
                             }
                         </script>
                     {{/iff}}
+
+                    {{# iff v.plugins.name '==' 'brand' }}
+                        <script>
+                            callModules[callModules.length] = function(body) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/admin/components/show_loader_brand",
+                                    data: {
+                                        body       : body,
+                                        name_table : '{{ ../../table }}',
+                                        id_album   : '{{ ../../id }}',
+                                    },
+                                    cache: false,
+                                    dataType: "html",
+                                    success: function (data) {
+                                        $('#brand').html(data);
+                                    }
+                                })
+                            }
+                        </script>
+                    {{/iff}}
                 {{/each}}
 
                 <input type="hidden" name="id" value="{{ id }}"/>
@@ -209,4 +230,73 @@
     }
 
     loadProduct();
+</script>
+
+
+<script src="/js/admin/plugins/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: ".area",
+        plugins: [
+            "advlist autolink lists link image charmap print anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste",
+            " imagetools fullscreen"
+        ],
+        toolbar: "fullscreen insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fontselect fontsizeselect"
+        + 'print media ',
+        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+        image_class_list: [
+            {title: 'None', value: ''},
+            {title: 'Clear', value: 'clear'},
+            {title: 'Thumbnail', value: 'thumbnail'}
+        ],
+
+        class_list: [
+            {title: 'None', value: ''},
+            {title: 'Clear', value: 'clear'},
+            {title: 'Thumbnail', value: 'thumbnail'}
+        ],
+
+        menubar: true,
+        image_advtab: true,
+        image_dimensions: true,
+        document_base_url : "/",
+        relative_urls: false,
+        language: "ru",
+        font_formats: "Andale Mono=andale mono,times;"+
+        "Arial=arial,helvetica,sans-serif;"+
+        "Arial Black=arial black,avant garde;"+
+        "Book Antiqua=book antiqua,palatino;"+
+        "Comic Sans MS=comic sans ms,sans-serif;"+
+        "Courier New=courier new,courier;"+
+        "Georgia=georgia,palatino;"+
+        "Helvetica=helvetica;"+
+        "Impact=impact,chicago;"+
+        "Symbol=symbol;"+
+        "Tahoma=tahoma,arial,helvetica,sans-serif;"+
+        "Terminal=terminal,monaco;"+
+        "Times New Roman=times new roman,times;"+
+        "Trebuchet MS=trebuchet ms,geneva;"+
+        "Verdana=verdana,geneva;"+
+        "Webdings=webdings;"+
+        "Wingdings=wingdings,zapf dingbats"
+    });
+
+    tinymce.init({
+        selector: ".reviews",
+        menubar: false,
+
+        plugins: [
+            "advlist autolink lists link image charmap print anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste",
+            " imagetools fullscreen"
+        ],
+
+        toolbar: "fullscreen insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fontselect fontsizeselect"
+        + 'print media ',
+
+        language: "ru"
+    });
 </script>

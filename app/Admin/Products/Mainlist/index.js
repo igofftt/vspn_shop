@@ -1,6 +1,7 @@
+import _ from 'lodash'
 import boostrapPaginator from 'generic/boostrapPaginator'
 import models from 'app/Admin/models';
-import {getModule, queryParse} from 'generic/helpers';
+import {getModule, queryParse, getCat} from 'generic/helpers';
 
 export default (req, res, next) => {
 	let query = queryParse(req);
@@ -9,9 +10,13 @@ export default (req, res, next) => {
 	if(req.params.page) page = req.params.page;
 	let offset = (page - 1) < 0 ? 0 : (page - 1) * limit;
 	let table = 'products';
-	let currentUser = query.user;
-	let where = currentUser ? ` WHERE "${table}"."user_id"='${currentUser}' ` : '';
+	let currentUser = query.user || 0;
+	let currentCategory = parseInt(query.cat) || 0;
+	let where = ` WHERE "${table}"."active"='1' `;
 	let whereCount = currentUser ? {where: {user_id: currentUser}} : {};
+
+	// where += currentUser ? ` AND "${table}"."user_id"='${currentUser}' ` : '';
+	where += currentCategory ? ` AND "${table}"."cat"='${currentCategory}' ` : ''
 
 	// выборка нужного количества статей
 	const
@@ -27,12 +32,14 @@ export default (req, res, next) => {
 			))
 
 			.then(objResult => res.render('admin/Products/index', {
-				count       : count, // общее кол-во статей
-				current_user: currentUser,
-				data        : objResult.objData, // статьи
-				left_menu   : req.store.getState('left_menu'),
-				meta        : {title: 'Админ панель - весь товар'},
-				module      : objResult.module[0],
+				categories      : req.store.getState('site.categories'),
+				count           : count, // общее кол-во статей
+				current_category: currentCategory,
+				current_user    : currentUser,
+				data            : objResult.objData, // статьи
+				left_menu       : req.store.getState('left_menu'),
+				meta            : {title: 'Админ панель - весь товар'},
+				module          : objResult.module[0],
 
 				// номер текущей страницы в пейджинге
 				page: page,
@@ -56,15 +63,33 @@ export default (req, res, next) => {
 			.catch(e => next(e));
 
 	const
+		listTree = obj => {
+			let opt = '';
+
+			_.map(obj[0], v => {
+				opt += ` <option value="/admin/index/products?cat=${v.id}&user=${currentUser}" 
+          ${v.id === currentCategory ? 'selected' : ''}>${v.name}</option>`;
+
+				_.map(obj[v.id] || [], h => {
+					opt += ` <option value="/admin/index/products?cat=${h.id}&user=${currentUser}" 
+          ${h.id === currentCategory ? 'selected' : ''}>---${h.name}</option>`;
+				})
+			});
+
+			return opt;
+		},
 
 		// счетчик статей для педжинга
 		getUsersCount = () => models[`${table}Model`].count(whereCount)
 			.then(findAll)
 			.catch(e => next(e)),
 
+		getCategories = () => getCat({req, res, type: 'array'}, tree =>
+			req.store.setState('site.categories', listTree(tree), getUsersCount())),
+
 		// users(sellers) for filter by user
 		getSellers = () => models.userModel.findAll({raw: true, where: {usertype: 'sellers'}})
-			.then(dataObl => req.store.setState('site.sellers', dataObl, getUsersCount()));
+			.then(dataObl => req.store.setState('site.sellers', dataObl, getCategories()));
 
 	getSellers();
 };

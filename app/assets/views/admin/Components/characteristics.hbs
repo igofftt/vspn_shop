@@ -1,4 +1,8 @@
 <div class="cha-s">
+    <div class="alert alert-warning">
+        Единицы измерения в полях характеристики писать не нужно, все единицы подставляются автоматически
+    </div>
+
     <div class="text-right">
         <select class="select2-cha" multiple="multiple"></select>
     </div>
@@ -11,26 +15,26 @@
     let objCh = [
         {
             name: 'weight',
-            name_p: 'Вес',
+            name_p: 'Вес (г)',
 
-            value: [{col: 12, type: 'input', name: 'weight', name_p: 'Вес'}]
+            value: [{col: 12, type: 'input', name: 'weight', name_p: 'Вес, г'}]
         },
 
         {
             name: 'thickness',
-            name_p: 'Толщина',
+            name_p: 'Толщина (мм)',
 
-            value: [{col: 12, type: 'input', name: 'thickness', name_p: 'Толщина'}]
+            value: [{col: 12, type: 'input', name: 'thickness', name_p: 'Толщина, мм'}]
         },
 
         {
             name: 'dimensions_length_width',
-            name_p: 'Размеры',
-            name_d: 'длина/ширина',
+            name_p: 'Размеры (мм)',
+            name_d: 'длина/ширина (мм)',
 
             value: [
-                {col: 6, type: 'input', name: 'length', name_p: 'Длина'},
-                {col: 6, type: 'input', name: 'width', name_p: 'Ширина'}
+                {col: 6, type: 'input', name: 'length', name_p: 'Длина, мм'},
+                {col: 6, type: 'input', name: 'width', name_p: 'Ширина, мм'}
             ]
         },
 

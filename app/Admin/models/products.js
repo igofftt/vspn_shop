@@ -35,6 +35,7 @@ export default (sequelize, Datatypes) => {
 			name    : Datatypes.STRING(512),
 			params  : Datatypes.JSON,
 			price   : Datatypes.INTEGER,
+			reviews : Datatypes.TEXT,
 			sort    : Datatypes.INTEGER,
 			tags    : Datatypes.STRING(512),
 			text    : Datatypes.TEXT,

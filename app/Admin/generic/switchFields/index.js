@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import {getCat, queryParse} from 'generic/helpers';
+import models from 'app/Admin/models';
 
 const
 
@@ -42,6 +43,39 @@ const
 			}));
 		else
 			return resultR({sel: inp['body']['text']});
+	},
+
+	_catList = (inp, coll, l, req, res) => {
+		let
+			classAttr = inp.classAttr ? inp.classAttr : '',
+			langArr = l ? '--options--' : '';
+
+		const
+			resultR = obj => {
+				let opt = '';
+
+				for(let i = 0; obj.length > i; i++)
+					opt += `<option value="${obj[i].id}">${obj[i].name}</option>`;
+
+				let html = `<div class="form-group">
+					<label class="control-label">${inp.nameText}</label> 
+					<div class="">
+					<select ${inp.body.multiple || ''} name="${inp.nameAttr}${langArr}" id="${inp.idAttr}" class="form-control 
+					${classAttr}">
+					${inp['body']['text'].replace('{-option-}', opt)}
+					</select>
+					</div>
+					<br class="clear"/>
+					</div>`;
+
+				return coll(html, inp.name);
+			},
+
+			getList = () => models[`${inp['body']['table']}Model`]
+				.findAll({raw: true, where: {active: 1}})
+				.then(objRes => resultR(objRes));
+
+		return getList();
 	},
 
 	/**
@@ -109,6 +143,9 @@ const
 
 		if(c.typeField === 'select')
 			return _cat(c, n, l, req, res);
+
+		if(c.typeField === 'select-list')
+			return _catList(c, n, l, req, res);
 
 		let html;
 

@@ -23,14 +23,32 @@
                             <div class="col-md-9">
                                 <div class="row">
                                     <select onchange="window.location.href = this.value" id="select1" class="select2" autocomplete="off">
-                                        <option value="/admin/index/products" {{#iff usertype '==' '' }}selected{{/iff}}>
+                                        <option value="/admin/index/products?cat={{ current_category }}" {{#iff usertype '==' '' }}selected{{/iff}}>
                                             Все
                                         </option>
                                         {{# each sellers }}
-                                            <option value="/admin/index/products?user={{ id }}" {{#iff id '==' ../current_user }}selected{{/iff}}>
-                                                Продавец1
+                                            <option value="/admin/index/products?cat={{ ../current_category }}&user={{ id }}" {{#iff id '==' ../current_user }}selected{{/iff}}>
+                                                {{ name }}
                                             </option>
                                         {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <span class="input-group-addon" style="width: 100%">Категория: </span>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <select onchange="window.location.href = this.value" id="select1" class="select2" autocomplete="off">
+                                        <option value="/admin/index/products?user={{ current_user }}" {{#iff usertype '==' '' }}selected{{/iff}}>
+                                            Все
+                                        </option>
+                                        {{{ categories }}}
                                     </select>
                                 </div>
                             </div>
@@ -89,7 +107,7 @@
                     </div>
                 </div>
             {{ else }}
-                <div class="alert alert-info text-center">У этого продовца пока ещё нет товара</d>
+                <div class="alert alert-info text-center">Нет товара</d>
             {{/ each }}
         </div>
 

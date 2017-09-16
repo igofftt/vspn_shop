@@ -103,6 +103,10 @@
 				'<div class="loader"></div>' +
 				' <button class="btn btn-success btn-sm" onclick="$.adm.saveProduct(\'#form-products\')"' +
 				' type="button">Сохранить</button> ' +
+				' <button class="btn btn-primary btn-sm" onclick="$.adm.saveProduct(\'#form-products\', 0, \'not-close\')"' +
+				' type="button">Применить</button> ' +
+				' <button class="btn btn-info btn-sm" onclick="$.adm.saveProduct(\'#form-products\', 800, \'create\')"' +
+				' type="button">Сохранить и создать</button> ' +
 				'</div>' +
 
 				'</div>' +
@@ -143,7 +147,7 @@
 		},
 
 		loadEdit: function(id, table, animate) {
-			if(!parseInt(id)) {
+			if(!parseInt(id) && parseInt(id) !== 0) {
 				id = $(this).data('id');
 				table = $(this).data('table');
 			}
@@ -178,6 +182,11 @@
 			if(href.split('/').length === 7 && _.toInteger(href.split('/')[6]))
 				window.location.href = `${window.location.href.split('#')[0]}#product=
 				${parseInt(href.split('/')[6])}`;
+
+			if(href.split('/')[6] === 'new')
+				$.adm.loadEdit(0, 'products');
+
+			console.log('dd')
 		},
 
 		makeD: function makeD(v) {
@@ -287,13 +296,24 @@
 
 				success: function(data) {
 					if(data.result === 'ok') {
-						$.adm.editM('hide', animate);
+						if(revertWin !== 'not-close') {
+							$.adm.editM('hide', animate);
 
-						if(revertWin)
-							window.location.href = `/admin/index/products/${data.data.id}`;
-						else
+							if(revertWin)
+								window.location.href = `/admin/index/products/${revertWin === 'create' ? 'new' : data.data.id}`;
+							else
 							if(!parseInt(id))
 								window.location.href = '/admin/index/products/'
+						}
+
+						if(revertWin === 'not-close') {
+							$('.bottom-panel > .loader').html('<div class="text-center alert alert-success alert-success-b">' +
+								'Изменения сохранены</div>');
+
+							setTimeout(function() {
+								$('.alert-success-b').remove();
+							}, 2000)
+						}
 					}
 
 					if(!_.isEmpty(data.data))

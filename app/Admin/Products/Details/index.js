@@ -162,6 +162,10 @@ const
 		if(!obj.price)
 			_.setWith(obj, 'price', 0);
 
+		// required field
+		if(!obj.brand)
+			_.setWith(obj, 'brand', 0);
+
 		if(tagsNew.length)
 			_Tools.newTags(tagsNew);
 

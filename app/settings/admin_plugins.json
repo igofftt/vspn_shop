@@ -99,6 +99,16 @@
     "sql_column": "comment"
   },
   {
+    "name": "reviews",
+    "typeField": "textarea",
+    "classAttr": "reviews",
+    "nameText": "Обзоры",
+    "nameAttr": "pl[reviews]",
+    "description": "Текстовое поле для обзоров",
+    "idAttr": "textareaReviews",
+    "sql_column": "reviews"
+  },
+  {
     "name": "status",
     "typeField": "select",
     "classAttr": "select2-status",
@@ -319,6 +329,19 @@
     "body": {
       "text": "<div id=\"characteristics\"></div>",
       "type": "characteristics"
+    }
+  },
+  {
+    "name": "brand",
+    "typeField": "select-list",
+    "nameText": "Производители (брены)",
+    "nameAttr": "pl[brand]",
+    "description": "Селекст объект \"Производители (брены)\"",
+    "idAttr": "inputBrand",
+    "sql_column": "brand",
+    "body": {
+      "text": "<option value=\"\">Не исползуется</option>{-option-}",
+      "table": "brand"
     }
   }
 ]
