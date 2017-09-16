@@ -10,7 +10,7 @@ export default (req, res, next) => {
 	if(req.params.page) page = req.params.page;
 	let offset = (page - 1) < 0 ? 0 : (page - 1) * limit;
 	let table = 'products';
-	let currentUser = query.user || 0;
+	let currentUser = parseInt(query.user) || 0;
 	let currentCategory = parseInt(query.cat) || 0;
 	let where = ` WHERE "${table}"."active"='1' `;
 	let whereCount = currentUser ? {where: {user_id: currentUser}} : {};
