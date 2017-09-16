@@ -28,25 +28,28 @@ const
 		models.tagsModel
 			.findAll({raw: true, where: {name: {$like: `%${q}%`}}})
 
-			.then(objData => res.send({
-				incomplete_results: false,
+			.then(objData => {
+				let searchCheck = _.map(objData, v => v.name === q);
 
-				items: _.isEmpty(objData)
-					? [{
-						active   : 1,
-						createdAt: null,
-						deletedAt: null,
-						id       : `new_${(new Date()).getTime()}_${q}`,
-						id_user  : 1,
-						isNew    : true,
-						name     : q,
-						updatedAt: null,
-					}]
-					: objData,
+				return res.send({
+					incomplete_results: false,
 
-				result     : 'ok',
-				total_count: objData.length,
-			}));
+					items:
+						_.concat(objData, searchCheck ? [{
+							active   : 1,
+							createdAt: null,
+							deletedAt: null,
+							id       : `new_${(new Date()).getTime()}_${q}`,
+							id_user  : 1,
+							isNew    : true,
+							name     : q,
+							updatedAt: null,
+						}] : []),
+
+					result     : 'ok',
+					total_count: objData.length,
+				})
+			});
 
 		return res
 	},
