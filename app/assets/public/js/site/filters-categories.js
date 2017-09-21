@@ -164,9 +164,9 @@ var
 					document.getElementById('price_range').noUiSlider.on('change', () => {
 						filCat.selectCatalogs()
 					});
-
-					filCat.paginationCatalogs();
 				}
+
+				filCat.paginationCatalogs();
 
 				// // init cart min
 				filCat.addToCart(0, 'init');

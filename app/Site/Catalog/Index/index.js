@@ -229,7 +229,7 @@ const
 				return res.json({
 					current_category: req.store.getState('site.currentCategory'),
 					current_page    : currentPage,
-					last_page       : count/show > 0 ? (count/show).toFixed(0) : 1,
+					last_page       : count/show > 0 ? Math.ceil(count/show): 1,
 					products        : req.store.getState('site.products'),
 					result          : 'ok',
 					subCategories   : req.store.getState('site.subCategories'),
@@ -239,6 +239,27 @@ const
 
 			getCurrentCategory = () => models.menuModel.findById(category)
 				.then(dataObl => req.store.setState('site.currentCategory', dataObl, () => toJson())),
+
+			getCount = () => {
+				// если подкатегорий нету, то отображаем сожержимое все подкатегорий данной категории
+				if(_.isEmpty(categoriesSub))
+					categoriesSub = _.map(req.store.getState('site.subCategories'), o => `'${o.id}'`)
+						.concat(`'${category}'`)
+						.join(',');
+
+				return models.execute(`
+					 SELECT "${table}".*, "files"."file", "files"."crop"
+					 FROM "${table}"
+					 LEFT OUTER JOIN "files" ON "${table}"."id" = "files"."id_album"
+						 AND "files"."name_table" = '${table}' AND "files"."main" = 1
+					 WHERE "${table}"."cat" IN (${categoriesSub})
+					 ORDER BY "${table}"."id" ${where.sort};
+					 `)
+
+					.then(dataObl => {
+						req.store.setState('site.products.count', dataObl.rowCount, getCurrentCategory);
+					});
+			},
 
 			getProducts = () => {
 				// если подкатегорий нету, то отображаем сожержимое все подкатегорий данной категории
@@ -258,7 +279,7 @@ const
 
 					.then(dataObl => {
 						req.store.setState('site.products.count', dataObl.rowCount, () => {});
-						req.store.setState('site.products.data', dataObl.rows, getCurrentCategory)
+						req.store.setState('site.products.data', dataObl.rows, getCount)
 					});
 			},
 
