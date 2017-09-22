@@ -248,12 +248,9 @@ const
 						.join(',');
 
 				return models.execute(`
-					 SELECT "${table}".*, "files"."file", "files"."crop"
+					 SELECT "${table}".id
 					 FROM "${table}"
-					 LEFT OUTER JOIN "files" ON "${table}"."id" = "files"."id_album"
-						 AND "files"."name_table" = '${table}' AND "files"."main" = 1
-					 WHERE "${table}"."cat" IN (${categoriesSub})
-					 ORDER BY "${table}"."id" ${where.sort};
+					 WHERE "${table}"."cat" IN (${categoriesSub});
 					 `)
 
 					.then(dataObl => {
