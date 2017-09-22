@@ -18,8 +18,11 @@ Duzzer shop
 `apt install imagemagick`<br />
 `apt install graphicsmagick`
 ###### Create .env
-`touch /var/www/duzzer/.env`<br />
-######Open to edit file
+`touch /var/www/duzzer/.env`
+
+
+_Open to edit file_<br />
+
 `DB_NAME=duzzer_1`<br />
 `DB_HOST=localhost`<br />
 `DB_USER=pgadmin`<br />
