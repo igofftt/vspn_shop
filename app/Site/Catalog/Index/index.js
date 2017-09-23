@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import models from 'app/Admin/models';
-import sequelize from 'sequelize';
-import {getCat, queryParse} from 'generic/helpers';
+import {getCat, queryParse, getProductsOfSessions} from 'generic/helpers';
 
 const
 
@@ -17,7 +16,6 @@ const
 			id = req.body.id,
 			idd = false,
 			quantity = req.body.quantity,
-			table = 'products',
 			type = req.body.type;
 
 		if(type === 'add') {
@@ -43,34 +41,17 @@ const
 				cart    : req.session.cart || {},
 				products: req.store.getState('site.products'),
 				result  : 'ok',
-			}),
+			});
 
-			getProducts = () => {
-				let
-					cartId = _.map(req.session.cart || {}, c => c.id);
-
-				cartId = _.isEmpty(cartId) ? [0] : cartId;
-
-				return models.execute(`
-			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
-			ON "${table}"."id" = "files"."id_album" AND
-			"files"."name_table" = '${table}' AND "files"."main" = 1 WHERE "${table}"."id" IN (${cartId}) ORDER BY
-			"${table}"."id" ASC;
-			`)
-					.then(dataObl => req.store.setState('site.products.data', dataObl.rows || [], toJson))};
-
-		return getProducts()
+		return getProductsOfSessions(req, res, () => toJson);
 	},
-
-
 
 	/**
 	 * Functions forming index page a product
 	 * @param req
 	 * @param res
-	 * @param next
 	 */
-	catalogProduct = (req, res, next) => {
+	catalogProduct = (req, res) => {
 		let
 			id = req.params.id;
 
@@ -158,17 +139,17 @@ const
 
 		const
 			renderPage = () => res.render('site/Catalog/indexCatalog', {
-				brand        : req.store.getState('site.brand'),
-				category     : req.params.id,
-				error        : req.flash('error').toString(),
-				filters      : req.store.getState('site.filters'),
-				menu         : req.store.getState('site.menu'),
-				menuTop      : req.store.getState('site.menuTop'),
-				meta         : {title: 'VSPN'},
-				page         : query.page || 1,
+				brand   : req.store.getState('site.brand'),
+				category: req.params.id,
+				error   : req.flash('error').toString(),
+				filters : req.store.getState('site.filters'),
+				menu    : req.store.getState('site.menu'),
+				menuTop : req.store.getState('site.menuTop'),
+				meta    : {title: 'VSPN'},
+				page    : query.page || 1,
 
 				// TODO move to database
-				params_name  :  paramsNames[_.get(req.store.getState('site.filters'), 'params.name')],
+				params_name  : paramsNames[_.get(req.store.getState('site.filters'), 'params.name')],
 				parent_module: 'indexPage',
 				this_module  : 'indexPage',
 				user         : req.user,

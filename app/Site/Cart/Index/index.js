@@ -1,4 +1,7 @@
-import {getCat} from 'generic/helpers';
+import _ from 'lodash';
+import {getCat, getProductsOfSessions} from 'generic/helpers';
+import models from 'app/Admin/models';
+import sendmail from 'sendmail';
 
 const
 
@@ -25,39 +28,74 @@ const
 	},
 
 	/**
-	 * Page ordering products
-	 * @param req
-	 * @param res
-	 */
-	ordering = (req, res) => {
-		const
-			renderPage = () => res.render('site/Cart/orderingCart', {
-				error        : req.flash('error').toString(),
-				meta         : {title: 'VSPN'},
-				menuTop      : req.store.getState('site.menuTop'),
-				parent_module: 'indexPage',
-				this_module  : 'indexPage',
-				user         : req.user,
-			}),
-
-			getMenuTop = callback => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
-				req.store.setState('site.menuTop', tree, callback));
-
-		return getMenuTop(renderPage);
-	},
-
-	/**
-	 * send & save ordering
+	 * Send & save ordering
 	 * @param req
 	 * @param res
 	 */
 	sendOrdering = (req, res) => {
 		const
-			toJson = () => res.json({
-				result: 'ok',
-			});
+			sendMail = () => sendmail({
+				from   : 'no-reply@duzer.ru',
+				html   : 'Mail of test sendmail ',
+				subject: 'test sendmail',
+				to     : 'igorian.ru@mail.ru',
+			},(err, reply) => {
+				console.log(err && err.stack);
+				console.dir(reply);
+			}),
 
-		return toJson();
+			createOrdering = applications => {
+				let
+					cart = req.session.cart,
+					products = req.store.getState('site.products.data'),
+					quantity;
+
+				// Delete the trash
+				_.setWith(req.session, 'cart', {});
+
+				_.map(products, v => {
+					quantity = parseInt(_.get(cart, `${v.id}.quantity`));
+
+					models
+						.ordersModel
+
+						.create({
+							count           : quantity,
+							current_discount: v.discount,
+							current_price   : v.price,
+							id_applications : applications.id,
+							id_parent       : v.id,
+							id_user         : 0,
+							sum_price       : (quantity * v.price),
+						})
+						.then(() => {});
+				})
+			},
+
+			createApplications = () => {
+				models
+					.applicationsModel
+
+					.create({
+						active     : 1,
+						apartment  : req.body.apartment,
+						cite       : req.body.cite,
+						email      : req.body.email,
+						home       : req.body.home,
+						name_person: req.body.name,
+						phone      : req.body.phone,
+						street     : req.body.street,
+						surname    : req.body.surname,
+					})
+
+					.then(result => {
+						createOrdering(result);
+						sendMail();
+						res.json({result: 'ok'});
+					});
+			};
+
+		return getProductsOfSessions(req, res, () => createApplications);
 	};
 
-export default {index, ordering, sendOrdering}
+export default {index, sendOrdering}

@@ -41,10 +41,11 @@ db.productsModel = db.import('./products');
 db.langModel = db.import('./lang');
 db.menuModel = db.import('./menu');
 db.brandModel = db.import('./brand');
-db.issuesModel = db.import('./applications');
+db.applicationsModel = db.issuesModel = db.import('./applications');
 db.tagsModel = db.import('./tags');
 db.statusesModel = db.import('./statuses');
 db.paramsModel = db.import('./params');
+db.ordersModel = db.import('./orders');
 
 // for querying sql
 db.execute = (text, values) => pgPool.query(text, values);

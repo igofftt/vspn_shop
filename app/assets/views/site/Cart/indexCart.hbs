@@ -27,16 +27,81 @@
                         }
                     </style>
                     <table class="table_preview product-cont-big"></table>
+                </div>
+            </div>
 
-                    <div class="checkout__total" id="cart-panel-ordering">
-                        <div class="checkout__total_field">
-                            <p class="total result-calc"></p>
-                            <a class="get_order" href="/ordering">Оформить заказ</a>
+            <div class="catalog__content basket_view layout">
+                <div class="form">
+                    <form action="" method="post" name="form_ordering">
+                        <div>
+                            <h3>Данные заказа</h3>
+                            <br />
+                            <p>Сумма заказа:</p>
+                            <div><h1><b class="selReN"><span>0</span> &#8381;</b></h1></div>
+                            <hr />
                         </div>
+
+                        <div class="form_ordering_left">
+                            <div class="form__group">
+                                <label class="form__label">Город</label>
+                                <input id="cite" name="cite" class="form__control" placeholder="Город"/>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label">Улица</label>
+                                <input id="street" name="street" class="form__control" placeholder="Улица"/>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label">Дом</label>
+                                <input id="home" name="home" class="form__control" placeholder="Дом"/>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label">Квартира</label>
+                                <input id="apartment" name="apartment" class="form__control" placeholder="Квартира"/>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label">Имя</label>
+                                <input id="name" name="name" class="form__control" placeholder="Имя"/>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label">Фамилия</label>
+                                <input id="surname" name="surname" class="form__control" placeholder="Фамилия"/>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label">Телефон</label>
+                                <input id="phone" name="phone" class="form__control" placeholder="Телефон" value="+7"/>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label">Электронная почта</label>
+                                <input id="email" name="email" class="form__control" placeholder="Электронная почта"/>
+                            </div>
+
+                            <br class="clear" />
+                        </div>
+
+                        <div class="form_ordering_right">
+                            <label class="form__label">Комментарий</label>
+                            <textarea id="little_description" name="little_description" class="form__control" placeholder="Комментарий для курьера,чтобы он быстро Вас нашел. Особенности подъезда, домофон,кодовый замок... Все что может помочь курьеру в поиске Вашего дома и квартиры."></textarea>
+                            <br class="clear" />
+                        </div>
+                    </form>
+                </div>
+
+                <div class="checkout__total" id="cart-panel-ordering">
+                    <div class="checkout__total_field">
+                        <p class="total result-calc"></p>
+                        <button type="button" class="get_order"  onclick="filCat.send_app()">Оформить заказ</button>
                     </div>
                 </div>
             </div>
         </section>
+
         <section class="catalog preview">
             <header>
                 <h3>С этим товаром покупают</h3>

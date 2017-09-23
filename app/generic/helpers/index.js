@@ -10,3 +10,4 @@ export {default as getModule} from './get-module';
 export {default as getCat} from './get-cat';
 export {default as listCategory} from './list-category';
 export {default as listTree} from './list-tree';
+export {default as getProductsOfSessions} from './get-products-of-sessions';

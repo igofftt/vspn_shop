@@ -107,6 +107,7 @@ var
 
 						if(!data.products.data.length) {
 							$('#basket').addClass('hidden');
+							$('.form').addClass('hidden');
 							$('#cart-panel-ordering').addClass('hidden');
 							$('.moneyTop').html(0);
 							$('.product-cont-big').html('<tr><td style="height: 150px"><h3>Корзина пуста</h3></td></tr>');
@@ -118,6 +119,7 @@ var
 							$('.shop-cart > .p').html(data.products.data.length).removeClass('hidden')
 							$('#cart-panel-ordering').removeClass('hidden');
 							$('#basket').removeClass('hidden');
+							$('.form').removeClass('hidden');
 							$('[name=form_ordering]').removeClass('hidden');
 							$('.form_ordering_empty').remove();
 						}
@@ -489,6 +491,7 @@ var
 							success: function(data) {
 								if(data.result === 'ok') {
 									$('#modal_thanks').addClass('active');
+									$('.form').addClass('hidden');
 									$('.product-cont-big').html('<tr><td style="height: 150px"><h3>Корзина пуста</h3></td></tr>');
 									vApartment.cssReset(true);
 									vCite.cssReset(true);

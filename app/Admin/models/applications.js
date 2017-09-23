@@ -29,7 +29,6 @@ export default (sequelize, Datatypes) => {
 				type         : Datatypes.INTEGER,
 			},
 
-
 			name_person: Datatypes.STRING(512),
 			phone      : Datatypes.STRING(512),
 			seller_id  : Datatypes.INTEGER,
