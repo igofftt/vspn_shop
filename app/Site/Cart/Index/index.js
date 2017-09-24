@@ -61,6 +61,7 @@ const
 
 						.create({
 							count           : quantity,
+							created_at      : Date.now(),
 							current_discount: v.discount,
 							current_price   : v.price,
 							id_applications : applications.id,
@@ -72,6 +73,21 @@ const
 				})
 			},
 
+			createFirstStatus = applications => {
+				models
+					.statusesModel
+
+					.create({
+						active    : 1,
+						created_at: Date.now(),
+						id_user   : 0,
+						parent_id : applications.id,
+						status    : 0,
+					})
+
+					.then(() => {});
+			},
+
 			createApplications = () => {
 				models
 					.applicationsModel
@@ -80,6 +96,8 @@ const
 						active     : 1,
 						apartment  : req.body.apartment,
 						cite       : req.body.cite,
+						comment    : req.body.comment,
+						created_at : Date.now(),
 						email      : req.body.email,
 						home       : req.body.home,
 						name_person: req.body.name,
@@ -89,6 +107,7 @@ const
 					})
 
 					.then(result => {
+						createFirstStatus(result);
 						createOrdering(result);
 						sendMail();
 						res.json({result: 'ok'});

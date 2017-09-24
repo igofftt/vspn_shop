@@ -98,24 +98,15 @@ const
 		return module();
 	},
 
-	/**
-	 * get issues json
-	 * @param req
-	 * @param res
-	 */
-	getIssuesJson = (req, res) => {
+	loadIssues = (req, res) => {
 		let
 			currentUser = req.body.current_user,
-			id = parseInt(req.params.id) || 0,
 			whereIssues = req.body.current_user ? {seller_id: currentUser} : {};
-
-		whereIssues = _.merge(whereIssues, {id: id});
-
-		console.log(whereIssues)
 
 		const
 			render = () => res.json({
 				data    : req.store.getState('issues.issues'),
+				result  : 'ok',
 				statuses: req.store.getState('issues.statuses'),
 			}),
 
@@ -131,10 +122,47 @@ const
 					.then(dataObl => req.store.setState('issues.statuses', dataObl, render))
 			},
 
-			getCurrentIssues = () => models.issuesModel.find({raw: true, where: whereIssues})
+			getCurrentIssues = () => models.issuesModel.findAll({raw: true, where: whereIssues})
 				.then(dataObl => req.store.setState('issues.issues', dataObl, getStatusesIssues));
 
 		return getCurrentIssues();
+	},
+
+	/**
+	 * get issues json
+	 * @param req
+	 * @param res
+	 */
+	getIssuesJson = (req, res) => {
+		let
+			currentUser = req.body.current_user,
+			id = parseInt(req.params.id) || 0,
+			whereIssue = req.body.current_user ? {seller_id: currentUser} : {};
+
+		whereIssue = _.merge(whereIssue, {id: id});
+
+		const
+			render = () => res.json({
+				data    : req.store.getState('issues.issue'),
+				statuses: req.store.getState('issues.statuses'),
+			}),
+
+			getStatusesIssue = () => {
+				let
+					arrayId = [],
+					issue = req.store.getState('issues.issue');
+
+				for(let i = 0; issue.length > i; i++)
+					arrayId.push(issue[i].id);
+
+				return models.statusesModel.findAll({raw: true, where: {parent_id: id}})
+					.then(dataObl => req.store.setState('issues.statuses', dataObl, render))
+			},
+
+			getCurrentIssue = () => models.issuesModel.findOne({raw: true, where: whereIssue})
+				.then(dataObl => req.store.setState('issues.issue', dataObl, getStatusesIssue));
+
+		return getCurrentIssue();
 	},
 
 	/**
@@ -146,4 +174,4 @@ const
 		return res.json({result: 'ok'});
 	};
 
-export default {getIssues, getIssuesJson, update}
+export default {getIssues, getIssuesJson, loadIssues, update}

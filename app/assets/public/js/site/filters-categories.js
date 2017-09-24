@@ -478,10 +478,11 @@ var
 							data: {
 								apartment: $('[name="apartment"]').val(),
 								cite     : $('[name="cite"]').val(),
+								comment  : $('[name="little_description"]').val(),
 								email    : $('[name="email"]').val(),
 								home     : $('[name="home"]').val(),
 								name     : $('[name="name"]').val(),
-								phone    : $('[name="little_description"]').val(),
+								phone    : $('[name="phone"]').val(),
 								street   : $('[name="street"]').val(),
 								surname  : $('[name="surname"]').val(),
 							},

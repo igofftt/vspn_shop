@@ -17,6 +17,11 @@
     background: #ebebeb;
     cursor: pointer;
 }
+
+.issues-block-1 > .bg p {
+    margin: 0;
+}
+
 .issues-block-1-1 > .bg {
     background: #d8caeb;
 }

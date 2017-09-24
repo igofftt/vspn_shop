@@ -23,6 +23,7 @@ export default (sequelize, Datatypes) => {
 				type         : Datatypes.INTEGER,
 			},
 
+			id_user  : Datatypes.INTEGER,
 			parent_id: Datatypes.INTEGER,
 			status   : Datatypes.INTEGER,
 
@@ -43,6 +44,7 @@ export default (sequelize, Datatypes) => {
 
 // CREATE TABLE statuses (
 // 	id serial PRIMARY KEY,
+// 	id_user integer NOT NULL,
 // 	parent_id integer NOT NULL,
 // 	active integer NOT NULL DEFAULT '1',
 // 	status integer DEFAULT '0',

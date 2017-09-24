@@ -6,12 +6,14 @@
 
 		initialize: function initialize(data) {
 			this.conf = new Map((data || {}).pram);
-			this.setStyle();
-			this.rebaseBg()
+			this.loadIssues();
 			$.isbl.loadOnclick();
 		},
 
-		loadIssues: function() {
+		/**
+		 * Load Issue details
+		 */
+		loadIssue: function() {
 			let
 				id = $(this).data('id'),
 				table = $(this).data('table') || 'issues';
@@ -34,20 +36,55 @@
 			});
 		},
 
+		/**
+		 * Load Issue list views
+		 */
+		loadIssues: function() {
+			let
+				table = 'issues';
+
+			$.ajax({
+				cache   : false,
+				data    : {table: table},
+				dataType: 'json',
+
+				success: function(data) {
+					if(data.result === 'ok')
+						_.map(data.data, function(v) {
+							$('[data-block="' + v.status + '"]').append(
+								'<div class="bg" data-id="' + v.id + '"><div>' +
+								v.surname +
+								v.name_person +
+								'<p>' + v.cite + ', ' + v.street + '</p>' +
+								'<p>' + v.phone + '</p>' +
+								'<p>' + v.created_at + '</p>' +
+								'<p>Сумма заказа: -</p>' +
+								'</div></div>',
+							)
+						});
+
+					$.isbl.setStyle();
+					$.isbl.rebaseBg();
+					$('[data-block]').sortable({revert: true, update: $.isbl.callbackBgDown});
+
+					$('[data-id]')
+						.draggable({
+							appendTo         : 'body',
+							clone            : false,
+							connectToSortable: '[data-block]',
+							revert           : 'invalid',
+							scroll           : false,
+						});
+
+					$('[data-id]').click($.isbl.loadIssue);
+				},
+
+				type: 'post',
+				url : '/admin/load-issues/' + table + '/',
+			});
+		},
+
 		loadOnclick: function() {
-			$('[data-block]').sortable({revert: true, update: this.callbackBgDown});
-
-			$('[data-id]')
-				.draggable({
-					appendTo         : 'body',
-					clone            : false,
-					connectToSortable: '[data-block]',
-					revert           : 'invalid',
-					scroll           : false,
-				});
-
-			$('[data-id]').click(this.loadIssues);
-
 			$('[data-show-slide-menu]').click(function() {
 				if(document.getElementsByClassName('top-slide-menu')[0].hasAttribute('data-hidden'))
 					$('.top-slide-menu').removeAttr('data-hidden');
@@ -58,11 +95,12 @@
 
 		rebaseBg: function() {
 			$('[data-block]').each(function(i, el) {
+				console.log(i, el)
 				$('[data-block-top="' + (i + 1) + '"] > span').html($(el).children().length);
 
-				$(el).children().each(function(indx, element) {
-					$(element).attr({'data-id': indx + 1, style: ''});
-				})
+				// $(el).children().each(function(indx, element) {
+				// 	$(element).attr({'data-id': indx + 1, style: ''});
+				// })
 			})
 		},
 

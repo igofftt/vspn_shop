@@ -15,8 +15,42 @@
                 <input type="hidden" name="id" value="{{ id }}"/>
             </form>
         </div>
+
+        <label>История статусов</label>
+        <div id="statuses"></div>
     </div>
 </div>
+
+<style>
+    .form-group {
+        margin: 0;
+    }
+
+    .form-group > label {
+        margin: 0;
+        color: #585858;
+    }
+
+    .form-group > div {
+        margin-bottom: -15px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        border-color: #fff;
+        padding: 3px;
+        display: unset;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        padding: 0.5rem 0.75rem;
+    }
+</style>
 
 <script>
     function loadIssues() {
@@ -35,7 +69,10 @@
             type: 'post',
             dataType: 'JSON',
             success: function(data) {
-                var text, body = data.data || {};
+                let
+                    text,
+                    type = ['Новая заявка', 'Нет в наличии', 'В отправке', 'В наличии', 'Заказ отправлен', 'Доставлено'],
+                    body = data.data || {};
 
                 if(_.isEmpty(body))
                     return false;
@@ -68,6 +105,10 @@
                     } else {
                         $('[name="pl[' + k + ']"]').val(_.unescape(text));
                     }
+                });
+
+                _.map(data.statuses, v => {
+                    $('#statuses').append('<li>Статус: ' + type[v.status] + ' Дата: ' + v.created_at + '</li>')
                 });
             }
         });
