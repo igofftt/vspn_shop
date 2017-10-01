@@ -185,8 +185,6 @@
 
 			if(href.split('/')[6] === 'new')
 				$.adm.loadEdit(0, 'products');
-
-			console.log('dd')
 		},
 
 		makeD: function makeD(v) {
