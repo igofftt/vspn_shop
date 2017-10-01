@@ -71,5 +71,10 @@ export default hbs => {
 		return ret;
 	});
 
+	hbs.registerHelper('log', content => {
+		console.log(content);
+		return '';
+	});
+
 	return true;
 }

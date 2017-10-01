@@ -1,4 +1,8 @@
 {{!< ../../../admin/layout}}
+{{#contentFor "head"}}
+    <link href="/css/admin/plugins/codemirror/codemirror.css" rel="stylesheet">
+    <link href="/css/admin/plugins/codemirror/ambiance.css" rel="stylesheet">
+{{/contentFor}}
 <div class="con">
     <div class="wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
@@ -221,7 +225,7 @@
                     <div class="loader"></div>
                     <button class="btn btn-success" type="submit">Сохранить</button>
                     <button class="btn btn-primary" formaction="/admin/site/update/{{ table }}/{{{df id 0}}}/1" type="submit">Применить</button>
-                    <button class="btn btn-default" formaction="/admin/site/index/{{ table }}" type="submit">Отменить</button>
+                    <a class="btn btn-default" href="/admin/site/index/{{ table }}" type="submit">Отменить</a>
                 </div>
             </form>
         </div>
@@ -229,6 +233,9 @@
 </div>
 
 {{#contentFor "footer"}}
+    <!-- CodeMirror -->
+    <script src="/js/admin/plugins/codemirror/codemirror.js"></script>
+    <script src="/js/admin/plugins/codemirror/mode/javascript/javascript.js"></script>
     <script type="text/javascript" src="/js/lodash.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -269,19 +276,34 @@
                     _.map(plugins, (v, k) => {
                         text = body[k];
 
-
-
-                        if((v.plugins || {}).typeField === 'select' && text) {
-
-                            console.log($('#select' + ucfirst(k)).html())
-
-                            $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
-                        } else {
-                            $('[name="pl[' + k + ']"]').val(_.unescape(text));
+                        if(_.isNaN(parseInt(text))) {
+                            try {
+                                text = JSON.parse(text);
+                            } catch (err) {
+                                // обработка ошибки
+                            }
                         }
+
+                        if((v.plugins || {}).typeField === 'select' && text)
+                            $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
+                        else
+                            $('[name="pl[' + k + ']"]').val(_.isObject(text)
+                                    ? JSON.stringify(text)
+                                    : _.unescape(text));
                     });
                 }
             });
-        })
+        });
+
+        setTimeout(function() {
+            CodeMirror.fromTextArea(document.getElementsByClassName('code')[0], {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true,
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
+            });
+        }, 500)
     </script>
 {{/contentFor}}

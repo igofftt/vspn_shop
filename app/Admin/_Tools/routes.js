@@ -12,6 +12,7 @@ router.route('/admin/_tools/getTags').post(QueryTools.getTags);
 router.route('/admin/_tools/rowDelete').post(QueryTools.rowDelete);
 router.route('/admin/components/show_loader_characteristics').post(Components.showLoaderCharacteristics);
 router.route('/admin/components/show_loader_brand').post(Components.showLoaderBrand);
+router.route('/admin/_tools/get-characteristics/').post(Components.getCharacteristics);
 
 export default combineRoute(
 	[

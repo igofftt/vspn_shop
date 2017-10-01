@@ -1,12 +1,22 @@
 import models from 'app/Admin/models';
 
-/**
- * function for query by id and table name
- * @param req
- * @param res
- * @returns {*}
- */
 const
+
+	/**
+	 * Function get Characteristics
+	 * @param req
+	 * @param res
+	 */
+	getCharacteristics = (req, res) => models.characteristicsModel
+		.findAll({raw: true, where: {active: 1}})
+		.then(objFiles => res.json(objFiles)),
+
+	/**
+	 * function for query by id and table name
+	 * @param req
+	 * @param res
+	 * @returns {*}
+	 */
 	showLoaderBrand = (req, res) => {
 		let
 			body = req.body.body,
@@ -52,4 +62,4 @@ const
 			}));
 	};
 
-export default {showLoaderBrand, showLoaderCharacteristics};
+export default {getCharacteristics, showLoaderBrand, showLoaderCharacteristics};

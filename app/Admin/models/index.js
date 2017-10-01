@@ -46,6 +46,7 @@ db.tagsModel = db.import('./tags');
 db.statusesModel = db.import('./statuses');
 db.paramsModel = db.import('./params');
 db.ordersModel = db.import('./orders');
+db.characteristicsModel = db.import('./characteristics');
 
 // for querying sql
 db.execute = (text, values) => pgPool.query(text, values);

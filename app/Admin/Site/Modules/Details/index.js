@@ -91,7 +91,7 @@ const
 								plugins: pluginSingleSwitch,
 							};
 
-						if(o.i >= o.count)
+						if(o.i > o.count)
 							return _.assign(objResult, {columnSel, moduleThis, pluginsThisHtml, pluginsThisLangHtml});
 
 						// create html fields
@@ -100,7 +100,9 @@ const
 					};
 
 					if(pluginsThis.length)
-						return forEachPlugins({count: (pluginsThis.length - 1), i: 0, plugin: pluginsThis[0]})();
+						return forEachPlugins({count: pluginsThis.length, i: 0, plugin: pluginsThis[0]})();
+					else
+						return _.assign(objResult, {columnSel, moduleThis, pluginsThisHtml, pluginsThisLangHtml})
 				})
 
 				.then(objResult => { res.render('admin/Site/Modules/details', {

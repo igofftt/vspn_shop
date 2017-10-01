@@ -9,6 +9,24 @@
     "sql_column": "name"
   },
   {
+    "name": "system_name",
+    "typeField": "input",
+    "nameText": "Системное имя",
+    "nameAttr": "pl[system_name]",
+    "description": "Текстовое поле инпут для системного имя",
+    "idAttr": "inputSystem_name",
+    "sql_column": "system_name"
+  },
+  {
+    "name": "name_description",
+    "typeField": "input",
+    "nameText": "Подробное название",
+    "nameAttr": "pl[name_description]",
+    "description": "Текстовое поле инпут для более подробного описания имени",
+    "idAttr": "inputName_description",
+    "sql_column": "name_description"
+  },
+  {
     "name": "name_person",
     "typeField": "input",
     "nameText": "Имя",
@@ -131,6 +149,25 @@
     "description": "Текстовое поле \"Полное описание\"",
     "idAttr": "textareaText",
     "sql_column": "text"
+  },
+  {
+    "name": "little_description",
+    "typeField": "textarea",
+    "nameText": "Описание",
+    "nameAttr": "pl[little_description]",
+    "description": "Текстовое поле \"Описание\"",
+    "idAttr": "textareaLittle_description",
+    "sql_column": "little_description"
+  },
+  {
+    "name": "value",
+    "classAttr": "code",
+    "typeField": "textarea",
+    "nameText": "Значение",
+    "nameAttr": "pl[value]",
+    "description": "Текстовое поле \"Значение\"",
+    "idAttr": "textareaValue",
+    "sql_column": "value"
   },
   {
     "name": "title",
@@ -256,6 +293,21 @@
     }
   },
   {
+    "name": "cat_multi",
+    "typeField": "select",
+    "classAttr": "select2",
+    "nameText": "Категория multi",
+    "nameAttr": "pl[cat_multi]",
+    "description": "Текстовое поле селект \"Cat multi\" для выбора категории",
+    "idAttr": "selectCat_multi",
+    "sql_column": "cat_multi",
+    "body": {
+      "text": "<option value=\"0\">Главная (без категории)</option>{-option-}",
+      "type": "replace",
+      "multiple": "multiple"
+    }
+  },
+  {
     "name": "controller",
     "typeField": "input",
     "nameText": "Controller",
@@ -263,6 +315,15 @@
     "description": "Текстовое поле инпут \"Controller\"",
     "idAttr": "inputController",
     "sql_column": "controller"
+  },
+  {
+    "name": "measure",
+    "typeField": "input",
+    "nameText": "Мера измерения",
+    "nameAttr": "pl[measure]",
+    "description": "Текстовое поле инпут \"Measure\"",
+    "idAttr": "inputMeasure",
+    "sql_column": "measure"
   },
   {
     "name": "sys_cat",

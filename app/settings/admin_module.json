@@ -147,6 +147,31 @@
         "sort": "1"
       },
       {
+        "id": "characteristics",
+        "active": true,
+        "class_module": "fa fa-sliders",
+        "pre_link_module": "index",
+        "link_module": "characteristics",
+        "name_module": "Характеристики",
+        "parent_first": true,
+        "plugins": [
+          "name",
+          "name_description",
+          "system_name",
+          "measure",
+          "value",
+          "cat_multi",
+          "active"
+        ],
+        "column_index": [
+          "name",
+          "system_name",
+          "active"
+        ],
+        "sort": "1",
+        "views_module": "table"
+      },
+      {
         "id": "all-products",
         "active": true,
         "class_module": "fa fa-cog",
@@ -156,10 +181,12 @@
         "parent_first": true,
         "plugins": [
           "name",
+          "system_name",
           "little_description",
           "active"
         ],
-        "sort": "1"
+        "sort": "1",
+        "views_module": "table"
       }
     ]
   },

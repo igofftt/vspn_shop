@@ -25,6 +25,8 @@ export default (tree, lang) => {
 				//console.log(err)
 			}
 
+			console.log(i)
+
 			echo += `<option value="${arr[cat][ii]['id']}">${list[i]}${name}</option>`;
 
 			//рекурсия - проверяем нет ли дочерних категорий

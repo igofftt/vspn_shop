@@ -11,14 +11,22 @@ const
 		let
 			langQuery = query.lang ? query.lang : 'ru',
 			length = _.get(req, 'body.iDisplayLength', 0),
-			plugins = settings.plugins,
+			plugins = settings.admin.plugins,
 			response = {},
+			search = _.get(req, 'body.sSearch', ''),
 			skip = _.get(req, 'body.iDisplayStart', 0),
 			sort = _.get(req, 'body.sSortDir_0', 0),
 			sortF = _.get(req, `body.mDataProp_${_.get(req, 'body.iSortCol_0')}`, 0),
 			st = ['Не отображается', 'Отображается'],
 			table = req.params.page,
-			where = {limit: length, offset: _.isNumber(skip) ? skip : 0, sort: `${sort}`, sortF: `${sortF}`};
+
+			where = {
+				limit : length,
+				offset: _.isNumber(skip) ? skip : 0,
+				search: search ? ` WHERE "${table}"."name" LIKE '%${search}%' ` : '',
+				sort  : `${sort}`,
+				sortF : `${sortF}`,
+			};
 
 		// function for get lang object string
 		const getStrLang = str => {
@@ -34,7 +42,8 @@ const
 		models.execute(`
 			SELECT "${table}".*, "files"."file", "files"."crop" FROM "${table}" LEFT OUTER JOIN "files" 
 			ON "${table}"."id" = "files"."id_album" AND
-			"files"."name_table" = '${table}' AND "files"."main" = 1  ORDER BY
+			"files"."name_table" = '${table}' AND "files"."main" = 1
+			 ${where.search} ORDER BY
 			 "${table}"."${where.sortF}" ${where.sort} limit ${where.limit} offset ${where.offset};
 		`)
 			.then(dataObl => models.userModel.count().then(count => {return {count, dataObl: dataObl.rows}}))
@@ -92,7 +101,7 @@ const
 
 						case'name':
 							let name;
-							name = `<a href="/admin/update/${table}/${val.id}">`;
+							name = `<a href="/admin/site/update/${table}/${val.id}">`;
 							name += !val.name.trim() ? 'Без названия' : getStrLang(val.name);
 							name += '</a>';
 							data[i]['_name'] = data[i]['name'];
@@ -167,7 +176,7 @@ const
 			langQuery = query.lang ? query.lang : 'ru',
 			limit = 50,
 			page = 1,
-			plugins = settings.plugins,
+			plugins = settings.admin.plugins,
 			table = req.params.table;
 
 		if(req.params.page) page = req.params.page;
