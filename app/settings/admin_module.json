@@ -182,7 +182,14 @@
         "plugins": [
           "name",
           "system_name",
-          "little_description",
+          "html_bottom",
+          "html_top",
+          "text",
+          "active"
+        ],
+        "column_index": [
+          "name",
+          "system_name",
           "active"
         ],
         "sort": "1",

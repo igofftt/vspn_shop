@@ -14,6 +14,11 @@
     .form-inline label {
         display: inherit;
     }
+
+    .pagination {
+        float: right!important;
+        margin-right: 15px!important;
+    }
 </style>
 
 <!--@if(!empty($filters) || $sort != '')-->
@@ -78,7 +83,7 @@
                 <table id="table_id" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th></th>{{log '{ss}' }}
+                        <th></th>
                         {{# each column as |v|}}
                             <th>
                                 {{ v.nameText }}
@@ -93,8 +98,6 @@
     </div>
 </div>
 
-
-
 {{#contentFor "footer"}}
     <!-- pace -->
     <script src="/js/admin/plugins/pace/pace.min.js"></script>
@@ -103,6 +106,8 @@
     <script type="text/javascript" src="/js/lodash.min.js"></script>
 
     <script>
+        $.fn.DataTable.ext.classes.sPageButton = 'button page-item';
+
         $('#table_id').DataTable({
             "bServerSide": true,
             "sAjaxSource": "/admin/site/modules/getData/{{ table }}?{{{ url }}}",
@@ -133,6 +138,8 @@
                     $.adm.inp_edit(id, title)
                 });
             }
+
+            $('.page-item > a').addClass('page-link');
         });
     </script>
 {{/contentFor}}

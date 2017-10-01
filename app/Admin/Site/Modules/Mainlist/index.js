@@ -102,7 +102,7 @@ const
 						case'name':
 							let name;
 							name = `<a href="/admin/site/update/${table}/${val.id}">`;
-							name += !val.name.trim() ? 'Без названия' : getStrLang(val.name);
+							name += !val.name ? 'Без названия' : getStrLang(val.name);
 							name += '</a>';
 							data[i]['_name'] = data[i]['name'];
 							data[i]['name'] = name;
