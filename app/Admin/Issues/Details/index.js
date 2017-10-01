@@ -152,7 +152,7 @@ const
 					arrayId = [],
 					issue = req.store.getState('issues.issue');
 
-				for(let i = 0; issue.length > i; i++)
+				for(let i = 0; (issue || {}).length > i; i++)
 					arrayId.push(issue[i].id);
 
 				return models.statusesModel.findAll({raw: true, where: {parent_id: id}})

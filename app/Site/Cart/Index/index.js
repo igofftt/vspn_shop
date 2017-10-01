@@ -62,8 +62,8 @@ const
 						.create({
 							count           : quantity,
 							created_at      : Date.now(),
-							current_discount: v.discount,
-							current_price   : v.price,
+							current_discount: v.discount || 0,
+							current_price   : v.price || 0,
 							id_applications : applications.id,
 							id_parent       : v.id,
 							id_user         : 0,

@@ -16,8 +16,11 @@
             </form>
         </div>
 
-        <label>История статусов</label>
+        <label class="alert alert-light">История статусов</label>
         <div id="statuses"></div>
+
+        <label class="alert alert-light">Товары</label>
+        <div id="ordering"></div>
     </div>
 </div>
 
@@ -50,69 +53,18 @@
     .form-group textarea:focus {
         padding: 0.5rem 0.75rem;
     }
+
+    .list-dr {
+        list-style: none;
+    }
 </style>
 
+<script type="text/javascript" src="/js/admin/issues.js"></script>
 <script>
-    function loadIssues() {
-        var plugins = {{{ pluginsStr }}};
-        var pluginsLang = {{{ pluginsLangStr }}};
-
-        function ucfirst(str) {
-            var f = str.charAt(0).toUpperCase();
-            return f + str.substr(1, str.length - 1);
-        }
-
-        $.ajax({
-            cache: false,
-            url: '/admin/load-update/issues_json/{{ id }}',
-            data: {table: '{{ table }}'},
-            type: 'post',
-            dataType: 'JSON',
-            success: function(data) {
-                let
-                    text,
-                    type = ['Новая заявка', 'Нет в наличии', 'В отправке', 'В наличии', 'Заказ отправлен', 'Доставлено'],
-                    body = data.data || {};
-
-                if(_.isEmpty(body))
-                    return false;
-
-                _.map(pluginsLang, (v, k) => {
-                    text = _.unescape(body[k]);
-
-                    try {
-                        text = JSON.parse(text);
-                        if(text) {
-                            $('[name="pl[' + k + '][ru]"]').val(_.unescape(text.ru));
-                            $('[name="pl[' + k + '][en]"]').val(_.unescape(text.en));
-                        }
-                    } catch(err) {
-                        // обработка ошибки
-                    }
-                });
-
-                _.map(plugins, (v, k) => {
-                    text = body[k];
-
-                    if((v.plugins || {}).typeField === 'select' && text !== 'NaN') {
-                        if((v.plugins || {}).name === 'status') {
-                            $(".select2-status").select2({width: '100%'});
-                            $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
-                        } else {
-                            $(".select2").select2({width: '100%'});
-                            $('#select' + ucfirst(k)).val(text ? text : 0).trigger("change");
-                        }
-                    } else {
-                        $('[name="pl[' + k + ']"]').val(_.unescape(text));
-                    }
-                });
-
-                _.map(data.statuses, v => {
-                    $('#statuses').append('<li>Статус: ' + type[v.status] + ' Дата: ' + v.created_at + '</li>')
-                });
-            }
-        });
-    }
-
-    loadIssues();
+    issues.initialize({params: [
+        ['plugins', {{{ pluginsStr }}}],
+        ['plugins-lang', {{{ pluginsLangStr }}}],
+        ['table', {{ table }}],
+        ['id', {{ id }}],
+    ]})
 </script>

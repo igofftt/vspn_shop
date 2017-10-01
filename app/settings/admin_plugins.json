@@ -211,6 +211,7 @@
   },
   {
     "name": "html_top",
+    "classAttr": "code",
     "typeField": "textarea",
     "typeView": "accordion",
     "nameText": "Html top",
@@ -222,6 +223,7 @@
   },
   {
     "name": "html_bottom",
+    "classAttr": "code",
     "typeField": "textarea",
     "typeView": "accordion",
     "nameText": "Html bottom",

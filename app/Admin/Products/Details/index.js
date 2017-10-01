@@ -110,6 +110,21 @@ const
 
 		getModule({req, res, userId: req.user.id}, queryData);
 	},
+ 
+	/**
+	 * Function helper grtting products by Id Applications
+	 * @param req
+	 * @param res
+	 */
+	getProductByIdAppJson = (req, res) => models.execute(`SELECT orders.*, p.name, p.vendor_code, f.file
+			FROM orders
+			INNER JOIN products p ON p.id = orders.id_parent
+			INNER JOIN files f ON f.id_album = orders.id_parent
+				AND f.main = 1	
+			WHERE orders.id_applications = ${parseInt(req.params.id)}
+			GROUP BY orders.id, p.id, f.id;`)
+
+		.then(dataObl => res.json({orders: dataObl.rows, result: 'ok'})),
 
 	/**
 	 * function update from param Table
@@ -191,4 +206,4 @@ const
 			models[`${table}Model`].create(obj).then(result => sendResult(result));
 	};
 
-export default {index, update}
+export default {index, getProductByIdAppJson, update}
