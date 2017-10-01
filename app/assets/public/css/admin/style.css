@@ -430,3 +430,7 @@ label {
     margin: auto 0;
     display: inline-block;
 }
+
+.page-item.active .page-link {
+    z-index: 0!important;
+}
