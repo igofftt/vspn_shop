@@ -296,14 +296,16 @@
         });
 
         setTimeout(function() {
-            CodeMirror.fromTextArea(document.getElementsByClassName('code')[0], {
-                lineNumbers: true,
-                matchBrackets: true,
-                styleActiveLine: true,
-                foldGutter: true,
-                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-                extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
-            });
+            $('.code').each(function() {
+                CodeMirror.fromTextArea(this, {
+                    lineNumbers: true,
+                    matchBrackets: true,
+                    styleActiveLine: true,
+                    foldGutter: true,
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                    extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
+                });
+            })
         }, 500)
     </script>
 {{/contentFor}}
