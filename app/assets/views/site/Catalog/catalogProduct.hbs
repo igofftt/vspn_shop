@@ -182,7 +182,11 @@
          */
         function initChas() {
             eventSelect.val(_.map({{# if product.params }}{{{ product.params }}}{{ else }}[]{{/if}},
-                    function(v, k) { _render(_.find(objCh, {name: k}), v); return k; })).trigger("change");
+                    function(v, k) {
+                        if(_.find(objCh, {name: k}))
+                            _render(_.find(objCh, {name: k}), v);
+                        return k;
+                    })).trigger("change");
         }
 
         /**
@@ -198,7 +202,7 @@
             t += `<dl><dt style="display: inline-table;">${d0.name_p}:&nbsp;</dt>`;
             t += `<dd style="display: inline-table;">`;
 
-            for(let ii = 0; (d0 || {}).value.length > ii; ii++) {
+            for(let ii = 0; (d0.value.length > ii; ii++) {
                 let d = d0.value[ii];
 
                 if(d.type === 'input') {
