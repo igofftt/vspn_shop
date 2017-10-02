@@ -218,9 +218,10 @@
 
         initChas(objCh);
 
-
-        setTimeout(function() {
-            $('[data-item="0"]').click();
-        }, 0)
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('[data-item="0"]').click();
+            }, 0)
+        })
     </script>
 {{/contentFor}}
