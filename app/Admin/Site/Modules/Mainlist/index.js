@@ -22,7 +22,7 @@ const
 
 			where = {
 				limit : length,
-				offset: _.isNumber(skip) ? skip : 0,
+				offset: _.isNaN(parseInt(skip)) ? 0 : skip,
 				search: search ? ` WHERE "${table}"."name" LIKE '%${search}%' ` : '',
 				sort  : `${sort}`,
 				sortF : `${sortF}`,
@@ -46,7 +46,15 @@ const
 			 ${where.search} ORDER BY
 			 "${table}"."${where.sortF}" ${where.sort} limit ${where.limit} offset ${where.offset};
 		`)
-			.then(dataObl => models.userModel.count().then(count => {return {count, dataObl: dataObl.rows}}))
+
+			.then(dataObl => models.execute(`SELECT COUNT("${table}".id) AS count FROM "${table}" LEFT OUTER JOIN "files"
+				 ON "${table}"."id" = "files"."id_album" AND
+				 "files"."name_table" = '${table}' AND "files"."main" = 1
+				 ${where.search};
+			`)
+
+				.then(countObj => {return {count: (parseInt((countObj.rows || {})[0].count) + 1), dataObl: dataObl.rows}})
+			)
 
 			.then(objResult => {
 				let allModules = modules => _.assign({count: (objResult.count - 1), dataObl: objResult.dataObl, modules});
@@ -54,7 +62,6 @@ const
 				// get module all modules
 				return getModule({req, res, userId: req.user.id}, allModules);
 			})
-
 
 			.then(objResult => {
 				let
