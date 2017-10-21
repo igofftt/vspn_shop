@@ -126,17 +126,12 @@
     <script>
         let objCh = {{{ characteristics }}};
 
-//        console.log(objCh)
-
         /**
          * init
          */
         function initChas(obj) {
             _.map({{# if product.params }}{{{ product.params }}}{{ else }}[]{{/if}},
                     function(v, k) {
-
-                        console.log(obj)
-
                         if(_.find(obj, {system_name: k}))
                             _render(_.find(obj, {system_name: k}), v);
                         return k;
@@ -150,8 +145,6 @@
          * @private
          */
         function _render(d0, val) {
-            console.log(d0)
-
             let t = '';
             val = _.isObject(val) ? val : {};
             d0.value = JSON.parse(d0.value);
@@ -172,8 +165,6 @@
                         t += !_.isNaN(parseFloat(val[d.name])) ? ` ${val[d.name] || ''}${d0.measure} ` : '';
                     else
                         t += !_.isNaN(parseFloat(val[d.name])) ? `${d.name_p}:  ${val[d.name] || ''}${d0.measure} ` : '';
-
-                    console.log( parseFloat(val[d.name]))
 
                 if(d.type === 'color') {
                     t += ` ${val[d.name] || ''}`;
