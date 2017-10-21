@@ -59,11 +59,12 @@ const
 			mathObj = obj => _.merge(obj, {price_current: obj.price - (obj.price / 100 * obj.discount)}),
 
 			renderPage = () => res.render('site/Catalog/catalogProduct', {
-				brand  : req.store.getState('site.brand'),
-				error  : req.flash('error').toString(),
-				files  : req.store.getState('site.files.product'),
-				menu   : req.store.getState('site.menu'),
-				menuTop: req.store.getState('site.menuTop'),
+				brand          : req.store.getState('site.brand'),
+				characteristics: JSON.stringify(req.store.getState('site.characteristics')),
+				error          : req.flash('error').toString(),
+				files          : req.store.getState('site.files.product'),
+				menu           : req.store.getState('site.menu'),
+				menuTop        : req.store.getState('site.menuTop'),
 
 				meta: {
 					author     : req.store.getState('site.product').author || '',
@@ -81,9 +82,13 @@ const
 			getMenuTop = () => getCat({lang: 'ru', req, res, type: 'array'}, tree =>
 				req.store.setState('site.menuTop', tree, renderPage)),
 
+			getCharacteristics = () => models.characteristicsModel
+				.findAll({raw: true, where: {active: 1}})
+				.then(dataObl => req.store.setState('site.characteristics', dataObl, getMenuTop)),
+
 			getProduct = () => models.productsModel
 				.findById(id, {raw: true, where: {active: 1}})
-				.then(dataObl => req.store.setState('site.product', dataObl, getMenuTop)),
+				.then(dataObl => req.store.setState('site.product', dataObl, getCharacteristics)),
 
 			getFiles = () => models.filesModel
 				.findAll({limit: 10, raw: true, where: {active: 1, id_album: id, name_table: 'products'}})

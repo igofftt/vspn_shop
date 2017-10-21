@@ -124,69 +124,23 @@
     <script type="text/javascript" src="/js/site/gallery.js"></script>
 
     <script>
-        let eventSelect = $('.select2-cha');
-        let objCh = [
-            {
-                name: 'weight',
-                name_p: 'Вес',
-                measure: 'г',
+        let objCh = {{{ characteristics }}};
 
-                value: [{col: 12, type: 'input', name: 'weight', name_p: 'Вес, г'}]
-            },
-
-            {
-                name: 'thickness',
-                name_p: 'Толщина',
-                measure: 'мм',
-
-                value: [{col: 12, type: 'input', name: 'thickness', name_p: 'Толщина'}]
-            },
-
-            {
-                name: 'dimensions_length_width',
-                name_p: 'Размеры',
-                name_d: 'длина/ширина)',
-                measure: 'мм',
-
-                value: [
-                    {col: 6, type: 'input', name: 'length', name_p: 'Длина'},
-                    {col: 6, type: 'input', name: 'width', name_p: 'Ширина'}
-                ]
-            },
-
-            {
-                name: 'color',
-                name_p: 'Цвет',
-                name_d: '',
-
-                value: [{col: 12, type: 'color', name: 'color', name_p: 'Цвет'}]
-            },
-
-            {
-                name: 'concentrate_density_m3',
-                name_p: 'Плотность концентрата',
-                measure: 'г/см³',
-                value: [{col: 12, type: 'input', name: 'concentrate_density_m3', name_p: 'Плотность концентрата'}]
-            },
-
-            {
-                name: 'consumption_m2',
-                name_p: 'Расход',
-                measure: 'л на м²',
-                value: [{col: 12, type: 'input', name: 'consumption_m2', name_p: 'Расход'}]
-            }
-        ];
+//        console.log(objCh)
 
         /**
          * init
          */
-        function initChas() {
-            eventSelect.val(_.map({{# if product.params }}{{{ product.params }}}{{ else }}[]{{/if}},
+        function initChas(obj) {
+            _.map({{# if product.params }}{{{ product.params }}}{{ else }}[]{{/if}},
                     function(v, k) {
-                        if(_.find(objCh, {name: k}))
-                            _render(_.find(objCh, {name: k}), v);
+
+                        console.log(obj)
+
+                        if(_.find(obj, {system_name: k}))
+                            _render(_.find(obj, {system_name: k}), v);
                         return k;
-                    })).trigger("change");
+            })
         }
 
         /**
@@ -196,18 +150,30 @@
          * @private
          */
         function _render(d0, val) {
+            console.log(d0)
+
             let t = '';
             val = _.isObject(val) ? val : {};
+            d0.value = JSON.parse(d0.value);
 
-            t += `<dl><dt style="display: inline-table;">${d0.name_p}:&nbsp;</dt>`;
-            t += `<dd style="display: inline-table;">`;
+            if(d0.value.length === 1 && !_.isNaN(parseFloat(val[d0.value[0].name])))
+                t += `<dl><dt style="display: inline-table;">${d0.name}:&nbsp;</dt>`;
+            else
+            if(!_.isNaN(parseFloat(val[d0.value[0].name])))
+                t += `<dl><dt style="display: inline-table;"></dt>`;
+            else
+                t += '';
 
             for(let ii = 0; d0.value.length > ii; ii++) {
                 let d = d0.value[ii];
 
-                if(d.type === 'input') {
-                    t += ` ${d.name_p} ${val[d.name] || ''}, ${d0.measure}`;
-                }
+                if(d.type === 'input')
+                    if(d0.value.length === 1)
+                        t += !_.isNaN(parseFloat(val[d.name])) ? ` ${val[d.name] || ''}${d0.measure} ` : '';
+                    else
+                        t += !_.isNaN(parseFloat(val[d.name])) ? `${d.name_p}:  ${val[d.name] || ''}${d0.measure} ` : '';
+
+                    console.log( parseFloat(val[d.name]))
 
                 if(d.type === 'color') {
                     t += ` ${val[d.name] || ''}`;
