@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin
+Sitemap: http://duzzer.ru/sitemap.xml
+Host: http://duzzer.ru/
