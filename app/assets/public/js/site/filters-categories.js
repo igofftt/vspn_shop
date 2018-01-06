@@ -142,87 +142,7 @@ var
 			return s.replace(/(\d{1,3}(?=(\d{3})+(?:\.\d|\b)))/g,'\$1' + separator);
 		},
 
-		initCharacteristics: function(categories) {
-			let cat;
-			$('.cha-s .cont').html('');
-
-			/**
-			 * init
-			 */
-			function initChas(obj) {
-				_.map(obj, function(v) {
-					let show = false;
-
-					cat = _.isNaN(parseInt(v.cat_multi))
-						? JSON.parse(v.cat_multi)
-						: [parseInt(v.cat_multi)];
-
-					if(cat)
-						for(let i = 0; cat.length > i; i++)
-							if( _.indexOf(categories, cat[i].toString()) !== -1) {
-								show = true;
-								break;
-							}
-
-					if(show)
-						_render(v, {});
-				})
-			}
-
-			/**
-			 * render characteristics
-			 * @param d0
-			 * @param val
-			 * @private
-			 */
-			function _render(d0, val) {
-				let t = '';
-				val = _.isObject(val) ? val : {};
-
-				if(!_.isObject(d0.value))
-					d0.value = JSON.parse(d0.value);
-
-				t += `<div class="form-group row form-obj" id="${d0.name}-d">
-                    <label class="label">${d0.name} ${d0.measure ? ', ' + d0.measure : ''}</label>
-                    <!--<button class="closes btn btn-danger btn-sm"><i class="fa fa-close"></i></button>-->
-                    <div class=""><div class="">`;
-
-				for(let ii = 0; d0.value.length > ii; ii++) {
-					let d = d0.value[ii];
-
-					if(d.type === 'input') {
-						t += `<div class="">
-								<input 
-									 value="${val[d.name] || ''}"
-									 class="form-control" name="pl[params][${d0.name}][${d.name}]"
-									  type="text" placeholder="${d.name_p}"
-									 />
-							</div>`;
-					}
-
-					if(d.type === 'color') {
-						t += `<div class="">
-								<input
-								 class="form-control" value="${val[d.name] || ''}"
-								 type="color" id="example-color-input"
-								 name="pl[params][${d0.name}][${d.name}]"
-								 type="text" placeholder="${d.name_p}"
-								 />
-							 </div>`;
-					}
-				}
-
-				t += `</div>
-            </div>
-            </div>`;
-
-				$('.cha-s .cont').append(t);
-			}
-
-			initChas(this.conf.characteristics)
-		},
-
-		initialize: function(data) {
+		initialize: function initialize(data) {
 			this.conf = data;
 			this.url  = '/';
 			this.cont = this.conf.cont;
@@ -294,7 +214,6 @@ var
 
 			let
 				category = $('[name=category]').val(),
-				catHr = [category],
 				filterGroup = $('.filterGroup > div.active').data('filterGroup'),
 				inputSearch,
 				page,
@@ -306,27 +225,9 @@ var
 			inputSearch = $('[name=input_search]').val();
 			page = $('[name=current-page]').val();
 
-			/* load characteristics */
-			if(this.conf.isCharacteristics) {
-				$('[name^=categories_sub]:checked').each(function(i, v) {
-					catHr.push($(v).val());
-				});
-
-				// if only one category is found then select all subcategories
-				if(catHr.length === 1)
-					$('[name^=categories_sub]').each(function(i, v) {
-						catHr.push($(v).val());
-					});
-
-				if(catHr != this.conf.catHrOld || [])
-					filCat.initCharacteristics(catHr);
-
-				this.conf.catHrOld = catHr;
-			}
-
 			if(1) {
 				request = {
-					categories_sub: $('[name^=categories_sub]').val(),
+					categories_sub: $('[name=categories_sub]').val(),
 					category      : category,
 					filter_group  : filterGroup,
 					form          : $('[name=filter-form]').serializeArray(),
@@ -408,10 +309,12 @@ var
 
 							$(filCat.num).html(data.products.count);
 							$(filCat.cont).html(t);
+
+							console.log('result: ', data)
 						}
 
 						$('[name=last-page]').val(data.last_page);
-						$('[name=current-page]').val(data.current_page);
+						$('[name=current-page]').val(data.current_page)
 						$(filCat.cont).animate({opacity: 1}, 150);
 					},
 

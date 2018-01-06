@@ -144,15 +144,14 @@ const
 
 		const
 			renderPage = () => res.render('site/Catalog/indexCatalog', {
-				brand          : req.store.getState('site.brand'),
-				category       : req.params.id,
-				characteristics: JSON.stringify(req.store.getState('site.characteristics')),
-				error          : req.flash('error').toString(),
-				filters        : req.store.getState('site.filters'),
-				menu           : req.store.getState('site.menu'),
-				menuTop        : req.store.getState('site.menuTop'),
-				meta           : {title: 'VSPN'},
-				page           : query.page || 1,
+				brand   : req.store.getState('site.brand'),
+				category: req.params.id,
+				error   : req.flash('error').toString(),
+				filters : req.store.getState('site.filters'),
+				menu    : req.store.getState('site.menu'),
+				menuTop : req.store.getState('site.menuTop'),
+				meta    : {title: 'VSPN'},
+				page    : query.page || 1,
 
 				// TODO move to database
 				params_name  : paramsNames[_.get(req.store.getState('site.filters'), 'params.name')],
@@ -183,15 +182,11 @@ const
 				.findAll({order: [['id', 'ASC']], raw: true})
 				.then(dataObl => req.store.setState('site.brand', dataObl, getMenuTop)),
 
-			getCharacteristics = () => models.characteristicsModel
-				.findAll({raw: true, where: {active: 1}})
-				.then(dataObl => req.store.setState('site.characteristics', dataObl, getBrand)),
-
-			getMenu = () => models.menuModel
+			getMenu = callback => models.menuModel
 				.findAll({order: [['id', 'ASC']], raw: true})
-				.then(dataObl => req.store.setState('site.menu', dataObl, getCharacteristics));
+				.then(dataObl => req.store.setState('site.menu', dataObl, callback));
 
-		return getMenu();
+		return getMenu(getBrand);
 	},
 
 	/**

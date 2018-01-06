@@ -161,20 +161,129 @@
     <!-- filters-categories -->
     <script src="/js/site/filters-categories.js"></script>
     <script>
-        let objCh = {{{ characteristics }}};
-
         $(document).ready(function(){
-
             filCat.initialize({
-                cont             : '.selResult',
-                characteristics  : objCh,
-                isCharacteristics: true,
-                num              : '.selReN > .i',
-                pagination       : true,
-                url_req          : '/',
+                cont      : '.selResult',
+                num       : '.selReN > .i',
+                pagination: true,
+                url_req   : '/',
             });
 
             setTimeout(filCat.selectCatalogs(), 0);
         });
+    </script>
+
+    <script>
+        let objCh = [
+            {
+                name: 'weight',
+                name_p: 'Вес',
+                measure: 'г',
+
+                value: [{col: 12, type: 'input', name: 'weight', name_p: 'Вес, г'}]
+            },
+
+            {
+                name: 'thickness',
+                name_p: 'Толщина',
+                measure: 'мм',
+
+                value: [{col: 12, type: 'input', name: 'thickness', name_p: 'Толщина'}]
+            },
+
+            {
+                name: 'dimensions_length_width',
+                name_p: 'Размеры',
+                name_d: 'длина/ширина)',
+                measure: 'мм',
+
+                value: [
+                    {col: 6, type: 'input', name: 'length', name_p: 'Длина'},
+                    {col: 6, type: 'input', name: 'width', name_p: 'Ширина'}
+                ]
+            },
+
+            {
+                name: 'color',
+                name_p: 'Цвет',
+                name_d: '',
+
+                value: [{col: 12, type: 'color', name: 'color', name_p: 'Цвет'}]
+            },
+
+            {
+                name: 'concentrate_density_m3',
+                name_p: 'Плотность концентрата',
+                measure: 'г/см³',
+                value: [{col: 12, type: 'input', name: 'concentrate_density_m3', name_p: 'Плотность концентрата'}]
+            },
+
+            {
+                name: 'consumption_m2',
+                name_p: 'Расход',
+                measure: 'л на м²',
+                value: [{col: 12, type: 'input', name: 'consumption_m2', name_p: 'Расход'}]
+            }
+        ];
+
+        /**
+         * init
+         */
+        function initChas() {
+            _.map(objCh, function(v, k) { _render(v, {}); return k; })
+        }
+
+        /**
+         * render characteristics
+         * @param d0
+         * @param val
+         * @private
+         */
+        function _render(d0, val) {
+            let t = '';
+            val = _.isObject(val) ? val : {};
+
+            t += `<div class="form-group row form-obj" id="${d0.name}-d">
+                    <label class="label">${d0.name_p} ${d0.measure ? ', ' + d0.measure : ''}</label>
+                    <!--<button class="closes btn btn-danger btn-sm"><i class="fa fa-close"></i></button>-->
+                    <div class=""><div class="">`;
+
+            for(let ii = 0; d0.value.length > ii; ii++) {
+                let d = d0.value[ii];
+
+                if(d.type === 'input') {
+                    t += `<div class=""><input value="${val[d.name] || ''}" class="form-control" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
+                            `;
+                }
+
+                if(d.type === 'color') {
+                    t += `<div class="">
+                            <input class="form-control" value="${val[d.name] || ''}" type="color" id="example-color-input" name="pl[params][${d0.name}][${d.name}]" type="text" placeholder="${d.name_p}"></div>
+                            `;
+                }
+            }
+
+            t += `</div>
+            </div>
+            </div>`;
+
+            $('.cha-s .cont').append(t);
+        }
+
+        /**
+         * render select
+         * @param obj
+         */
+        function renderOptions(obj) {
+            let n = '';
+
+            for(let i = 0; obj.length > i; i++) {
+                let d0 =obj[i];
+                n += `<option value="${d0.name}">${d0.name_p}</option>`;
+            }
+        }
+
+        renderOptions(objCh);
+        initChas(objCh);
     </script>
 {{/contentFor}}
